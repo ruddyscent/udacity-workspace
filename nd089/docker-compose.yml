@@ -1,0 +1,13 @@
+services:
+  nd089:
+    build: .
+#    runtime: nvidia
+    command: bash
+    ipc: host
+    volumes:
+      - /home/kwchun/Workspace:/home
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
