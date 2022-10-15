@@ -1,13 +1,15 @@
 services:
   nd089:
     build: .
-#    runtime: nvidia
     command: bash
     ipc: host
     volumes:
       - /home/kwchun/Workspace:/home
+    ports:
+      - "8888:8888"
     deploy:
       resources:
         reservations:
           devices:
             - capabilities: [gpu]
+    command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password='' --notebook-dir=/home
