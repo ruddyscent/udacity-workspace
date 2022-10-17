@@ -1,0 +1,5 @@
+matplotlib==3.4.3
+seaborn==0.10.0
+scikit-image==0.16.2
+scikit-learn==1.0
+
