@@ -1,8 +1,17 @@
 FROM pytorch/pytorch:0.4_cuda9_cudnn7
 
-COPY requirements.txt .
+# [Optional] Uncomment this section to install additional OS packages.
+# RUN apt-get update \
+# && export DEBIAN_FRONTEND=noninteractive \
+# && apt-get -y install --no-install-recommends <your-package-list-here> \
+# && apt-get clean autoclean \
+# && apt-get autoremove --yes \
+# && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+COPY requirements.txt /tmp/pip-tmp/
+
+RUN pip install --upgrade pip \
+&& pip --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
+&& rm -rf /tmp/pip-tmp
 
 CMD ["jupyter-lab", "--ip=0.0.0.0", "--no-browser", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.password=''", "--notebook-dir=/home"]
