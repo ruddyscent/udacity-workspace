@@ -10,6 +10,7 @@ services:
       - /home/kwchun/Workspace:/home
     ports:
       - "${JUPYTER_PORT}:8888"
+      - "${TENSORBOARD_PORT}:6006"
     deploy:
       resources:
         reservations:
@@ -17,3 +18,4 @@ services:
             - capabilities: [gpu]
     working_dir: /home
     command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="${JUPYTER_TOKEN}" --NotebookApp.password='' --notebook-dir=/home
+
