@@ -1,4 +1,4 @@
-FROM pytorch/pytorch:0.4_cuda9_cudnn7
+FROM nvcr.io/nvidia/pytorch:18.07-py3
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update \
