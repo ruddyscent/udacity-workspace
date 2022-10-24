@@ -54,10 +54,8 @@ def get_pet_labels(image_dir):
                   "already exists in results_dic witih value =",
                   results_dic[filename])
         else:
-            low_pet_image = filename.lower()
-            word_list_pet_image = low_pet_image.split("_")
-            pet_label = " ".join(word for word in word_list_pet_image if word.isalpha())
-            pet_label = pet_label.strip()
+            terms = filename.lower().split("_")
+            pet_label = " ".join(term.strip() for term in terms if term.isalpha())
             results_dic[filename] = [pet_label]
 
     return results_dic
