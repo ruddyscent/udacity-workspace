@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/pytorch:21.11-py3
+FROM nvcr.io/nvidia/pytorch:21.03-py3
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update \
@@ -11,6 +11,6 @@ FROM nvcr.io/nvidia/pytorch:21.11-py3
 COPY requirements.txt /tmp/pip-tmp/
 
 RUN pip install --upgrade pip \
-&& pip --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
+&& pip install --upgrade --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
 && rm -rf /tmp/pip-tmp
 
