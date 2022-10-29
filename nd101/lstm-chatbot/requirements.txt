@@ -92,7 +92,7 @@ nbformat==5.0.4
 networkx==2.4
 nibabel==3.0.2
 nltk==3.6.4
-notebook==5.7.4
+notebook==6.4.12
 numpy==1.21.2
 oauth2client==3.0.0
 oauthlib==3.0.1
