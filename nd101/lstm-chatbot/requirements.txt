@@ -113,7 +113,7 @@ pox==0.3.0
 ppft==1.6.6.4
 prometheus-client==0.7.1
 prompt-toolkit==3.0.3
-protobuf==3.11.4
+protobuf==3.18.3
 protobuf3-to-dict==0.1.5
 ptyprocess==0.6.0
 pyarrow==0.16.0
