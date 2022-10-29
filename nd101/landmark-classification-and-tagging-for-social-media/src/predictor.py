@@ -24,7 +24,8 @@ class Predictor(nn.Module):
             T.Resize([256, ]),  # We use single int value inside a list due to torchscript type restrictions
             T.CenterCrop(224),
             T.ConvertImageDtype(torch.float),
-            T.Normalize(mean.tolist(), std.tolist())
+            # T.Normalize(mean.tolist(), std.tolist())
+            T.Normalize([0.5], [0.5])
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
