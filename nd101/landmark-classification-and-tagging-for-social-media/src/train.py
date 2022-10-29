@@ -114,7 +114,7 @@ def optimize(data_loaders, model, optimizer, loss, n_epochs, save_path, interact
     # plateau
     # HINT: look here: 
     # https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer) # YOUR CODE HERE
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.1, patience=10) # YOUR CODE HERE
 
     for epoch in range(1, n_epochs + 1):
 
@@ -185,16 +185,16 @@ def one_epoch_test(test_dataloader, model, loss):
                 data, target = data.cuda(), target.cuda()
 
             # 1. forward pass: compute predicted outputs by passing inputs to the model
-            logits  = model(data) # YOUR CODE HERE
+            logits = model(data) # YOUR CODE HERE
             # 2. calculate the loss
-            loss_value  = loss(logits, target) # YOUR CODE HERE
+            loss_value = loss(logits, target).detach() # YOUR CODE HERE
 
             # update average test loss
             test_loss = test_loss + ((1 / (batch_idx + 1)) * (loss_value.data.item() - test_loss))
 
             # convert logits to predicted class
             # HINT: the predicted class is the index of the max of the logits
-            pred  = torch.argmax(logits, dim=1) # YOUR CODE HERE
+            pred = logits.data.max(1, keepdim=True)[1] # YOUR CODE HERE
 
             # compare predictions to true label
             correct += torch.sum(torch.squeeze(pred.eq(target.data.view_as(pred))).cpu())
@@ -208,7 +208,6 @@ def one_epoch_test(test_dataloader, model, loss):
     return test_loss
 
 
-    
 ######################################################################################
 #                                     TESTS
 ######################################################################################

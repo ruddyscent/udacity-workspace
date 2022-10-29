@@ -54,7 +54,7 @@ def get_data_loaders(
                 transforms.CenterCrop(224),
                 transforms.ColorJitter(brightness=.3, contrast=0.3, saturation=0.3, hue=0.1),
                 transforms.RandomAffine(degrees=(-10, 10), translate=(0.1, 0.1), scale=(0.8, 1), shear=(-0.1, 0.1, -0.1, 0.1)),
-                # transforms.AutoAugment(transforms.AutoAugmentPolicy.SVHN),
+                # transforms.AutoAugment(),
                 # transforms.AugMix(),
                 # transforms.RandAugment(),
                 transforms.ToTensor(),
@@ -111,7 +111,7 @@ def get_data_loaders(
 
     # define samplers for obtaining training and validation batches
     train_sampler = torch.utils.data.SubsetRandomSampler(train_idx)
-    valid_sampler  = torch.utils.data.SubsetRandomSampler(valid_idx) # YOUR CODE HERE
+    valid_sampler = torch.utils.data.SubsetRandomSampler(valid_idx) # YOUR CODE HERE
 
     # prepare data loaders
     data_loaders["train"] = torch.utils.data.DataLoader(
@@ -187,7 +187,7 @@ def visualize_one_batch(data_loaders, max_n: int = 5):
 
     # Convert from BGR (the format used by pytorch) to
     # RGB (the format expected by matplotlib)
-    images = torch.permute(images, (0, 2, 3, 1)).clip(0, 1)
+    images = images.permute((0, 2, 3, 1)).clip(0, 1)
 
     # plot the images in the batch, along with the corresponding labels
     fig = plt.figure(figsize=(25, 4))
