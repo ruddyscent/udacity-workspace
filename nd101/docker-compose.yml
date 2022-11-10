@@ -17,5 +17,5 @@ services:
           devices:
             - capabilities: [gpu]
     working_dir: /home
-    command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="${JUPYTER_TOKEN}" --NotebookApp.password='' --notebook-dir=/home
+    command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="${JUPYTER_TOKEN}" --NotebookApp.password='' --notebook-dir=/home --NotebookApp.iopub_data_rate_limit=1.0e7 --NotebookApp.rate_limit_window=1.0e4
 
