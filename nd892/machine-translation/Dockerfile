@@ -1,4 +1,7 @@
-FROM nvcr.io/nvidia/tensorflow:22.10.1-tf2-py3
+# FROM nvcr.io/nvidia/tensorflow:22.10.1-tf2-py3
+FROM nvcr.io/nvidia/tensorflow:22.10-tf1-py3
+
+ENV TF_ALLOW_IOLIBS=1
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update \
