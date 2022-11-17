@@ -1,5 +1,5 @@
 gensim==4.1.2
-html5lib==0.9999999
+html5lib==0.999999999
 ipykernel==5.5.6
 # keras==2.10.0
 keras==2.1.6
