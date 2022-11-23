@@ -15,7 +15,9 @@ services:
       resources:
         reservations:
           devices:
-            - capabilities: [gpu]
+            - driver: nvidia
+              device_ids: ['0', '1']
+              capabilities: [gpu]
     working_dir: /home
     command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="${JUPYTER_TOKEN}" --NotebookApp.password='' --notebook-dir=/home
 
