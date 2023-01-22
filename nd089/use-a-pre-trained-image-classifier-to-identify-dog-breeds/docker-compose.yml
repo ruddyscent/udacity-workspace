@@ -1,0 +1,16 @@
+services:
+  nd089:
+    build: .
+    ipc: host
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    volumes:
+      - /home/kwchun/Workspace/udacity-workspace/nd089/use-a-pre-trained-image-classifier-to-identify-dog-breeds/home:/home
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    working_dir: /home
+    command: bash
