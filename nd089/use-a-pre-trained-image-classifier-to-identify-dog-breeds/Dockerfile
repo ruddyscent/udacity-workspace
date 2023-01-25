@@ -14,4 +14,3 @@ RUN pip install --upgrade pip \
 && pip --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
 && rm -rf /tmp/pip-tmp
 
-CMD ["jupyter-lab", "--ip=0.0.0.0", "--no-browser", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.password=''", "--notebook-dir=/home"]
