@@ -6,7 +6,7 @@ services:
       memlock: -1
       stack: 67108864
     volumes:
-      - /home/kwchun/Workspace/udacity-workspace/nd101/landmark-classification-and-tagging-for-social-media/home/:/home
+      - ./home:/home
     ports:
       - "${JUPYTER_PORT}:8888"
       - "${TENSORBOARD_PORT}:6006"
