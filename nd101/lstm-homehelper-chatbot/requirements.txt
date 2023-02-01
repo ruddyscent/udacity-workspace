@@ -1,6 +1,4 @@
 gensim==4.1.2
-ipykernel==6.21.0
-ipywidgets==8.0.4
-pandoc==2.3
-torchtext
-torchdata
+torchdata==0.5.1
+torchtext==0.14.1
+nltk==3.8.1
