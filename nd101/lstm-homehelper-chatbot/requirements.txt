@@ -1,2 +1,4 @@
-# gensim==4.1.2
-# pandoc==2.3
+gensim==4.1.2
+torchdata==0.5.1
+torchtext==0.14.1
+nltk==3.8.1
