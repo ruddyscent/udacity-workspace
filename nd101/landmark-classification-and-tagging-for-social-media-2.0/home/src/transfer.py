@@ -27,11 +27,26 @@ def get_model_transfer_learning(model_name="resnet18", n_classes=50):
 
     # Add the linear layer at the end with the appropriate number of classes
     # 1. get numbers of features extracted by the backbone
-    num_ftrs  = model_transfer.fc.in_features # YOUR CODE HERE
+    # YOUR CODE HERE
+
+    # resnet has an 'fc' layer
+    if hasattr(model_transfer, 'fc'):
+        num_ftrs  = model_transfer.fc.in_features
+    # mobilenet has a 'classifier' sequential layer.
+    elif hasattr(model_transfer, 'classifier'):
+        num_ftrs = model_transfer.classifier[0].in_features
+    else:
+        raise ValueError(f'Model {model_name} has unknown/unhandled classifier layer')
 
     # 2. Create a new linear layer with the appropriate number of inputs and
     #    outputs
-    model_transfer.fc = nn.Linear(num_ftrs, n_classes) # YOUR CODE HERE
+    # YOUR CODE HERE
+    if hasattr(model_transfer, 'fc'):
+        model_transfer.fc  = nn.Linear(num_ftrs, n_classes)
+    elif hasattr(model_transfer, 'classifier'):
+        model_transfer.classifier = nn.Linear(num_ftrs, n_classes)
+    else:
+        raise ValueError(f'Model {model_name} has unknown/unhandled classifier layer')
 
     return model_transfer
 
