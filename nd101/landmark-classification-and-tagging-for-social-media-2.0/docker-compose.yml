@@ -21,8 +21,7 @@ services:
     command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="${JUPYTER_TOKEN}" --NotebookApp.password="" --notebook-dir=/home
 
   voila:
-    build:
-      dockerfile: Dockerfile-voila
+    build: .
     ipc: host
     ulimits:
       memlock: -1
@@ -39,4 +38,4 @@ services:
               device_ids: ['${GPU_DEVICES}']
               capabilities: [gpu]
     working_dir: /home 
-    command: sh -c "jupyter trust app.ipynb && voila --show_tracebacks=True --no-browser --Voila.ip=0.0.0.0 app.ipynb"
+    command: voila --show_tracebacks=True --no-browser --Voila.ip=0.0.0.0 app.ipynb

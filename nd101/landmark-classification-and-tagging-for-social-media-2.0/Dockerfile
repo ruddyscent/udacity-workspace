@@ -23,3 +23,5 @@ RUN pip install --upgrade pip \
 
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager 
 
+RUN jupyter serverextension enable voila \
+    && jupyter server extension enable voila
