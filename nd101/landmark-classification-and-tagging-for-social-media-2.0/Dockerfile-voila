@@ -4,24 +4,16 @@ FROM nvcr.io/nvidia/pytorch:21.11-py3
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
-        texlive-xetex \
-        texlive-fonts-recommended \
-        texlive-plain-generic \
-        pandoc \
         nodejs \
         npm \
     && apt-get clean autoclean \
-    && apt-get autoremove --yes 
+    && apt-get autoremove --yes
 #    && rm -rf /var/lib/apt/lists/*
 #    && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-COPY requirements.txt /tmp/pip-tmp/
+RUN pip install voila==0.3.6 ipywidgets==7.5.0 nbconvert==6.4.5
 
-RUN pip install --upgrade pip \
-    && pip install --upgrade --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
-    && rm -rf /tmp/pip-tmp
-
-RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager 
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager@2
 
 RUN jupyter serverextension enable voila \
     && jupyter server extension enable voila
