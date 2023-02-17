@@ -1,4 +1,3 @@
-FROM nvcr.io/nvidia/pytorch:23.01-py3
+FROM nvcr.io/nvidia/pytorch:21.11-py3
 
-RUN pip install voila==0.4.0
-
+RUN pip install voila==0.4.0 ipywidgets==8.0.4 nbconvert==6.4.5

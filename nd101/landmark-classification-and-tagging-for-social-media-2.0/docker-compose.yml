@@ -39,4 +39,4 @@ services:
               device_ids: ['${GPU_DEVICES}']
               capabilities: [gpu]
     working_dir: /home 
-    tty: true
+    command: voila --show_tracebacks=True --no-browser --Voila.ip=0.0.0.0 app.ipynb
