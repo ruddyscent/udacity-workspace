@@ -39,4 +39,4 @@ services:
               device_ids: ['${GPU_DEVICES}']
               capabilities: [gpu]
     working_dir: /home 
-    command: voila --show_tracebacks=True --no-browser --Voila.ip=0.0.0.0 app.ipynb
+    command: sh -c "jupyter trust app.ipynb && voila --show_tracebacks=True --no-browser --Voila.ip=0.0.0.0 app.ipynb"
