@@ -19,3 +19,24 @@ services:
               capabilities: [gpu]
     working_dir: /home
     command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="${JUPYTER_TOKEN}" --NotebookApp.password="" --notebook-dir=/home
+
+  voila:
+    build:
+      dockerfile: Dockerfile-voila
+    ipc: host
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    volumes:
+      - ./home:/home
+    ports:
+      - "${VOILA_PORT}:8866"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['${GPU_DEVICES}']
+              capabilities: [gpu]
+    working_dir: /home 
+    tty: true
