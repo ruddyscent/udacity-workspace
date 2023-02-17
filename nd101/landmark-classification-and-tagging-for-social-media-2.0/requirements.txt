@@ -1,5 +1,5 @@
 livelossplot==0.5.5
 seaborn==0.12.2
 ipywidgets==7.5.0
-nbconvert==6.4.5
+nbconvert==6.5.1
 voila==0.3.6
