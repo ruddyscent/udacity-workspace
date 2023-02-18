@@ -1,4 +1,4 @@
-landmark_images/
+landmark_images
+checkpoints
 mean_and_std.pt
-*.gz
-*.html
+submission_*.gz
