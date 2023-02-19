@@ -8,11 +8,9 @@ RUN apt-get update \
     && apt-get autoremove --yes \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# RUN conda install ipykernel ipywidgets pandoc
+COPY requirements.txt /tmp/pip-tmp/
 
-# COPY requirements.txt /tmp/pip-tmp/
-# 
-# RUN pip install --upgrade pip \
-# && pip install --upgrade --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
-# && rm -rf /tmp/pip-tmp
+RUN pip install --upgrade pip \
+    && pip install --upgrade --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
+    && rm -rf /tmp/pip-tmp
 
