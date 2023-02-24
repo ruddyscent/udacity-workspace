@@ -55,7 +55,7 @@ def get_data_loaders(
                 transforms.ColorJitter(brightness=.3, contrast=0.3, saturation=0.3, hue=0.1),
                 transforms.RandomAffine(degrees=(-10, 10), translate=(0.1, 0.1), scale=(0.8, 1), shear=(-0.1, 0.1, -0.1, 0.1)),
                 transforms.ToTensor(),
-                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+                transforms.Normalize(mean, std)
             ]
         ),
         "valid": transforms.Compose(
@@ -64,7 +64,7 @@ def get_data_loaders(
                 transforms.Resize(256),
                 transforms.CenterCrop(224),
                 transforms.ToTensor(),
-                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+                transforms.Normalize(mean, std)
             ]
         ),
         "test": transforms.Compose(
@@ -73,7 +73,7 @@ def get_data_loaders(
                 transforms.Resize(256),
                 transforms.CenterCrop(224),
                 transforms.ToTensor(),
-                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+                transforms.Normalize(mean, std)
             ]
         ),
     }
