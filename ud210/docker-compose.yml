@@ -1,6 +1,6 @@
 services:
   ud210:
-    image: gcc
+    image: arm64v8/gcc
     volumes:
       - ./home:/usr/src/myapp
     working_dir: /usr/src/myapp
