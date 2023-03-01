@@ -36,8 +36,11 @@ def main():
 #     model.eval()
 #     model.to(device)
 
-    model = read_model(in_arg.checkpoint, in_arg.gpu)
+    model, class_to_idx = read_model(in_arg.checkpoint)
     
+    if in_arg.gpu and torch.cuda.is_available():
+        model = model.cuda()
+
 #     with Image.open(in_arg.image_path) as im:
 #         np_image = process_image(im)
 #         tensor_image = torch.tensor(np_image, dtype=torch.float)
@@ -45,7 +48,7 @@ def main():
     
     tensor_image = read_image(in_arg.image_path, in_arg.gpu)
     
-    ind, prob = inference(model, tensor_image, in_arg.top_k, in_arg.category_names)
+    ind, prob = inference(model, tensor_image, in_arg.top_k, class_to_idx, in_arg.category_names)
     print(f"top-k candidates: {ind}")
     print(f"top-k confidence: {prob}")
     
