@@ -1,11 +1,13 @@
 
 from datetime import datetime
+from tqdm import tqdm
 from typing import List, NoReturn, Tuple
 
 import json
 import os
 import torch
 
+from get_model import save_model
 
 def train_model(
     model: torch.nn.Module,
@@ -13,8 +15,7 @@ def train_model(
     epochs: int, 
     learning_rate: float,
     gpu: bool,
-    save_dir: str,
-    class_to_idx: dict
+    save_dir: str
 ) -> NoReturn:
     device = torch.device('cuda' if gpu and torch.cuda.is_available() else 'cpu')
             
@@ -27,7 +28,7 @@ def train_model(
     loss_fn = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9)
 
-    for epoch in range(epochs):
+    for epoch in tqdm(range(epochs)):
         print(f"EPOCH: {epoch + 1}/{epochs}")
         avg_loss = train_one_epoch(
             model, epoch, dataloaders, optimizer, loss_fn, device)
@@ -54,12 +55,7 @@ def train_model(
             # Track best performance, and save the model's state
             if avg_vloss < best_vloss:
                 best_vloss = avg_vloss
-                model.timestamp = timestamp
-                model.epoch = epoch
-                model.class_to_idx = class_to_idx
-                model.optimizer_state_dict = optimizer.state_dict
-                torch.save(model, os.path.join(save_dir, "best_model.pth"))
-                
+                save_model(model, dataloaders['train'].dataset.class_to_idx, save_dir)
 
 def train_one_epoch(model: torch.nn.Module,
                     epoch_index: int, 
@@ -92,17 +88,17 @@ def train_one_epoch(model: torch.nn.Module,
     return last_loss
 
 
-def inference(model: torch.nn.Module, tensor_image: torch.Tensor, topk: int, category_names: str) -> Tuple[List, List]:
+def inference(model: torch.nn.Module, tensor_image: torch.Tensor, topk: int, class_to_idx: dict, category_names: str) -> Tuple[List, List]:
     with torch.no_grad():
         outputs = model(tensor_image)
         # the class with the highest energy is what we choose as prediction
         confidence = torch.nn.functional.softmax(outputs.data, dim=1)
         res, ind = torch.topk(confidence, topk, dim=1)   
         
-    idx2cls = {idx: cls for cls, idx in model.class_to_idx.items()}
+    idx2cls = {val: key for key, val in class_to_idx.items()}
     ind = list(map(lambda x: idx2cls[x], ind.squeeze().cpu().numpy()))
     prob = res.squeeze().cpu().numpy()
-    
+ 
     if category_names:
         with open(category_names, 'r') as f:
             cat_to_name = json.load(f)
