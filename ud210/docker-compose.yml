@@ -1,0 +1,9 @@
+services:
+  ud210:
+    image: arm64v8/gcc
+    volumes:
+      - ./home:/usr/src/myapp
+    working_dir: /usr/src/myapp
+    command: bash
+    tty: true
+    stdin_open: true
