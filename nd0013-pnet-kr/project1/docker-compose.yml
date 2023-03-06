@@ -1,5 +1,5 @@
 services:
-  nd101:
+  nd0013-pnet-kr:
     build: .
     ipc: host
     ulimits:
