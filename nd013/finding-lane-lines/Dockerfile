@@ -13,7 +13,8 @@ RUN apt-get update -y \
         apt-transport-https \
         ca-certificates \
         gnupg \
-        python3-tk 
+        python3-tk \
+        python3-opencv
 #    && rm -rf /var/lib/apt/lists/* \
 #    && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
