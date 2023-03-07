@@ -1,5 +1,5 @@
 services:
-  nd089:
+  nd0013-pnet-kr:
     build: .
     ipc: host
     ulimits:
@@ -18,4 +18,5 @@ services:
               device_ids: ['${GPU_DEVICES}']
               capabilities: [gpu]
     working_dir: /home
-    command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="$JUPYTER_TOKEN" --NotebookApp.password='' --notebook-dir=/home
+    command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="${JUPYTER_TOKEN}" --NotebookApp.password="" --notebook-dir=/home
+
