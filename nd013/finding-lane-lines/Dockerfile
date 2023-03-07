@@ -33,10 +33,3 @@ RUN pip install --upgrade pip \
 
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
-RUN mkdir -p /data \
-    && cd /data \
-    && wget --content-disposition 'https://www.dropbox.com/sh/hsgby5aql3s7b69/AAD1DHaE04_zQp5QTsiUufwIa\?dl\=0' \
-    && unzip test_videos.zip -x / -d test_videos \
-    && wget --content-disposition https://www.dropbox.com/sh/6vtcwsa35b2ddt8/AABvTVkHogKL6s9WMxlnd3Kna?dl=0  \
-    && unzip test_images.zip -x / -d test_images \
-    && rm test_videos.zip test_images.zip
