@@ -1,0 +1,17 @@
+services:
+  ud810:
+    build: .
+    ipc: host
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    volumes:
+      - ./home:/home
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ~/.Xauthority:/root/.Xauthority
+    environment:
+      DISPLAY: $DISPLAY
+      QT_X11_NO_MITSHM: 1
+        #    network_mode: "host"
+    working_dir: /home
+    tty: true
