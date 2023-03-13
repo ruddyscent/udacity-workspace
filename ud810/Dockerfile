@@ -19,6 +19,7 @@ RUN apt-get update -y \
         python3-pip \
         octave \
         octave-statistics \
+        octave-image \
         gnuplot \
         fonts-freefont-otf \
         ghostscript
