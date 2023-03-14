@@ -1,0 +1,12 @@
+--2023-03-14 14:57:22--  https://com-udacity-student-execution-artifacts-prod.s3.us-west-2.amazonaws.com/execution-results-udacityu/36ef629d-64ac-4301-bef2-f4a11a07fe18/output-image-00.png
+com-udacity-student-execution-artifacts-prod.s3.us-west-2.amazonaws.com (com-udacity-student-execution-artifacts-prod.s3.us-west-2.amazonaws.com) 해석 중... 3.5.80.190, 52.218.178.250, 52.92.251.178, ...
+다음으로 연결 중: com-udacity-student-execution-artifacts-prod.s3.us-west-2.amazonaws.com (com-udacity-student-execution-artifacts-prod.s3.us-west-2.amazonaws.com)|3.5.80.190|:443... 연결했습니다.
+HTTP 요청을 보냈습니다. 응답 기다리는 중... 200 OK
+길이: 75923 (74K) [application/octet-stream]
+저장 위치: `output-image-00.png.1'
+
+     0K .......... .......... .......... .......... .......... 67%  324K 0s
+    50K .......... .......... ....                            100%  165K=0.3s
+
+2023-03-14 14:57:23 (247 KB/s) - `output-image-00.png.1' 저장함 [75923/75923]
+
