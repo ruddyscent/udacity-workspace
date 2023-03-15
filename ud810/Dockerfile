@@ -20,6 +20,7 @@ RUN apt-get update -y \
         octave \
         octave-statistics \
         octave-image \
+        octave-doc \
         gnuplot \
         fonts-freefont-otf \
         ghostscript
