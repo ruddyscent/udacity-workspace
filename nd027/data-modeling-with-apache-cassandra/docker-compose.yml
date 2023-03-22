@@ -1,0 +1,36 @@
+services:
+  nd027:
+    build: .
+      #     ipc: host
+      #     ulimits:
+      #       memlock: -1
+      #       stack: 67108864
+    volumes:
+      - ./home:/home
+      #      - /tmp/.X11-unix:/tmp/.X11-unix
+      #      - ~/.Xauthority:/root/.Xauthority
+    ports:
+      - "${JUPYTER_PORT}:8888"
+      #    environment:
+      #      DISPLAY: $DISPLAY
+      #      QT_X11_NO_MITSHM: 1
+      #      network_mode: "host"
+    working_dir: /home
+    command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="$JUPYTER_TOKEN" --notebook-dir=/home
+
+  db:
+    image: arm64v8/postgres
+    environment:
+      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - ./postgresql:/var/lib/postgresql/data
+
+  adminer:
+    image: arm64v8/adminer
+    ports:
+      - "${ADMINER_PORT}:8080"
+
