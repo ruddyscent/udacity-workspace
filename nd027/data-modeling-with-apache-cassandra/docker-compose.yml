@@ -18,16 +18,19 @@ services:
     working_dir: /home
     command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="$JUPYTER_TOKEN" --notebook-dir=/home
 
-  db:
+  postgres:
     image: arm64v8/postgres
     environment:
       POSTGRES_DB: $POSTGRES_DB
       POSTGRES_USER: $POSTGRES_USER
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-    ports:
-      - "${POSTGRES_PORT}:5432"
     volumes:
       - ./postgresql:/var/lib/postgresql/data
+
+  cassandra:
+    image: arm64v8/cassandra
+    volumes:
+      - ./cassandra:/var/lib/cassandra
 
   adminer:
     image: arm64v8/adminer
