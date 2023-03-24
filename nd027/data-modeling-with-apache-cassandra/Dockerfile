@@ -14,7 +14,8 @@ RUN apt-get update \
         python3-ipykernel \
         python3-ipywidgets \
         python3-pip \
-        python3-psycopg2
+        python3-psycopg2 \
+        python3-pandas
 #    && rm -rf /var/lib/apt/lists/* \
 #    && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
