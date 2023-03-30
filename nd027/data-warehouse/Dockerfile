@@ -11,6 +11,7 @@ RUN apt-get update \
         nodejs \
         npm \
         wget \
+        python-is-python3 \
         python3-ipykernel \
         python3-ipywidgets \
         python3-pip \
