@@ -27,7 +27,7 @@ log_data/2018/11/2018-11-12-events.json
 log_data/2018/11/2018-11-13-events.json
 ```
 And below is an example of what the data in a log file, 2018-11-12-events.json, looks like.
-~[log_data image](images/log-data.png)
+![log_data image](images/log-data.png)
 
 ## Log JSON Meta Information
 And below is what data is in `log_json_path.json`.
