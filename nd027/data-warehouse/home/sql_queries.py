@@ -106,7 +106,8 @@ time_table_create = ("""CREATE TABLE IF NOT EXISTS time (
 staging_events_copy = ("""copy staging_events from '{}'
 credentials 'aws_iam_role={}'
 json '{}' region 'us-west-2';
-""").format(config['S3']['LOG_DATA'], config['IAM_ROLE']['ARN'], config['S3']['LOG_JSONPATH'])
+""").format(config['S3']['LOG_DATA'], config['IAM_ROLE']['ARN'], 
+    config['S3']['LOG_JSONPATH'])
 
 staging_songs_copy = ("""copy staging_songs from '{}'
 credentials 'aws_iam_role={}'
@@ -115,7 +116,8 @@ json 'auto' region 'us-west-2';
 
 # FINAL TABLES
 songplay_table_insert = ("""
-INSERT INTO songplays (start_time, user_id, level, song_id, artist_id, session_id, location, user_agent)
+INSERT INTO songplays (start_time, user_id, level, song_id, artist_id, 
+    session_id, location, user_agent)
 SELECT  
     TIMESTAMP 'epoch' + ts / 1000 * INTERVAL '1 second', 
     userId, 
@@ -126,10 +128,11 @@ SELECT
     location, 
     userAgent
 FROM staging_events
-LEFT JOIN staging_songs ON (staging_events.song = staging_songs.title AND staging_events.length = staging_songs.duration)
-where song IS NOT NULL
+LEFT JOIN staging_songs ON (staging_events.song = staging_songs.title)
+WHERE staging_events.page = 'NextSong'
 """)
-
+# LEFT JOIN staging_songs ON (staging_events.song = staging_songs.title AND 
+#    staging_events.length = staging_songs.duration)
 user_table_insert = ("""
 INSERT INTO users (user_id, first_name, last_name, gender, level)
 SELECT DISTINCT userId, firstName, lastName, gender, level
@@ -152,7 +155,8 @@ FROM staging_songs
 
 time_table_insert = ("""
 INSERT INTO time (start_time, hour, day, week, month, year, weekday)
-WITH temp_time AS (SELECT TIMESTAMP 'epoch' + (ts / 1000 * INTERVAL '1 second') AS ts FROM staging_events)
+WITH temp_time AS (SELECT TIMESTAMP 'epoch' 
+    + (ts / 1000 * INTERVAL '1 second') AS ts FROM staging_events)
 SELECT DISTINCT 
     ts, 
     EXTRACT(hour FROM ts), 
