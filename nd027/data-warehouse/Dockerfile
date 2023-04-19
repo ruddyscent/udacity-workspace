@@ -1,4 +1,4 @@
-FROM arm64v8/ubuntu:latest
+FROM arm64v8/ubuntu:22.04
 
 # [Optional] Uncomment this section to install additional OS packages.
 RUN apt-get update \
@@ -19,8 +19,9 @@ RUN apt-get update \
         python3-pandas \
         postgresql-client-common \
         postgresql-client-14 \
-        boto3 \
-        python3-matplotlib
+        python3-boto3 \
+        python3-matplotlib \
+        python3-sqlalchemy
 #    && rm -rf /var/lib/apt/lists/* \
 #    && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
@@ -30,3 +31,4 @@ RUN pip install --upgrade pip \
     && pip --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
     && rm -rf /tmp/pip-tmp
 
+WORKDIR /home
