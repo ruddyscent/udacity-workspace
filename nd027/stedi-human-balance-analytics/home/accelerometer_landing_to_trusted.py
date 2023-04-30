@@ -4,7 +4,15 @@ from awsglue.utils import getResolvedOptions
 from pyspark.context import SparkContext
 from awsglue.context import GlueContext
 from awsglue.job import Job
-from awsglue.dynamicframe import DynamicFrame
+from awsglue import DynamicFrame
+
+
+def sparkSqlQuery(glueContext, query, mapping, transformation_ctx) -> DynamicFrame:
+    for alias, frame in mapping.items():
+        frame.toDF().createOrReplaceTempView(alias)
+    result = spark.sql(query)
+    return DynamicFrame.fromDF(result, glueContext, transformation_ctx)
+
 
 args = getResolvedOptions(sys.argv, ["JOB_NAME"])
 sc = SparkContext()
@@ -33,32 +41,37 @@ CustomerTrusted_node1682555347507 = glueContext.create_dynamic_frame.from_catalo
 )
 
 # Script generated for node Join
-AccelerometerLanding_node1DF = AccelerometerLanding_node1.toDF()
-CustomerTrusted_node1682555347507DF = CustomerTrusted_node1682555347507.toDF()
-Join_node2 = DynamicFrame.fromDF(
-    AccelerometerLanding_node1DF.join(
-        CustomerTrusted_node1682555347507DF,
-        (
-            AccelerometerLanding_node1DF["user"]
-            == CustomerTrusted_node1682555347507DF["email"]
-        ),
-        "leftsemi",
-    ),
+Join_node2 = Join.apply(
+    frame1=AccelerometerLanding_node1,
+    frame2=CustomerTrusted_node1682555347507,
+    keys1=["user"],
+    keys2=["email"],
+    transformation_ctx="Join_node2",
+)
+
+# Script generated for node SQL Query
+SqlQuery0 = """
+select * from myDataSource
+where myDataSource.sharewithresearchasofdate <= myDataSource.timeStamp
+"""
+SQLQuery_node1682610897864 = sparkSqlQuery(
     glueContext,
-    "Join_node2",
+    query=SqlQuery0,
+    mapping={"myDataSource": Join_node2},
+    transformation_ctx="SQLQuery_node1682610897864",
 )
 
 # Script generated for node Drop Fields
 DropFields_node1682577758236 = DropFields.apply(
-    frame=Join_node2,
+    frame=SQLQuery_node1682610897864,
     paths=[
         "email",
         "serialnumber",
-        "sharewithfriendsasofdate",
+        "lastupdatedate",
         "sharewithpublicasofdate",
         "registrationdate",
         "sharewithresearchasofdate",
-        "lastupdatedate",
+        "sharewithfriendsasofdate",
     ],
     transformation_ctx="DropFields_node1682577758236",
 )

@@ -4,7 +4,6 @@ from awsglue.utils import getResolvedOptions
 from pyspark.context import SparkContext
 from awsglue.context import GlueContext
 from awsglue.job import Job
-from awsglue.dynamicframe import DynamicFrame
 
 args = getResolvedOptions(sys.argv, ["JOB_NAME"])
 sc = SparkContext()
@@ -27,26 +26,66 @@ AccelerometerTrusted_node1682584724137 = glueContext.create_dynamic_frame.from_c
     transformation_ctx="AccelerometerTrusted_node1682584724137",
 )
 
-# Script generated for node Join
-CustomerTrusted_node1682584556895DF = CustomerTrusted_node1682584556895.toDF()
-AccelerometerTrusted_node1682584724137DF = AccelerometerTrusted_node1682584724137.toDF()
-Join_node2 = DynamicFrame.fromDF(
-    CustomerTrusted_node1682584556895DF.join(
-        AccelerometerTrusted_node1682584724137DF,
+# Script generated for node Renamed keys for Join
+RenamedkeysforJoin_node1682789140659 = ApplyMapping.apply(
+    frame=AccelerometerTrusted_node1682584724137,
+    mappings=[
+        ("serialnumber", "string", "`(accelerometer) serialnumber`", "string"),
+        ("z", "double", "`(accelerometer) z`", "double"),
         (
-            CustomerTrusted_node1682584556895DF["email"]
-            == AccelerometerTrusted_node1682584724137DF["user"]
+            "sharewithpublicasofdate",
+            "long",
+            "`(accelerometer) sharewithpublicasofdate`",
+            "long",
         ),
-        "leftsemi",
-    ),
-    glueContext,
-    "Join_node2",
+        ("timestamp", "long", "`(accelerometer) timestamp`", "long"),
+        (
+            "sharewithresearchasofdate",
+            "long",
+            "`(accelerometer) sharewithresearchasofdate`",
+            "long",
+        ),
+        ("registrationdate", "long", "`(accelerometer) registrationdate`", "long"),
+        (
+            "sharewithfriendsasofdate",
+            "long",
+            "`(accelerometer) sharewithfriendsasofdate`",
+            "long",
+        ),
+        ("user", "string", "`(accelerometer) user`", "string"),
+        ("y", "double", "`(accelerometer) y`", "double"),
+        ("x", "double", "`(accelerometer) x`", "double"),
+        ("lastupdatedate", "long", "`(accelerometer) lastupdatedate`", "long"),
+    ],
+    transformation_ctx="RenamedkeysforJoin_node1682789140659",
+)
+
+# Script generated for node Join
+Join_node2 = Join.apply(
+    frame1=CustomerTrusted_node1682584556895,
+    frame2=RenamedkeysforJoin_node1682789140659,
+    keys1=["email"],
+    keys2=["`(accelerometer) user`"],
+    transformation_ctx="Join_node2",
 )
 
 # Script generated for node Drop Fields
 DropFields_node1682577647921 = DropFields.apply(
     frame=Join_node2,
-    paths=["user", "timestamp", "x", "y", "z"],
+    paths=[
+        "email",
+        "`(accelerometer) lastupdatedate`",
+        "`(accelerometer) serialnumber`",
+        "`(accelerometer) z`",
+        "`(accelerometer) sharewithpublicasofdate`",
+        "`(accelerometer) timestamp`",
+        "`(accelerometer) sharewithresearchasofdate`",
+        "`(accelerometer) registrationdate`",
+        "`(accelerometer) sharewithfriendsasofdate`",
+        "`(accelerometer) user`",
+        "`(accelerometer) y`",
+        "`(accelerometer) x`",
+    ],
     transformation_ctx="DropFields_node1682577647921",
 )
 
