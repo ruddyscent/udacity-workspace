@@ -1,7 +1,21 @@
+DROP table IF EXISTS public.artists;
+
+DROP table IF EXISTS public.songplays;
+
+DROP table IF EXISTS public.songs;
+
+DROP table IF EXISTS public.staging_events;
+
+DROP table IF EXISTS public.staging_songs;
+
+DROP table IF EXISTS public."time";
+
+DROP table IF EXISTS public.users;
+
 CREATE TABLE public.artists (
 	artistid varchar(256) NOT NULL,
-	name varchar(256),
-	location varchar(256),
+	name varchar(512),
+	location varchar(512),
 	lattitude numeric(18,0),
 	longitude numeric(18,0)
 );
@@ -21,7 +35,7 @@ CREATE TABLE public.songplays (
 
 CREATE TABLE public.songs (
 	songid varchar(256) NOT NULL,
-	title varchar(256),
+	title varchar(1024),
 	artistid varchar(256),
 	"year" int4,
 	duration numeric(18,0),
@@ -52,12 +66,12 @@ CREATE TABLE public.staging_events (
 CREATE TABLE public.staging_songs (
 	num_songs int4,
 	artist_id varchar(256),
-	artist_name varchar(256),
+	artist_name varchar(512),
 	artist_latitude numeric(18,0),
 	artist_longitude numeric(18,0),
-	artist_location varchar(256),
+	artist_location varchar(512),
 	song_id varchar(256),
-	title varchar(256),
+	title varchar(1024),
 	duration numeric(18,0),
 	"year" int4
 );

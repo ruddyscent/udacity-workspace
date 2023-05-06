@@ -1,7 +1,101 @@
 class SqlQueries:
+    # create_staging_events_table = ("""
+    #     CREATE TABLE IF NOT EXISTS staging_events (
+    #         artist VARCHAR(256),
+    #         auth VARCHAR(256),
+    #         firstName VARCHAR(256),
+    #         gender VARCHAR(1),
+    #         itemInSession INTEGER,
+    #         lastName VARCHAR(256),
+    #         length FLOAT,
+    #         level VARCHAR(10),
+    #         location VARCHAR(256),
+    #         method VARCHAR(256),
+    #         page VARCHAR(256),
+    #         registration FLOAT,
+    #         sessionId INTEGER,
+    #         song VARCHAR(256),
+    #         status INTEGER,
+    #         ts BIGINT,
+    #         userAgent VARCHAR(256),
+    #         userId INTEGER
+    #     );
+    # """)
+
+    # create_staging_songs_table = ("""
+    #     CREATE TABLE IF NOT EXISTS staging_songs (
+    #         num_songs INTEGER,
+    #         artist_id VARCHAR(256),
+    #         artist_latitude FLOAT,
+    #         artist_longitude FLOAT,
+    #         artist_location VARCHAR(512),
+    #         artist_name VARCHAR(512),
+    #         song_id VARCHAR(256),
+    #         title VARCHAR(256),
+    #         duration FLOAT,
+    #         year INTEGER
+    #     );
+    # """)
+
+    # songplay_table_create = ("""
+    #     CREATE TABLE IF NOT EXISTS songplays (
+    #         songplay_id VARCHAR(256),
+    #         start_time TIMESTAMP,
+    #         user_id INTEGER,
+    #         level VARCHAR(10),
+    #         song_id VARCHAR(18),
+    #         artist_id VARCHAR(18),
+    #         session_id INTEGER,
+    #         location VARCHAR(256),
+    #         user_agent VARCHAR(255)
+    #     );
+    # """)
+
+    # user_table_create = ("""
+    #     CREATE TABLE users (
+    #         user_id INTEGER,
+    #         first_name VARCHAR(256),
+    #         last_name VARCHAR(256),
+    #         gender CHAR(1),
+    #         level VARCHAR(10)
+    #     );
+    # """)
+
+    # song_table_create = ("""
+    #     CREATE TABLE songs (
+    #         song_id VARCHAR(256),
+    #         title VARCHAR(256),
+    #         artist_id VARCHAR(256),
+    #         year INTEGER,
+    #         duration FLOAT
+    #     );
+    # """)
+
+    # artist_table_create = ("""
+    #     CREATE TABLE artists (
+    #         artist_id VARCHAR(256),
+    #         name VARCHAR(512),
+    #         location VARCHAR(512),
+    #         latitude FLOAT,
+    #         longitude FLOAT
+    #     );
+    # """)
+
+    # time_table_create = ("""
+    #     CREATE TABLE time (
+    #         start_time TIMESTAMP,
+    #         hour INT,
+    #         day INT,
+    #         week INT,
+    #         month INT,
+    #         year INT,
+    #         weekday INT
+    #     );
+    # """)
+    
     songplay_table_insert = ("""
         SELECT
-                md5(events.sessionid || events.start_time) songplay_id,
+                md5(events.sessionid|| events.start_time) songplay_id,
                 events.start_time, 
                 events.userid, 
                 events.level, 
