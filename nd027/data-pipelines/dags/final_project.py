@@ -33,8 +33,9 @@ def final_project():
         table="staging_events",
         redshift_conn_id="redshift",
         aws_credentials_id="aws_credentials",
-        s3_bucket="udacity-dend", # "data-pipelines-us-west-2",
+        s3_bucket="udacity-dend",
         s3_key="log-data/",
+        region="us-west-2",
         json_path="s3://udacity-dend/log_json_path.json"
     )
 
@@ -43,9 +44,9 @@ def final_project():
         table="staging_songs",
         redshift_conn_id="redshift",
         aws_credentials_id="aws_credentials",
-        s3_bucket="udacity-dend", # "data-pipelines-us-west-2",
+        s3_bucket="udacity-dend",
         s3_key="song-data/",
-        # json_path="s3://udacity-dend/log_json_paths.json"
+        region="us-west-2"
     )
 
     load_songplays_table = LoadFactOperator(
