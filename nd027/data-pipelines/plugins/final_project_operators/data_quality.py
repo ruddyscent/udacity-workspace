@@ -4,7 +4,7 @@ from airflow.utils.decorators import apply_defaults
 
 class DataQualityOperator(BaseOperator):
 
-    ui_color = '#89DA59'
+    ui_color = "#89DA59"
 
     @apply_defaults
     def __init__(self,
@@ -26,8 +26,8 @@ class DataQualityOperator(BaseOperator):
         redshift = PostgresHook(postgres_conn_id=self.redshift_conn_id)
 
         for test in self.tests:
-            sql = test.get('sql')
-            expected_result = test.get('expected_result')
+            sql = test.get("sql")
+            expected_result = test.get("expected_result")
             records = redshift.get_records(sql)[0]
             if records[0] != expected_result:
                 raise ValueError(f"Data quality check failed. {records[0]} does not equal {expected_result}")
