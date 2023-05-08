@@ -1,13 +1,12 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 import pendulum
 import os
+
 from airflow.decorators import dag
 from airflow.operators.dummy_operator import DummyOperator
-from final_project_operators.stage_redshift import StageToRedshiftOperator
-from final_project_operators.load_fact import LoadFactOperator
-from final_project_operators.load_dimension import LoadDimensionOperator
-from final_project_operators.data_quality import DataQualityOperator
-from udacity.common.final_project_sql_statements import SqlQueries
+from final_project_operators import (StageToRedshiftOperator, LoadFactOperator,
+                                     LoadDimensionOperator, DataQualityOperator)
+from helpers.sql_queries import SqlQueries
 
 
 default_args = {
