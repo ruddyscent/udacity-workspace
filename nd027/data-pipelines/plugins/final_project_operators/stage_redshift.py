@@ -18,12 +18,12 @@ class StageToRedshiftOperator(BaseOperator):
                  # Define your operators params (with defaults) here
                  # Example:
                  # redshift_conn_id=your-connection-name
-                 redshift_conn_id="",
-                 aws_credentials_id="",
-                 table="",
-                 s3_bucket="",
-                 s3_key="",
-                 json_path="auto",
+                 redshift_conn_id: str = "",
+                 aws_credentials_id: str = "",
+                 table: str = "",
+                 s3_bucket: str = "",
+                 s3_key: str = "",
+                 json_path: str = "auto",
                  *args, **kwargs):
 
         super(StageToRedshiftOperator, self).__init__(*args, **kwargs)

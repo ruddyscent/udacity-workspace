@@ -11,10 +11,10 @@ class LoadDimensionOperator(BaseOperator):
                  # Define your operators params (with defaults) here
                  # Example:
                  # conn_id = your-connection-name
-                redshift_conn_id="",
-                table="",
-                sql_statement="",
-                append_data=False,
+                redshift_conn_id: str = "",
+                table: str = "",
+                sql_statement: str = "",
+                append_data: bool = False,
                  *args, **kwargs):
         super(LoadDimensionOperator, self).__init__(*args, **kwargs)
         # Map params here
