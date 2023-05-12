@@ -1,0 +1,9 @@
+services:
+  ud595:
+    build: .
+    volumes:
+      - ./home:/root
+    working_dir: /root
+    command: bash
+    tty: true
+    stdin_open: true
