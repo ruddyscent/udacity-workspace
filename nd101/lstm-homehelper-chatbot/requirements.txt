@@ -2,5 +2,6 @@ gensim==4.1.2
 torchdata==0.5.1
 torchtext==0.14.1
 nltk==3.8.1
+livelossplot==0.5.5
 nbdev==2.3.12
 pre-commit==3.1.0
