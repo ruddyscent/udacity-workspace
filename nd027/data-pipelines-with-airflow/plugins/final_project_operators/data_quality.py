@@ -1,4 +1,4 @@
-from typing import List
+from typing import Dict, List
 
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 from airflow.models import BaseOperator
@@ -14,7 +14,7 @@ class DataQualityOperator(BaseOperator):
                  # Example:
                  # conn_id = your-connection-name
                  redshift_conn_id: str = "",
-                 tests: List[str] = [],
+                 tests: List[Dict[str, str]] = [],
                  *args, **kwargs):
 
         super(DataQualityOperator, self).__init__(*args, **kwargs)
