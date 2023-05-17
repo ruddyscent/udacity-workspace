@@ -14,7 +14,7 @@ class DataQualityOperator(BaseOperator):
                  # Example:
                  # conn_id = your-connection-name
                  redshift_conn_id: str = "",
-                 tests: List[str] = [],
+                 tests: List[dict] = [],
                  *args, **kwargs):
 
         super(DataQualityOperator, self).__init__(*args, **kwargs)
