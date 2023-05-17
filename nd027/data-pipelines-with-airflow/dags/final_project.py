@@ -12,10 +12,10 @@ from helpers.sql_queries import SqlQueries
 default_args = {
     "owner": "udacity",
     "start_date": pendulum.now(),
-    "depends_on_past" : False,
+    "depends_on_past": False,
     "retries": 3,
     "retry_delay": timedelta(minutes=5),
-    "catchup" : False,
+    "catchup": False,
     "email_on_retry": False
 }
 
