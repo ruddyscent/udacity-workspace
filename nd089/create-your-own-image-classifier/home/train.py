@@ -7,11 +7,12 @@
 #
 # <> indicates expected user input:
 #      python train.py <data_dir> --save_dir <save_directory> --arch <model>
-#             --learning_rate <learning_rate> --hidden_units <hidden_units>
-#             --epochs <epochs> --gpu
+#             --learning_rate <learning_rate> --hidden_size <hidden_size>
+#             --output_size <output_size> --epochs <epochs> --gpu
 # Example call:
 #      python train.py flowers --save_dir ~/opt --arch vgg \
-#             --learning_rate 0.001 --hidden_units 4096 --epochs 30 --gpu    
+#             --learning_rate 0.001 --hidden_size 4096 \
+#             --hiddensize 102 --epochs 30 --gpu
 ##
 
 from time import time
@@ -25,10 +26,11 @@ from train_model import train_model
 def main():
     start_time = time()
     in_arg = get_train_input_args()
+
     dataloaders, class_to_idx = get_dataloaders(in_arg.data_dir)
-    model = get_model(in_arg.arch, in_arg.hidden_units)
+    model = get_model(in_arg.arch, in_arg.hidden_size, in_arg.output_size)
     train_model(model, dataloaders, in_arg.epochs, in_arg.learning_rate, 
-                in_arg.gpu, in_arg.save_dir, class_to_idx)
+                in_arg.gpu, in_arg.save_dir)
     end_time = time()
     
     tot_time = end_time - start_time
