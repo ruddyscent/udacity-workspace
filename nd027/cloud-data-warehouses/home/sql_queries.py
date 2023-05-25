@@ -103,15 +103,15 @@ time_table_create = ("""CREATE TABLE IF NOT EXISTS time (
 """)
 
 # STAGING TABLES
-staging_events_copy = ("""copy staging_events from '{}'
-credentials 'aws_iam_role={}'
-json '{}' region 'us-west-2';
+staging_events_copy = ("""COPY staging_events FROM '{}'
+CREDENTIALS 'aws_iam_role={}'
+JSON '{}' REGION 'us-west-2';
 """).format(config['S3']['LOG_DATA'], config['IAM_ROLE']['ARN'], 
     config['S3']['LOG_JSONPATH'])
 
-staging_songs_copy = ("""copy staging_songs from '{}'
-credentials 'aws_iam_role={}'
-json 'auto' region 'us-west-2';
+staging_songs_copy = ("""COPY staging_songs FROM '{}'
+CREDENTIALS 'aws_iam_role={}'
+JSON 'auto' REGION 'us-west-2';
 """).format(config['S3']['SONG_DATA'], config['IAM_ROLE']['ARN'])
 
 # FINAL TABLES
@@ -128,11 +128,11 @@ SELECT
     location, 
     userAgent
 FROM staging_events
-LEFT JOIN staging_songs ON (staging_events.song = staging_songs.title)
+LEFT JOIN staging_songs ON (staging_events.artist = staging_songs.artist_name) 
+    AND (staging_events.song = staging_songs.title)
 WHERE staging_events.page = 'NextSong'
 """)
-# LEFT JOIN staging_songs ON (staging_events.song = staging_songs.title AND 
-#    staging_events.length = staging_songs.duration)
+
 user_table_insert = ("""
 INSERT INTO users (user_id, first_name, last_name, gender, level)
 SELECT DISTINCT userId, firstName, lastName, gender, level
