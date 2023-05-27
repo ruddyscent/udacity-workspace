@@ -55,9 +55,9 @@ class StageToRedshiftOperator(BaseOperator):
         formatted_sql = StageToRedshiftOperator.copy_sql.format(
             self.table,
             s3_path,
+            self.region,
             credentials.access_key,
             credentials.secret_key,
-            self.region,
             self.json_path
         )
         redshift.run(formatted_sql)
