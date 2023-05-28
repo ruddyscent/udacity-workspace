@@ -137,7 +137,7 @@ user_table_insert = ("""
 INSERT INTO users (user_id, first_name, last_name, gender, level)
 SELECT DISTINCT userId, firstName, lastName, gender, level
 FROM staging_events
-WHERE userId IS NOT NULL
+WHERE userId IS NOT NULL AND page = 'NextSong'
 """)
 
 song_table_insert = ("""
@@ -156,7 +156,7 @@ FROM staging_songs
 time_table_insert = ("""
 INSERT INTO time (start_time, hour, day, week, month, year, weekday)
 WITH temp_time AS (SELECT TIMESTAMP 'epoch' 
-    + (ts / 1000 * INTERVAL '1 second') AS ts FROM staging_events)
+    + (ts / 1000 * INTERVAL '1 second') AS ts, page FROM staging_events)
 SELECT DISTINCT 
     ts, 
     EXTRACT(hour FROM ts), 
@@ -166,6 +166,7 @@ SELECT DISTINCT
     EXTRACT(year FROM ts), 
     EXTRACT(weekday FROM ts) 
 FROM temp_time
+WHERE page = 'NextSong'
 """)
 
 # VALIDATE TABLES
