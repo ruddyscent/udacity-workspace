@@ -2,6 +2,7 @@ import argparse
 import boto3
 import configparser
 import json
+import psycopg2
 import time
 
 
@@ -74,9 +75,10 @@ iam.attach_role_policy(RoleName=DWH_IAM_ROLE_NAME,
 print("1.3 Get the IAM role ARN")
 roleArn = iam.get_role(RoleName=DWH_IAM_ROLE_NAME)["Role"]["Arn"]
 
-print(roleArn)
+# print(roleArn)
 
 # STEP 2: Create Redshift cluster
+print("2 Create Redshift cluster")
 try:
     response = redshift.create_cluster(        
         #HW
@@ -96,19 +98,22 @@ try:
 except Exception as e:
     print(e)
 
-# Wait until the cluster status becomes `Available`
+# Wait until the cluster status becomes 'Available'
+print("2.1 Wait until the cluster status becomes 'Available'")
 myClusterProps = redshift.describe_clusters(ClusterIdentifier=DWH_CLUSTER_IDENTIFIER)["Clusters"][0]
 while myClusterProps["ClusterStatus"] != "available":
     time.sleep(5)
     myClusterProps = redshift.describe_clusters(ClusterIdentifier=DWH_CLUSTER_IDENTIFIER)["Clusters"][0]
 
 # 2.2 Take note of the cluster endpoint and role ARN
+print("2.2 Take note of the cluster endpoint and role ARN")
 DWH_ENDPOINT = myClusterProps["Endpoint"]["Address"]
 DWH_ROLE_ARN = myClusterProps["IamRoles"][0]["IamRoleArn"]
-print("DWH_ENDPOINT :: ", DWH_ENDPOINT)
-print("DWH_ROLE_ARN :: ", DWH_ROLE_ARN)
+print("DWH_ENDPOINT ::", DWH_ENDPOINT)
+print("DWH_ROLE_ARN ::", DWH_ROLE_ARN)
 
-# STEP 3: Open an incoming  TCP port to access the cluster ednpoint
+# STEP 3: Open an incoming TCP port to access the cluster ednpoint
+print("3. Open an incoming TCP port to access the cluster ednpoint")
 try:
     vpc = ec2.Vpc(id=myClusterProps["VpcId"])
     defaultSg = list(vpc.security_groups.all())[0]
@@ -124,6 +129,13 @@ except Exception as e:
     print(e)
 
 # STEP 4: Make sure you can connect to the cluster
-# conn_string="postgresql://{}:{}@{}:{}/{}".format(DWH_DB_USER, DWH_DB_PASSWORD, DWH_ENDPOINT, DWH_PORT,DWH_DB)
-# print(conn_string)
-# %sql $conn_string
+print("4 Verify of connection to the cluster")
+try:
+    conn_string = f"postgresql://{DWH_DB_USER}:{DWH_DB_PASSWORD}@{DWH_ENDPOINT}:{DWH_PORT}/{DWH_DB}"
+    # print(conn_string)
+    conn = psycopg2.connect(conn_string)
+    cur = conn.cursor()
+    cur.close()
+    conn.close()
+except Exception as e:
+    print(e)
