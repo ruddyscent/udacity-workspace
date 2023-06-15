@@ -1,1 +1,1 @@
-# Self Driving Car Engineer Nanodegree - Korean
+# Self Driving Car Engineer Nanodegree
