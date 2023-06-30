@@ -1,7 +1,5 @@
-Cython==0.29.21
-jupyter==1.0.0
-jupyterlab==4.0.2
-matplotlib==3.6.3
-Pillow==7.2.0
-ray==0.8.7
-waymo-open-dataset-tf-2-5-0==1.4.0
+tf-models-official==2.11.0
+tensorflow-io==0.32.0
+pyparsing==3.1.0
+pycairo==1.24.0
+waymo-open-dataset-tf-2-11-0==1.5.2
