@@ -2,4 +2,5 @@ tf-models-official==2.11.0
 tensorflow-io==0.31.0
 pyparsing==3.1.0
 pycairo==1.24.0
+ray==2.5.1
 waymo-open-dataset-tf-2-11-0==1.5.2
