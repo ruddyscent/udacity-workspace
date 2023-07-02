@@ -26,7 +26,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 COPY requirements.txt .
-RUN python3 -m pip install -r requirements.txt
+RUN python3 -m pip install --no-deps -r requirements.txt 
+# RUN python3 -m pip install --no-deps waymo-open-dataset-tf-2-11-0==1.5.2
 
 RUN git clone https://github.com/tensorflow/models.git && \
     cd /app/models/research/ && \
