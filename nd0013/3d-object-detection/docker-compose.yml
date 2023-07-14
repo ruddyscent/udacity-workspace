@@ -6,7 +6,7 @@ services:
       memlock: -1
       stack: 67108864
     volumes:
-      - ./home:/app/project
+      - ./home:/home
     ports:
       - "${JUPYTER_PORT}:8888"
       - "${TENSORBOARD_PORT}:6006"
@@ -17,6 +17,6 @@ services:
             - driver: nvidia
               device_ids: ['${GPU_DEVICES}']
               capabilities: [gpu]
-    working_dir: /app/project
-    command: jupyter notebook --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="${JUPYTER_TOKEN}" --NotebookApp.password="" --notebook-dir=/app/project
+    working_dir: /home
+    command: jupyter notebook --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="${JUPYTER_TOKEN}" --NotebookApp.password="" --notebook-dir=/home
 
