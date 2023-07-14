@@ -7,6 +7,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 SHELL ["/bin/bash", "-c"]
 # Pick up some TF dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
+        texlive-xetex \
+        texlive-fonts-recommended \
+        texlive-plain-generic \
+        pandoc \
         build-essential \
         ffmpeg \
         g++ \
