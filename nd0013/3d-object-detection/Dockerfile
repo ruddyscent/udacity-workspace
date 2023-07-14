@@ -1,4 +1,5 @@
 FROM nvcr.io/nvidia/tensorflow:23.03-tf2-py3
+# FROM nvcr.io/nvidia/pytorch:23.06-py3
 
 # Let us install tzdata painlessly
 ENV DEBIAN_FRONTEND=noninteractive
@@ -25,7 +26,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         software-properties-common \
         unzip \
         wget \
-	protobuf-compiler
+	protobuf-compiler \
+	python3-wxgtk4.0
 
 WORKDIR /app
 
