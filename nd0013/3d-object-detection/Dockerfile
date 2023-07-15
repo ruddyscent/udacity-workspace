@@ -51,4 +51,5 @@ RUN cd /usr/lib/x86_64-linux-gnu && \
     ln -s libnvinfer.so.8 libnvinfer.so.7
 
 # pip-installed OpenCV causes circular import
-RUN pip uninstall -y opencv-python
+RUN pip uninstall -y opencv-python opencv-python-headless && \
+    pip install opencv-python
