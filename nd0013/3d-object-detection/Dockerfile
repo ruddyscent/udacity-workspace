@@ -27,9 +27,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         unzip \
         wget \
 	protobuf-compiler \
-	python3-wxgtk4.0
+	python3-wxgtk4.0 \
+	libgl1-mesa-glx \
+	libgl1-mesa-dri
 
-WORKDIR /app
+WORKDIR /home
 
 COPY requirements.txt .
 RUN python3 -m pip install --no-deps -r requirements.txt 
@@ -53,3 +55,5 @@ RUN cd /usr/lib/x86_64-linux-gnu && \
 # pip-installed OpenCV causes circular import
 RUN pip uninstall -y opencv-python opencv-python-headless && \
     pip install opencv-python
+
+RUN apt-get install -y --no-install-recommends x11-apps mesa-utils

@@ -2,16 +2,19 @@ services:
   nd0013-kr:
     build: .
     ipc: host
+    privileged: true
     ulimits:
       memlock: -1
       stack: 67108864
     volumes:
       - ./home:/home
       - /tmp/.X11-unix:/tmp/.X11-unix
+      - /dev/dri:/dev/dri
       - ~/.Xauthority:/root/.Xauthority  
     environment:
       DISPLAY: $DISPLAY
       QT_X11_NO_MITSHM: 1
+      LIBGL_ALWAYS_INDIRECT: 1
     network_mode: "host"
     ports:
       - "${JUPYTER_PORT}:8888"
@@ -22,7 +25,7 @@ services:
           devices:
             - driver: nvidia
               device_ids: ['${GPU_DEVICES}']
-              capabilities: [gpu]
+              capabilities: [compute,utility,graphics,display]
     working_dir: /home
     command: jupyter notebook --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="${JUPYTER_TOKEN}" --NotebookApp.password="" --notebook-dir=/home
 
