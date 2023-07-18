@@ -1,5 +1,4 @@
-FROM nvcr.io/nvidia/tensorflow:23.03-tf2-py3
-# FROM nvcr.io/nvidia/pytorch:23.06-py3
+FROM nvcr.io/nvidia/pytorch:23.06-py3
 
 # Let us install tzdata painlessly
 ENV DEBIAN_FRONTEND=noninteractive
@@ -35,25 +34,24 @@ WORKDIR /home
 
 COPY requirements.txt .
 RUN python3 -m pip install --no-deps -r requirements.txt 
-# RUN python3 -m pip install --no-deps waymo-open-dataset-tf-2-11-0==1.5.2
 
-RUN git clone https://github.com/tensorflow/models.git && \
-    cd /app/models/research/ && \
-    protoc object_detection/protos/*.proto --python_out=. && \
-    cp object_detection/packages/tf2/setup.py . && \
-    python -m pip install .
+# RUN git clone https://github.com/tensorflow/models.git && \
+#     cd /app/models/research/ && \
+#     protoc object_detection/protos/*.proto --python_out=. && \
+#     cp object_detection/packages/tf2/setup.py . && \
+#     python -m pip install .
 
-# Install google cloud SDK
-RUN curl -sSL https://sdk.cloud.google.com > /tmp/gcl && bash /tmp/gcl --install-dir=~/gcloud --disable-prompts
-ENV PATH="$PATH:/root/gcloud/google-cloud-sdk/bin"
+# # Install google cloud SDK
+# RUN curl -sSL https://sdk.cloud.google.com > /tmp/gcl && bash /tmp/gcl --install-dir=~/gcloud --disable-prompts
+# ENV PATH="$PATH:/root/gcloud/google-cloud-sdk/bin"
 
-# TensorRT depends on libnvinfer{_plugin}7 
-RUN cd /usr/lib/x86_64-linux-gnu && \
-    ln -s libnvinfer_plugin.so.8 libnvinfer_plugin.so.7 && \
-    ln -s libnvinfer.so.8 libnvinfer.so.7
+# # TensorRT depends on libnvinfer{_plugin}7 
+# RUN cd /usr/lib/x86_64-linux-gnu && \
+#     ln -s libnvinfer_plugin.so.8 libnvinfer_plugin.so.7 && \
+#     ln -s libnvinfer.so.8 libnvinfer.so.7
 
 # pip-installed OpenCV causes circular import
-RUN pip uninstall -y opencv-python opencv-python-headless && \
-    pip install opencv-python
+# RUN pip uninstall -y opencv-python opencv-python-headless && \
+#     pip install opencv-python
 
 RUN apt-get install -y --no-install-recommends x11-apps mesa-utils
