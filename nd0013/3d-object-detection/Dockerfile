@@ -28,7 +28,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	protobuf-compiler \
 	python3-wxgtk4.0 \
 	libgl1-mesa-glx \
-	libgl1-mesa-dri
+	libgl1-mesa-dri \
+	libcanberra-gtk-module \
+	libcanberra-gtk3-module
 
 WORKDIR /home
 
@@ -51,7 +53,7 @@ RUN python3 -m pip install --no-deps -r requirements.txt
 #     ln -s libnvinfer.so.8 libnvinfer.so.7
 
 # pip-installed OpenCV causes circular import
-# RUN pip uninstall -y opencv-python opencv-python-headless && \
-#     pip install opencv-python
+# RUN pip uninstall -y opencv && \
+#     apt-get install -y python3-opencv
 
 RUN apt-get install -y --no-install-recommends x11-apps mesa-utils
