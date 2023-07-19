@@ -17,6 +17,7 @@
 import cv2
 import numpy as np
 import math
+import matplotlib.pyplot as plt
 from shapely.geometry import Polygon
 
 # add project directory to python path to enable relative imports
@@ -357,7 +358,8 @@ def show_bev(bev_maps, configs):
     bev_map = (bev_maps.squeeze().permute(1, 2, 0).numpy() * 255).astype(np.uint8)
     bev_map = cv2.resize(bev_map, (configs.bev_width, configs.bev_height))
     bev_map = cv2.rotate(bev_map, cv2.ROTATE_180)
-    cv2.imshow('BEV map', bev_map)
+    plt.imshow(cv2.cvtColor(bev_map, cv2.COLOR_BGR2RGB))
+    plt.title('BEV map')
 
 
 # visualize ground-truth labels as overlay in birds-eye view
@@ -373,8 +375,8 @@ def show_objects_labels_in_bev(detections, object_labels, bev_maps, configs):
     
 
     bev_map = cv2.rotate(bev_map, cv2.ROTATE_180)
-    cv2.imshow('labels (green) vs. detected objects (red)', bev_map)
-
+    plt.imshow(cv2.cvtColor(bev_map, cv2.COLOR_BGR2RGB))
+    plt.title('labels (green) vs. detected objects (red)')
 
 # visualize detection results as overlay in birds-eye view and ground-truth labels in camera image
 def show_objects_in_bev_labels_in_camera(detections, bev_maps, image, object_labels, object_labels_valid, camera_calibration, configs):
@@ -404,8 +406,8 @@ def show_objects_in_bev_labels_in_camera(detections, bev_maps, image, object_lab
     out_img[output_rgb_h:, ...] = ret_img_bev
 
     # show combined view
-    cv2.imshow('labels vs. detected objects', out_img)
-
+    plt.imshow(cv2.cvtColor(out_img, cv2.COLOR_BGR2RGB))
+    plt.title('labels vs. detected objects')
 
 # visualize object labels in camera image
 def project_labels_into_camera(camera_calibration, image, labels, labels_valid, img_resize_factor=1.0):
