@@ -36,7 +36,7 @@ def load_configs_model(model_name='darknet', configs=None):
 
     # init config file, if none has been passed
     if configs==None:
-        configs = edict()  
+        configs = edict()
 
     # get parent directory of this file to enable relative paths
     curr_path = os.path.dirname(os.path.realpath(__file__))
@@ -59,7 +59,7 @@ def load_configs_model(model_name='darknet', configs=None):
         configs.use_giou_loss = False
 
     elif model_name == 'fpn_resnet':
-        ####### ID_S3_EX1-3 START #######     
+        ####### ID_S3_EX1-3 START #######
         #######
         print("student task ID_S3_EX1-3")
         configs.model_path = os.path.join(parent_path, 'tools', 'objdet_models', 'resnet')
@@ -202,7 +202,7 @@ def detect_objects(input_bev_maps, model, configs):
                 for obj in detection:
                     x, y, w, l, im, re, _, _, _ = obj
                     yaw = np.arctan2(im, re)
-                    detections.append([1, x, y, 0.0, 1.50, w, l, yaw])    
+                    detections.append([1, x, y, 0.0, 1.50, w, l, yaw])
 
         elif 'fpn_resnet' in configs.arch:
             # decode output and perform post-processing
@@ -257,7 +257,7 @@ def detect_objects(input_bev_maps, model, configs):
             if ((x >= configs.lim_x[0]) and (x <= configs.lim_x[1]) 
                 and (y >= configs.lim_y[0]) and (y <= configs.lim_y[1])
                 and (z >= configs.lim_z[0]) and (z <= configs.lim_z[1])):
-                objects.append([1, x, y, z, w, l, h, yaw])
+                objects.append([1, x, y, z, h, w, l, yaw])
 
     #######
     ####### ID_S3_EX2 START #######   
