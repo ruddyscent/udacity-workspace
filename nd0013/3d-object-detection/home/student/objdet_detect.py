@@ -63,19 +63,24 @@ def load_configs_model(model_name='darknet', configs=None):
         #######
         print("student task ID_S3_EX1-3")
         configs.model_path = os.path.join(parent_path, 'tools', 'objdet_models', 'resnet')
-        configs.pretrained_filename = os.path.join(configs.model_path, 'pretrained', 'fpn_resnet_18_epoch_300.pth')
+        configs.pretrained_filename = os.path.join(
+            configs.model_path, 
+            'pretrained', 
+            'fpn_resnet_18_epoch_300.pth'
+            )
         configs.conf_thresh = 0.5
-        configs.nms_thresh = 0.4
-        configs.peak_thresh = 0.2
+        # configs.nms_thresh = 0.4
+        # configs.peak_thresh = 0.2
 
         configs.arch = 'fpn_resnet'
-        configs.pin_memory = True
-        configs.distributed = False  # For testing on 1 GPU only
+        configs.num_layers = 18
+        # configs.pin_memory = True
+        # configs.distributed = False  # For testing on 1 GPU only
         configs.K = 50
-        configs.input_size = (608, 608)
-        configs.hm_size = (152, 152)
+        # configs.input_size = (608, 608)
+        # configs.hm_size = (152, 152)
         configs.down_ratio = 4
-        configs.max_objects = 50
+        # configs.max_objects = 50
 
         configs.imagenet_pretrained = False
         configs.head_conv = 64
@@ -92,7 +97,7 @@ def load_configs_model(model_name='darknet', configs=None):
             'z_coor': configs.num_z,
             'dim': configs.num_dim
         }
-        configs.num_input_features = 4
+        # configs.num_input_features = 4
 
         #######
         ####### ID_S3_EX1-3 END #######     
@@ -130,6 +135,7 @@ def load_configs(model_name='fpn_resnet', configs=None):
     configs.output_width = 608 # width of result image (height may vary)
     configs.obj_colors = [[0, 255, 255], [0, 0, 255], [255, 0, 0]] # 'Pedestrian': 0, 'Car': 1, 'Cyclist': 2
 
+    configs.min_iou = 0.5 # minimum intersection over union for matching gt and detections
     return configs
 
 
@@ -150,8 +156,12 @@ def create_model(configs):
         ####### ID_S3_EX1-4 START #######     
         #######
         print("student task ID_S3_EX1-4")
-        num_layers = 18
-        model = fpn_resnet.get_pose_net(num_layers=num_layers, heads=configs.heads, head_conv=configs.head_conv, imagenet_pretrained=configs.imagenet_pretrained)
+        model = fpn_resnet.get_pose_net(
+            num_layers=configs.num_layers, 
+            heads=configs.heads, 
+            head_conv=configs.head_conv, 
+            imagenet_pretrained=configs.imagenet_pretrained
+            )
         #######
         ####### ID_S3_EX1-4 END #######     
     
@@ -165,7 +175,7 @@ def create_model(configs):
     # set model to evaluation state
     configs.device = torch.device('cpu' if configs.no_cuda else 'cuda:{}'.format(configs.gpu_idx))
     model = model.to(device=configs.device)  # load model to either cpu or gpu
-    model.eval()          
+    model.eval()
 
     return model
 
@@ -203,12 +213,19 @@ def detect_objects(input_bev_maps, model, configs):
             outputs['hm_cen'] = _sigmoid(outputs['hm_cen'])
             outputs['cen_offset'] = _sigmoid(outputs['cen_offset'])
             # detections size (batch_size, K, 10)
-            detections = decode(outputs['hm_cen'], outputs['cen_offset'], outputs['direction'], outputs['z_coor'],
-                                outputs['dim'], K=configs.K)
+            detections = decode(
+                outputs['hm_cen'],
+                outputs['cen_offset'],
+                outputs['direction'], 
+                outputs['z_coor'],
+                outputs['dim'],
+                K=configs.K
+                )
             detections = detections.cpu().numpy().astype(np.float32)
             detections = post_processing(detections, configs)
+            detections = detections[0][1]
             #######
-            ####### ID_S3_EX1-5 END #######     
+            ####### ID_S3_EX1-5 END #######
 
             
 
@@ -219,12 +236,12 @@ def detect_objects(input_bev_maps, model, configs):
     objects = [] 
 
     ## step 1 : check whether there are any detections
-    if len(detections[0][1]) > 0:
+    if len(detections) > 0:
         ## step 2 : loop over all detections
         x_range = configs.lim_x[1] - configs.lim_x[0]
         y_range = configs.lim_y[1] - configs.lim_y[0]
         
-        for item in detections[0][1]:
+        for item in detections:
             ## step 3 : perform the conversion using the limits for x, y and z set in the configs structure
             _, _x, _y, _z, _h, _w, _l, _yaw = item
             
