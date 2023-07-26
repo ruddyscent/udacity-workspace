@@ -98,8 +98,8 @@ all_labels = []
 det_performance_all = [] 
 np.random.seed(0) # make random values predictable
 if 'show_tracks' in exec_list:    
-    fig, (ax2, ax) = plt.subplots(1,2) # init track plot
-
+    fig, (ax2, ax) = plt.subplots(1, 2, figsize=(16, 12)) # init track plot
+    
 while True:
     try:
         ## Get next frame from Waymo dataset
