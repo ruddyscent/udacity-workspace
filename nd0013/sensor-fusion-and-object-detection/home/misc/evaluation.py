@@ -170,7 +170,7 @@ def plot_tracks(fig, ax, ax2, track_list, meas_list, lidar_labels, lidar_labels_
 
 
 def plot_rmse(manager, all_labels, configs_det):
-    fig, ax = plt.subplots(figsize=(16, 12))
+    fig, ax = plt.subplots(layout='constrained')
     plot_empty = True
     
     # loop over all tracks
