@@ -156,7 +156,8 @@ class Trackmanagement:
         # - set track state to 'tentative' or 'confirmed'
         ############
 
-        pass
+        track.score += 1 / params.window
+        track.state = 'tentative' if track.score < params.confirmed_threshold else 'confirmed'
         
         ############
         # END student code
