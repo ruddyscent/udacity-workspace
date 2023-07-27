@@ -51,7 +51,7 @@ class Filter:
         dt = self.dt
         q1 = (dt**3) * q / 3
         q2 = (dt**2) * q / 2
-        q3 = dt * q 
+        q3 = dt * q
         return np.matrix([[q1, 0, 0, q2, 0, 0],
                           [0, q1, 0, 0, q2, 0],
                           [0, 0, q1, 0, 0, q2],
