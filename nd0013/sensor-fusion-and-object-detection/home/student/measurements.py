@@ -47,18 +47,23 @@ class Sensor:
         # TODO Step 4: implement a function that returns True if x lies in the sensor's field of view, 
         # otherwise False.
         ############
-
-        return True
-        
+        pos_veh = np.ones((4, 1)) # homogeneous coordinates
+        pos_veh[0:3] = x[0:3]
+        x_sens = self.veh_to_sens * pos_veh
+        angle = np.arctan(x_sens[1] / x_sens[0])
+        if self.fov[0] <= angle <= self.fov[1]:
+            return True
+        else:
+            return False
         ############
         # END student code
         ############ 
              
     def get_hx(self, x):    
-        # calculate nonlinear measurement expectation value h(x)   
+        # calculate nonlinear measurement expectation value h(x)
         if self.name == 'lidar':
             pos_veh = np.ones((4, 1)) # homogeneous coordinates
-            pos_veh[0:3] = x[0:3] 
+            pos_veh[0:3] = x[0:3]
             pos_sens = self.veh_to_sens*pos_veh # transform from vehicle to lidar coordinates
             return pos_sens[0:3]
         elif self.name == 'camera':
@@ -70,9 +75,21 @@ class Sensor:
             # - make sure to not divide by zero, raise an error if needed
             # - return h(x)
             ############
-
-            pass
-        
+            # transform position estimate from vehicle to camera coordinates
+            pos_veh = np.ones((4, 1)) # homogeneous coordinates
+            pos_veh[0:3] = x[0:3]
+            pos_sens = self.veh_to_sens*pos_veh # transform from vehicle to lidar coordinates
+            
+            # calculate nonlinear measurement expectation value h(x)
+            hx = np.zeros((self.dim_meas, 1))
+            
+            # check and print error message if dividing by zero
+            if pos_sens[0] == 0:
+                raise NameError('Jacobian not defined for x[0]=0!')
+            else:
+                hx[0, 0] = self.c_i - self.f_i * pos_sens[1] / pos_sens[0] # project to image coordinates
+                hx[1, 0] = self.c_j - self.f_j * pos_sens[2] / pos_sens[0]
+            return hx
             ############
             # END student code
             ############ 
@@ -155,9 +172,15 @@ class Measurement:
             ############
             # TODO Step 4: initialize camera measurement including z and R 
             ############
-
-            pass
-        
+            sigma_cam_i = params.sigma_cam_i # load params
+            sigma_cam_j = params.sigma_cam_j
+            self.z = np.zeros((sensor.dim_meas, 1)) # measurement vector
+            self.z[0] = z[0]
+            self.z[1] = z[1]
+            self.length = z[2]
+            self.width = z[3]
+            self.R = np.matrix([[sigma_cam_i**2, 0], # measurement noise covariance matrix
+                                [0, sigma_cam_j**2]])
             ############
             # END student code
             ############ 
