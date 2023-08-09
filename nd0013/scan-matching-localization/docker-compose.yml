@@ -7,10 +7,10 @@ services:
       memlock: -1
       stack: 67108864
     volumes:
-      - ./home:/home
+      #      - ./home:/home
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /dev/dri:/dev/dri
-      - ~/.Xauthority:/root/.Xauthority  
+      - ${HOME}/.Xauthority:/root/.Xauthority:rw
       - /etc/group:/etc/group:ro
       - /etc/passwd:/etc/passwd:ro
       - /etc/shadow:/etc/shadow:ro
@@ -18,21 +18,19 @@ services:
       - /etc/sudoers.d:/etc/sudoers.d:ro
     user: ${UID}
     environment:
-      DISPLAY: $DISPLAY
-      QT_X11_NO_MITSHM: 1
-      LIBGL_ALWAYS_INDIRECT: 0
-      NO_AT_BRIDGE: 1
+      DISPLAY: ${DISPLAY}
+      QT_X11_NO_MITSHM: 1 # Fix a bug with QT
+      SDL_VIDEODRIVER: x11
     network_mode: "host"
     ports:
-      - "${JUPYTER_PORT}:8888"
-      - "${TENSORBOARD_PORT}:6006"
+      - "2000-2022:2000-2022"
     deploy:
       resources:
         reservations:
           devices:
             - driver: nvidia
               device_ids: ['${GPU_DEVICES}']
-              capabilities: [compute,utility,graphics,display]
-    working_dir: /home
-    command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="${JUPYTER_TOKEN}" --NotebookApp.password="" --notebook-dir=/home
+              capabilities: [compute, utility, graphics, display]
+                #    working_dir: /home
+    command: ["bash", "./CarlaUE4.sh", "-quality-level=Low"]
 
