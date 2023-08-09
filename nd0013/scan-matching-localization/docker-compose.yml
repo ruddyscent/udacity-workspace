@@ -7,14 +7,13 @@ services:
       memlock: -1
       stack: 67108864
     volumes:
-      #      - ./home:/home
+      - ./home:/workspace
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /dev/dri:/dev/dri
       - ${HOME}/.Xauthority:/root/.Xauthority:rw
       - /etc/group:/etc/group:ro
       - /etc/passwd:/etc/passwd:ro
       - /etc/shadow:/etc/shadow:ro
-      - /etc/sudoers:/etc/sudoers:ro
       - /etc/sudoers.d:/etc/sudoers.d:ro
     user: ${UID}
     environment:
@@ -31,6 +30,6 @@ services:
             - driver: nvidia
               device_ids: ['${GPU_DEVICES}']
               capabilities: [compute, utility, graphics, display]
-                #    working_dir: /home
-    command: ["bash", "./CarlaUE4.sh", "-quality-level=Low"]
+    working_dir: /workspace
+    command: ["bash", "/home/carla/CarlaUE4.sh"]
 
