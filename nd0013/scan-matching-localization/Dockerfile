@@ -35,7 +35,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	libcanberra-gtk3-module \
 	nvtop \
 	cmake \
-	libpcl-dev
+	libpcl-dev \
+	libusb-1.0-0-dev \
+	dirmngr \
+	gpg-agent
 
 WORKDIR /home
 
@@ -62,6 +65,14 @@ RUN python3 -m pip install -r requirements.txt
 # RUN pip uninstall -y opencv && \
 #     apt-get install -y python3-opencv
 
-RUN ln -s /usr/bin/make /usr/bin/gmake
-
 RUN apt-get install -y --no-install-recommends x11-apps mesa-utils
+
+# CARLA Simulator
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1AF1527DE64CB8D9 && \
+    add-apt-repository "deb [arch=amd64] http://dist.carla.org/carla $(lsb_release -sc) main" && \
+    apt-get update && \
+    apt-get install -y carla-simulator libomp5
+
+RUN ln -s /usr/bin/make /usr/bin/gmake && \
+    ln -s /usr/bin/vtk7 /usr/bin/vtk
+
