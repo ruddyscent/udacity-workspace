@@ -10,6 +10,7 @@ services:
       - ./home:/workspace
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /dev/dri:/dev/dri
+      - ${HOME}:${HOME}
       - ${HOME}/.Xauthority:/root/.Xauthority:rw
       - /etc/group:/etc/group:ro
       - /etc/passwd:/etc/passwd:ro
