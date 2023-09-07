@@ -24,13 +24,15 @@ RUN apt-get update \
 
 # Build IO2D
 # https://github.com/cpp-io2d/P0267_RefImpl/blob/master/BUILDING.md
-RUN git config --global http.sslVerify false \ # https://m.blog.naver.com/jamsuham75/221846244985
+ # https://m.blog.naver.com/jamsuham75/221846244985
+RUN git config --global http.sslVerify false \ 
  && git clone --recurse-submodules https://github.com/cpp-io2d/P0267_RefImpl \
  && cd P0267_RefImpl \
  && mkdir build \
  && cd build \
- && cmake .. -DIO2D_WITHOUT_TESTS=1 \ # https://github.com/cpp-io2d/P0267_RefImpl/issues/147
- && make
+ # https://github.com/cpp-io2d/P0267_RefImpl/issues/147
+ && cmake .. -DIO2D_WITHOUT_TESTS=1 \ 
+ && make \
  && make install
 
 RUN echo "alias vi=nvim" >> ~/.bash_aliases \
