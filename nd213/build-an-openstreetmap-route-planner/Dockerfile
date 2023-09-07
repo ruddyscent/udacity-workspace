@@ -11,6 +11,8 @@ RUN apt-get update \
 	libpng-dev \
 	git \
 	neovim \
+	x11-apps \
+	mesa-utils \
  && apt-get clean autoclean \
  && apt-get autoremove --yes 
 # && rm -rf /var/lib/{apt,dpkg,cache,log}/
