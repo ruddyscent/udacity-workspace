@@ -1,0 +1,12 @@
+services:
+  nd213:
+    build: .
+    ipc: host
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    volumes:
+      - ./home:/home
+    working_dir: /home
+    command: ["/bin/bash"]
+    tty: true
