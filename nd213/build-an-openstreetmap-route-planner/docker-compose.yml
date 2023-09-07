@@ -1,6 +1,8 @@
 services:
   nd213:
     build: .
+    # Need to display graphical applications
+    network_mode: host
     environment:
       # Allow graphical programs in the container.
       - DISPLAY=${DISPLAY}
@@ -12,7 +14,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - /${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
     working_dir: /home
-    command: ["/bin/bash"]
     # Interactive shell
-    # stdin_open: true
+    stdin_open: true
     tty: true
+    command: ["/bin/bash"]
