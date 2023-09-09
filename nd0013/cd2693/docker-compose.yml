@@ -1,5 +1,5 @@
 services:
-  nd0013-kr:
+  nd0013:
     build: .
     ipc: host
     privileged: true
@@ -11,19 +11,20 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /dev/dri:/dev/dri
       - ${HOME}:${HOME}
-      - ${HOME}/.Xauthority:/root/.Xauthority:rw
+      - /${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
       - /etc/group:/etc/group:ro
       - /etc/passwd:/etc/passwd:ro
       - /etc/shadow:/etc/shadow:ro
       - /etc/sudoers.d:/etc/sudoers.d:ro
     user: ${UID}
     environment:
-      DISPLAY: ${DISPLAY}
-      QT_X11_NO_MITSHM: 1 # Fix a bug with QT
-      SDL_VIDEODRIVER: x11
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1 # Fix a bug with QT
+      - SDL_VIDEODRIVER=x11
+      - NVIDIA_DRIVER_CAPABILITIES=all
     network_mode: "host"
-    ports:
-      - "2000-2022:2000-2022"
+      #    ports:
+      #      - "2000-2022:2000-2022"
     deploy:
       resources:
         reservations:
