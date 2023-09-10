@@ -9,6 +9,7 @@ RUN apt-get update \
 	libncurses-dev \
 	git \
 	neovim \
+	gdb \
  && apt-get clean autoclean \
  && apt-get autoremove --yes 
 # && rm -rf /var/lib/{apt,dpkg,cache,log}/
