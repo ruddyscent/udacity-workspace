@@ -22,7 +22,11 @@ float Processor::Utilization() {
       float non_idle_time = stof(user) + stof(nice) + stof(system) + stof(irq) +
                             stof(softirq) + stof(steal);
       float total_time = idle_time + non_idle_time;
-      utilization = non_idle_time / total_time;
+      utilization = (non_idle_time - prev_non_idle_time) / (total_time - prev_total_time);
+
+      // Store the current values for the next iteration
+      prev_non_idle_time = non_idle_time;
+      prev_total_time = total_time;
     }
   }
   return utilization;
