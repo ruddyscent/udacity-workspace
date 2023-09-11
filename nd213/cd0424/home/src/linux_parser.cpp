@@ -161,7 +161,12 @@ string LinuxParser::Command(int pid) {
     string line;
     getline(stream, command);
   }
-  return command; 
+
+  if (command.size() > 40)
+  {
+    command = command.substr(0, 37) + "...";
+  }
+  return command;
 }
 
 // DONE: Read and return the memory used by a process
