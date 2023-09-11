@@ -101,22 +101,6 @@ long LinuxParser::UpTime() {
   return stol(uptime);
  }
 
-// TODO: Read and return the number of jiffies for the system
-long LinuxParser::Jiffies() { return 0; }
-
-// TODO: Read and return the number of active jiffies for a PID
-// REMOVE: [[maybe_unused]] once you define the function
-long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
-
-// TODO: Read and return the number of active jiffies for the system
-long LinuxParser::ActiveJiffies() { return 0; }
-
-// TODO: Read and return the number of idle jiffies for the system
-long LinuxParser::IdleJiffies() { return 0; }
-
-// TODO: Read and return CPU utilization
-vector<string> LinuxParser::CpuUtilization() { return {}; }
-
 // DONE: Read and return the total number of processes
 int LinuxParser::TotalProcesses() { 
   int total_processes = 0;
@@ -171,7 +155,7 @@ string LinuxParser::Command(int pid) {
 
 // DONE: Read and return the memory used by a process
 // REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::Ram(int pid[[maybe_unused]]) {
+string LinuxParser::Ram(int pid) {
   ifstream stream(kProcDirectory + "/" + to_string(pid) + kStatusFilename);
   string ram;
   if (stream.is_open()) {
