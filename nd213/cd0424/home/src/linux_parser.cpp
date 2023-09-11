@@ -6,6 +6,9 @@
 
 #include "linux_parser.h"
 
+using std::getline;
+using std::ifstream;
+using std::replace;
 using std::stof;
 using std::string;
 using std::to_string;
@@ -16,16 +19,16 @@ string LinuxParser::OperatingSystem() {
   string line;
   string key;
   string value;
-  std::ifstream filestream(kOSPath);
+  ifstream filestream(kOSPath);
   if (filestream.is_open()) {
-    while (std::getline(filestream, line)) {
-      std::replace(line.begin(), line.end(), ' ', '_');
-      std::replace(line.begin(), line.end(), '=', ' ');
-      std::replace(line.begin(), line.end(), '"', ' ');
+    while (getline(filestream, line)) {
+      replace(line.begin(), line.end(), ' ', '_');
+      replace(line.begin(), line.end(), '=', ' ');
+      replace(line.begin(), line.end(), '"', ' ');
       std::istringstream linestream(line);
       while (linestream >> key >> value) {
         if (key == "PRETTY_NAME") {
-          std::replace(value.begin(), value.end(), '_', ' ');
+          replace(value.begin(), value.end(), '_', ' ');
           return value;
         }
       }
@@ -38,9 +41,9 @@ string LinuxParser::OperatingSystem() {
 string LinuxParser::Kernel() {
   string os, kernel, version;
   string line;
-  std::ifstream stream(kProcDirectory + kVersionFilename);
+  ifstream stream(kProcDirectory + kVersionFilename);
   if (stream.is_open()) {
-    std::getline(stream, line);
+    getline(stream, line);
     std::istringstream linestream(line);
     linestream >> os >> version >> kernel;
   }
@@ -71,7 +74,7 @@ vector<int> LinuxParser::Pids() {
 float LinuxParser::MemoryUtilization() { 
   string category, value, unit;
   float mem_total, mem_free;
-  std::ifstream stream(kProcDirectory + kMeminfoFilename);
+  ifstream stream(kProcDirectory + kMeminfoFilename);
   if (stream.is_open()) {
     while (stream >> category >> value >> unit)
     {
@@ -91,7 +94,7 @@ float LinuxParser::MemoryUtilization() {
 // DONE: Read and return the system uptime
 long LinuxParser::UpTime() { 
   string uptime, idle_time;
-  std::ifstream stream(kProcDirectory + kUptimeFilename);
+  ifstream stream(kProcDirectory + kUptimeFilename);
   if (stream.is_open()) {
     stream >> uptime >> idle_time;
   }
@@ -117,7 +120,7 @@ vector<string> LinuxParser::CpuUtilization() { return {}; }
 // DONE: Read and return the total number of processes
 int LinuxParser::TotalProcesses() { 
   string category, value;
-  std::ifstream stream(kProcDirectory + kStatFilename);
+  ifstream stream(kProcDirectory + kStatFilename);
   if (stream.is_open()) {
     while (stream >> category >> value)
     {
@@ -132,7 +135,7 @@ int LinuxParser::TotalProcesses() {
 // DONE: Read and return the number of running processes
 int LinuxParser::RunningProcesses() { 
   string category, value;
-  std::ifstream stream(kProcDirectory + kStatFilename);
+  ifstream stream(kProcDirectory + kStatFilename);
   if (stream.is_open()) {
     while (stream >> category >> value)
     {
@@ -156,9 +159,43 @@ string LinuxParser::Ram(int pid[[maybe_unused]]) { return string(); }
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::Uid(int pid[[maybe_unused]]) { return string(); }
 
-// TODO: Read and return the user associated with a process
+// DONE: Read and return the user associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::User(int pid[[maybe_unused]]) { return string(); }
+string LinuxParser::User(int pid) { 
+  ifstream status_stream(kProcDirectory + "/" + to_string(pid) + kStatusFilename);
+  string uid;
+  if (status_stream.is_open()) {
+    string line;
+    string category, value;
+    while (getline(status_stream, line))
+    {
+      std::istringstream linestream(line);
+      linestream >> category >> value;
+      if (category == "Uid:")
+      {
+        uid = value;
+        break;
+      }
+    }
+  }
+
+  string user = "";
+  ifstream password_stream(kPasswordPath);
+  if (password_stream.is_open()) {
+    string line;
+    string user, x, uid_tmp;
+    while (getline(password_stream, line))
+    {
+      std::replace(line.begin(), line.end(), ':', ' ');
+      std::istringstream linestream(line);
+      linestream >> user >> x >> uid_tmp;
+      if (uid == uid_tmp)
+      {
+        return user;
+      }
+    }
+  }
+}
 
 // TODO: Read and return the uptime of a process
 // REMOVE: [[maybe_unused]] once you define the function
