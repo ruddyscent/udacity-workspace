@@ -176,7 +176,9 @@ string LinuxParser::Ram(int pid[[maybe_unused]]) {
     {
       std::istringstream linestream(line);
       linestream >> category >> value;
-      if (category == "VmSize:")
+      // According to the following link, VmRSS is the correct one to use
+      // https://man7.org/linux/man-pages/man5/proc.5.html
+      if (category == "VmRSS:")
       {
         ram = value;
         break;
