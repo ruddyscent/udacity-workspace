@@ -62,7 +62,7 @@ vector<int> LinuxParser::Pids() {
       string filename(file->d_name);
       if (std::all_of(filename.begin(), filename.end(), isdigit)) {
         int pid = stoi(filename);
-        pids.push_back(pid);
+        pids.emplace_back(pid);
       }
     }
   }
@@ -145,7 +145,7 @@ int LinuxParser::RunningProcesses() {
     {
       if (category == "procs_running")
       {
-          running_processes = stoi(value);
+        running_processes = stoi(value);
       }
     }
   }
@@ -247,7 +247,7 @@ float LinuxParser::CpuUtilization(int pid, float &prev_non_idle_time, float &pre
     vector<string> cpu_utilization;
     while (linestream >> value)
     {
-      cpu_utilization.push_back(value);
+      cpu_utilization.emplace_back(value);
     }
     float utime = stof(cpu_utilization[13]);
     float stime = stof(cpu_utilization[14]);
@@ -282,7 +282,7 @@ float LinuxParser::CpuUtilization(int pid) {
     vector<string> cpu_utilization;
     while (linestream >> value)
     {
-      cpu_utilization.push_back(value);
+      cpu_utilization.emplace_back(value);
     }
     float utime = stof(cpu_utilization[13]);
     float stime = stof(cpu_utilization[14]);
@@ -310,7 +310,7 @@ long LinuxParser::UpTime(int pid) {
     vector<string> cpu_utilization;
     while (linestream >> value)
     {
-      cpu_utilization.push_back(value);
+      cpu_utilization.emplace_back(value);
     }
     uptime = stol(cpu_utilization[21]) / sysconf(_SC_CLK_TCK);
   }
