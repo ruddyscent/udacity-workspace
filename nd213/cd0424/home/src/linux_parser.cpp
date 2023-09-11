@@ -259,6 +259,36 @@ float LinuxParser::CpuUtilization(int pid, float &prev_non_idle_time, float &pre
   }   
 }
 
+float LinuxParser::CpuUtilization(int pid) {
+  float uptime = UpTime();
+  float hertz = sysconf(_SC_CLK_TCK);
+  float cpu_usage = 0;
+
+  ifstream stream(kProcDirectory + "/" + to_string(pid) + kStatFilename);
+  // vector<string> cpu_utilization;
+  if (stream.is_open()) {
+    string line;
+    getline(stream, line);
+    std::istringstream linestream(line);
+    string value;
+    vector<string> cpu_utilization;
+    while (linestream >> value)
+    {
+      cpu_utilization.push_back(value);
+    }
+    float utime = stof(cpu_utilization[13]);
+    float stime = stof(cpu_utilization[14]);
+    float cutime = stof(cpu_utilization[15]);
+    float cstime = stof(cpu_utilization[16]);
+    float start_time = stof(cpu_utilization[21]);
+
+    float total_time = utime + stime + cutime + cstime;
+    float seconds = uptime - (start_time / hertz);
+    cpu_usage = total_time / hertz / seconds;
+  }
+  return cpu_usage; 
+}
+
 // DONE: Read and return the uptime of a process
 // REMOVE: [[maybe_unused]] once you define the function
 long LinuxParser::UpTime(int pid) { 
