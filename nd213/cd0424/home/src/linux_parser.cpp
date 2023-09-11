@@ -119,6 +119,7 @@ vector<string> LinuxParser::CpuUtilization() { return {}; }
 
 // DONE: Read and return the total number of processes
 int LinuxParser::TotalProcesses() { 
+  int total_processes = 0;
   string category, value;
   ifstream stream(kProcDirectory + kStatFilename);
   if (stream.is_open()) {
@@ -126,14 +127,17 @@ int LinuxParser::TotalProcesses() {
     {
       if (category == "processes")
       {
-          return stoi(value);
+          total_processes = stoi(value);
+          break;
       }
     }
   }
+  return total_processes;
 }
 
 // DONE: Read and return the number of running processes
-int LinuxParser::RunningProcesses() { 
+int LinuxParser::RunningProcesses() {
+  int running_processes = 0;
   string category, value;
   ifstream stream(kProcDirectory + kStatFilename);
   if (stream.is_open()) {
@@ -141,10 +145,11 @@ int LinuxParser::RunningProcesses() {
     {
       if (category == "procs_running")
       {
-          return stoi(value);
+          running_processes = stoi(value);
       }
     }
   }
+  return running_processes;
 }
 
 // DONE: Read and return the command associated with a process
@@ -230,8 +235,8 @@ string LinuxParser::User(int pid) {
 }
 
 float LinuxParser::CpuUtilization(int pid, float &prev_non_idle_time, float &prev_total_time) {
+  float result = 0;
   ifstream stream(kProcDirectory + "/" + to_string(pid) + kStatFilename);
-  // vector<string> cpu_utilization;
   if (stream.is_open()) {
     string line;
     getline(stream, line);
@@ -255,8 +260,9 @@ float LinuxParser::CpuUtilization(int pid, float &prev_non_idle_time, float &pre
     prev_non_idle_time = non_idle_time;
     prev_total_time = total_time;
     
-    return delta_non_idle_time / delta_total_time;
-  }   
+    result = delta_non_idle_time / delta_total_time;
+  }
+  return result;
 }
 
 float LinuxParser::CpuUtilization(int pid) {
