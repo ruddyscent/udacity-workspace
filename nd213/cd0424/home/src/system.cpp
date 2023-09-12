@@ -11,11 +11,7 @@
 #include "process.h"
 #include "processor.h"
 
-using std::set;
-using std::size_t;
-using std::sort;
-using std::string;
-using std::vector;
+using namespace std;
 
 /*You need to complete the mentioned TODOs in order to satisfy the rubric
 criteria "The student will be able to extract and display basic data about the
@@ -40,13 +36,13 @@ vector<Process>& System::Processes() {
 }
 
 // DONE: Return the system's kernel identifier (string)
-std::string System::Kernel() { return LinuxParser::Kernel(); }
+string System::Kernel() { return LinuxParser::Kernel(); }
 
 // DONE: Return the system's memory utilization
 float System::MemoryUtilization() { return LinuxParser::MemoryUtilization(); }
 
 // DONE: Return the operating system name
-std::string System::OperatingSystem() { return LinuxParser::OperatingSystem(); }
+string System::OperatingSystem() { return LinuxParser::OperatingSystem(); }
 
 // DONE: Return the number of processes actively running on the system
 int System::RunningProcesses() { return LinuxParser::RunningProcesses(); }

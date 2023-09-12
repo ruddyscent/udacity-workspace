@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+// using namespace std;
 using std::getline;
 using std::ifstream;
 using std::replace;
@@ -14,6 +15,7 @@ using std::stof;
 using std::string;
 using std::to_string;
 using std::vector;
+using std::istringstream;
 
 // DONE: An example of how to read data from the filesystem
 string LinuxParser::OperatingSystem() {
@@ -26,7 +28,7 @@ string LinuxParser::OperatingSystem() {
       replace(line.begin(), line.end(), ' ', '_');
       replace(line.begin(), line.end(), '=', ' ');
       replace(line.begin(), line.end(), '"', ' ');
-      std::istringstream linestream(line);
+      istringstream linestream(line);
       while (linestream >> key >> value) {
         if (key == "PRETTY_NAME") {
           replace(value.begin(), value.end(), '_', ' ');
@@ -45,7 +47,7 @@ string LinuxParser::Kernel() {
   ifstream stream(kProcDirectory + kVersionFilename);
   if (stream.is_open()) {
     getline(stream, line);
-    std::istringstream linestream(line);
+    istringstream linestream(line);
     linestream >> os >> version >> kernel;
   }
   return kernel;
@@ -61,7 +63,7 @@ vector<int> LinuxParser::Pids() {
     if (file->d_type == DT_DIR) {
       // Is every character of the name a digit?
       string filename(file->d_name);
-      if (std::all_of(filename.begin(), filename.end(), isdigit)) {
+      if (all_of(filename.begin(), filename.end(), isdigit)) {
         int pid = stoi(filename);
         pids.emplace_back(pid);
       }
@@ -154,7 +156,7 @@ string LinuxParser::Ram(int pid) {
     string line;
     string category, value;
     while (getline(stream, line)) {
-      std::istringstream linestream(line);
+      istringstream linestream(line);
       linestream >> category >> value;
       if (category == filterProcMem) {
         ram = value;
@@ -175,7 +177,7 @@ string LinuxParser::Uid(int pid) {
     string line;
     string category, value;
     while (getline(status_stream, line)) {
-      std::istringstream linestream(line);
+      istringstream linestream(line);
       linestream >> category >> value;
       if (category == filterUID) {
         uid = value;
@@ -198,8 +200,8 @@ string LinuxParser::User(int pid) {
     string line;
     string x, uid_tmp;
     while (getline(password_stream, line)) {
-      std::replace(line.begin(), line.end(), ':', ' ');
-      std::istringstream linestream(line);
+      replace(line.begin(), line.end(), ':', ' ');
+      istringstream linestream(line);
       linestream >> user >> x >> uid_tmp;
       if (uid == uid_tmp) {
         break;
@@ -217,7 +219,7 @@ float LinuxParser::CpuUtilization(int pid, float& prev_non_idle_time,
   if (stream.is_open()) {
     string line;
     getline(stream, line);
-    std::istringstream linestream(line);
+    istringstream linestream(line);
     string value;
     vector<string> cpu_utilization;
     while (linestream >> value) {
@@ -251,7 +253,7 @@ float LinuxParser::CpuUtilization(int pid) {
   if (stream.is_open()) {
     string line;
     getline(stream, line);
-    std::istringstream linestream(line);
+    istringstream linestream(line);
     string value;
     vector<string> cpu_utilization;
     while (linestream >> value) {
@@ -278,7 +280,7 @@ long LinuxParser::UpTime(int pid) {
   if (stream.is_open()) {
     string line;
     getline(stream, line);
-    std::istringstream linestream(line);
+    istringstream linestream(line);
     string value;
     vector<string> cpu_utilization;
     while (linestream >> value) {

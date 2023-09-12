@@ -1,33 +1,32 @@
+#include "process.h"
+
 #include <unistd.h>
+
 #include <cctype>
 #include <sstream>
 #include <string>
 #include <vector>
 
-#include "process.h"
-
 #include "linux_parser.h"
 
-using std::string;
-using std::to_string;
-using std::vector;
+using namespace std;
 
 // DONE: Return this process's ID
 int Process::Pid() { return pid_; }
 
 // DONE: Return this process's CPU utilization
 float Process::CpuUtilization() const {
-    return LinuxParser::CpuUtilization(pid_);
+  return LinuxParser::CpuUtilization(pid_);
 }
 
 // DONE: Return the command that generated this process
 string Process::Command() { return LinuxParser::Command(pid_); }
 
 // DONE: Return this process's memory utilization
-string Process::Ram() { 
-    string ram_in_kilobyte = LinuxParser::Ram(pid_);
-    long ram_in_megabyte = std::stol(ram_in_kilobyte) / 1024;
-    return std::to_string(ram_in_megabyte);
+string Process::Ram() {
+  string ram_in_kilobyte = LinuxParser::Ram(pid_);
+  long ram_in_megabyte = stol(ram_in_kilobyte) / 1024;
+  return to_string(ram_in_megabyte);
 }
 
 // DONE: Return the user (name) that generated this process
@@ -38,6 +37,6 @@ long int Process::UpTime() { return LinuxParser::UpTime(pid_); }
 
 // DONE: Overload the "less than" comparison operator for Process objects
 // REMOVE: [[maybe_unused]] once you define the function
-bool Process::operator<(Process const& a) const { 
-    return CpuUtilization() > a.CpuUtilization();
+bool Process::operator<(Process const& a) const {
+  return CpuUtilization() > a.CpuUtilization();
 }
