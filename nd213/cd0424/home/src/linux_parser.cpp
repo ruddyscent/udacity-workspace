@@ -78,9 +78,9 @@ float LinuxParser::MemoryUtilization() {
   ifstream stream(kProcDirectory + kMeminfoFilename);
   if (stream.is_open()) {
     while (stream >> category >> value >> unit) {
-      if (category == "MemTotal:") {
+      if (category == filterMemTotalString) {
         mem_total = stof(value);
-      } else if (category == "MemFree:") {
+      } else if (category == filterMemFreeString) {
         mem_free = stof(value);
       }
     }
@@ -105,7 +105,7 @@ int LinuxParser::TotalProcesses() {
   ifstream stream(kProcDirectory + kStatFilename);
   if (stream.is_open()) {
     while (stream >> category >> value) {
-      if (category == "processes") {
+      if (category == filterProcesses) {
         total_processes = stoi(value);
         break;
       }
@@ -121,7 +121,7 @@ int LinuxParser::RunningProcesses() {
   ifstream stream(kProcDirectory + kStatFilename);
   if (stream.is_open()) {
     while (stream >> category >> value) {
-      if (category == "procs_running") {
+      if (category == filterRunningProcesses) {
         running_processes = stoi(value);
       }
     }
@@ -156,9 +156,7 @@ string LinuxParser::Ram(int pid) {
     while (getline(stream, line)) {
       std::istringstream linestream(line);
       linestream >> category >> value;
-      // According to the following link, VmRSS is the correct one to use
-      // https://man7.org/linux/man-pages/man5/proc.5.html
-      if (category == "VmRSS:") {
+      if (category == filterProcMem) {
         ram = value;
         break;
       }
@@ -179,7 +177,7 @@ string LinuxParser::Uid(int pid) {
     while (getline(status_stream, line)) {
       std::istringstream linestream(line);
       linestream >> category >> value;
-      if (category == "Uid:") {
+      if (category == filterUID) {
         uid = value;
         break;
       }
