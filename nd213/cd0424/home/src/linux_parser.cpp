@@ -127,7 +127,11 @@ int LinuxParser::RunningProcesses() {
   string category, value;
   ifstream stream(kProcDirectory + kStatFilename);
   if (stream.is_open()) {
-    while (stream >> category >> value) {
+    string line;
+    string category, value;
+    while (getline(stream, line)) {
+      istringstream linestream(line);
+      linestream >> category >> value;
       if (category == filterRunningProcesses) {
         running_processes = stoi(value);
       }
