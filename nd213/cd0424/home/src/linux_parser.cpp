@@ -103,41 +103,12 @@ long LinuxParser::UpTime() {
 
 // DONE: Read and return the total number of processes
 int LinuxParser::TotalProcesses() {
-  int total_processes = 0;
-  string category, value;
-  ifstream stream(kProcDirectory + kStatFilename);
-  if (stream.is_open()) {
-    string line;
-    string category, value;
-    while (getline(stream, line)) {
-      istringstream linestream(line);
-      linestream >> category >> value;
-      if (category == filterProcesses) {
-        total_processes = stoi(value);
-        break;
-      }
-    }
-  }
-  return total_processes;
+  return GetValueByKey<int>(filterProcesses, kStatFilename);
 }
 
 // DONE: Read and return the number of running processes
 int LinuxParser::RunningProcesses() {
-  int running_processes = 0;
-  string category, value;
-  ifstream stream(kProcDirectory + kStatFilename);
-  if (stream.is_open()) {
-    string line;
-    string category, value;
-    while (getline(stream, line)) {
-      istringstream linestream(line);
-      linestream >> category >> value;
-      if (category == filterRunningProcesses) {
-        running_processes = stoi(value);
-      }
-    }
-  }
-  return running_processes;
+  return GetValueByKey<int>(filterRunningProcesses, kStatFilename);
 }
 
 // DONE: Read and return the command associated with a process
@@ -159,43 +130,13 @@ string LinuxParser::Command(int pid) {
 // DONE: Read and return the memory used by a process
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::Ram(int pid) {
-  ifstream stream(kProcDirectory + "/" + to_string(pid) + kStatusFilename);
-  string ram;
-  if (stream.is_open()) {
-    string line;
-    string category, value;
-    while (getline(stream, line)) {
-      istringstream linestream(line);
-      linestream >> category >> value;
-      if (category == filterProcMem) {
-        ram = value;
-        break;
-      }
-    }
-  }
-  return ram;
+  return GetValueByKey<string>(filterProcMem, kStatusFilename, pid);
 }
 
 // DONE: Read and return the user ID associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::Uid(int pid) {
-  ifstream status_stream(kProcDirectory + "/" + to_string(pid) +
-                         kStatusFilename);
-  string uid;
-  if (status_stream.is_open()) {
-    string line;
-    string category, value;
-    while (getline(status_stream, line)) {
-      istringstream linestream(line);
-      linestream >> category >> value;
-      if (category == filterUID) {
-        uid = value;
-        break;
-      }
-    }
-  }
-
-  return uid;
+  return GetValueByKey<string>(filterUID, kStatusFilename, pid);
 }
 
 // DONE: Read and return the user associated with a process

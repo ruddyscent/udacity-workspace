@@ -45,6 +45,30 @@ std::string Ram(int pid);
 std::string Uid(int pid);
 std::string User(int pid);
 long int UpTime(int pid);
+
+// Utility
+template <typename T> T GetValueByKey(std::string const &keyFilter, std::string const &filename) {
+    T value;
+    std::ifstream stream(kProcDirectory + filename);
+    if (stream.is_open()) {
+        std::string line;
+        std::string key;
+        while (getline(stream, line)) {
+            std::istringstream linestream(line);
+            linestream >> key >> value;
+            if (key == keyFilter) {
+                break;
+            }
+        }
+    }
+    return value;
+}
+
+template <typename T> T GetValueByKey(std::string const &keyFilter, std::string const &filename, int pid) {
+    std::string filepath = "/" + std::to_string(pid) + filename;
+    return GetValueByKey<T>(keyFilter, filepath);
+}
+
 };  // namespace LinuxParser
 
 #endif
