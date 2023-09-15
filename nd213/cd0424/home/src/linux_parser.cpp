@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <iostream>
 
 // using namespace std;
 using std::getline;
@@ -106,7 +107,11 @@ int LinuxParser::TotalProcesses() {
   string category, value;
   ifstream stream(kProcDirectory + kStatFilename);
   if (stream.is_open()) {
-    while (stream >> category >> value) {
+    string line;
+    string category, value;
+    while (getline(stream, line)) {
+      istringstream linestream(line);
+      linestream >> category >> value;
       if (category == filterProcesses) {
         total_processes = stoi(value);
         break;
