@@ -8,6 +8,15 @@ USER root
 # Let us install tzdata painlessly
 ENV DEBIAN_FRONTEND=noninteractive
 
+# RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A4B469963BF863CC
+# RUN apt-key del 7fa2af80 \ 
+#  && wget https://developer.download.nvidia.com/compute/cuda/repos/$distro/$arch/cuda-keyring_1.0-1_all.deb \
+#  && dpkg -i cuda-keyring_1.0-1_all.deb
+
+# https://developer.nvidia.com/blog/updating-the-cuda-linux-gpg-repository-key/
+RUN apt-key del 7fa2af80 \
+ && apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     sudo \
     libpcl-dev \
@@ -23,9 +32,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     cmake \
     ninja-build \
     libvulkan1 \
-    python \
-    python-pip \
-    python-dev \
     python3-dev \
     python3-pip \
     libpng-dev \
@@ -42,6 +48,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \ 
     wget \
     automake \
+    python3-setuptools \
+    python3-distro \
+    python3-wheel \
  && update-alternatives --install /usr/bin/clang++ clang++ /usr/lib/llvm-8/bin/clang++ 180 \
  && update-alternatives --install /usr/bin/clang clang /usr/lib/llvm-8/bin/clang 180
 
@@ -58,6 +67,8 @@ RUN cd /home \
  && git checkout ${CARLA_VER} \
  && make setup \
  && make LibCarla \
+ && make PythonAPI \
+ && pip3 install ./PythonAPI/carla/dist/carla-*.whl \
  && mkdir -p ${BASE_DIR}/include \
  && mkdir -p ${BASE_DIR}/lib \
  && find /home/carla-${CARLA_VER} -name *.so* -exec cp {} ${BASE_DIR}/lib \; \
@@ -75,12 +86,12 @@ RUN cd /home \
  && cp -r ../include/* ${BASE_DIR}/include/system \
  && cp *.a ${BASE_DIR}/lib/
 
-RUN cd /home/carla-${CARLA_VER}/Build/boost-1.80.0-c8-install/ \
+RUN cd /home/carla-${CARLA_VER}/Build/boost-*/ \
  && cp -r include/boost ${BASE_DIR}/include/system \
  && find lib/* -name *.so* -exec cp {} ${BASE_DIR}/lib \; \
  && find lib/* -name *.a -exec cp {} ${BASE_DIR}/lib \; 
 
-RUN cd /home/carla-${CARLA_VER}/Build/recast-0b13b0-c8-install/ \
+RUN cd /home/carla-${CARLA_VER}/Build/recast-*/ \
  && cp -r include/recast/ ${BASE_DIR}/include/system \
  && cp lib/* ${BASE_DIR}/lib
 

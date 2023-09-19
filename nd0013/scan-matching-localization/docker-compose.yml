@@ -22,6 +22,7 @@ services:
       - QT_X11_NO_MITSHM=1 # Fix a bug with QT
       - SDL_VIDEODRIVER=x11
       - NVIDIA_DRIVER_CAPABILITIES=all
+        #      - SDL_VIDEODRIVER=offscreen
     network_mode: "host"
       #    ports:
       #      - "2000-2022:2000-2022"
@@ -34,4 +35,5 @@ services:
               capabilities: [compute, utility, graphics, display]
     working_dir: /workspace
     command: ["bash", "/home/carla/CarlaUE4.sh", "-RenderOffScreen"]
+      #    command: ["bash", "/home/carla/CarlaUE4.sh", "-opengl"]
 
