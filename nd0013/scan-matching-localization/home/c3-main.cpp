@@ -21,8 +21,6 @@ namespace csd = carla::sensor::data;
 using namespace std::chrono_literals;
 using namespace std::string_literals;
 
-using namespace std;
-
 #include <string>
 #include <pcl/io/pcd_io.h>
 #include <pcl/visualization/pcl_visualizer.h>
@@ -35,9 +33,11 @@ using namespace std;
 #include <pcl/registration/ndt.h>
 #include <pcl/console/time.h>   // TicToc
 
+using namespace std;
+
 PointCloudT pclCloud;
 cc::Vehicle::Control control;
-std::chrono::time_point<std::chrono::system_clock> currentTime;
+chrono::time_point<chrono::system_clock> currentTime;
 vector<ControlState> cs;
 
 bool refresh_view = false;
@@ -127,7 +127,7 @@ int main(){
 	auto lidar_actor = world.SpawnActor(lidar_bp, lidar_transform, ego_actor.get());
 	auto lidar = boost::static_pointer_cast<cc::Sensor>(lidar_actor);
 	bool new_scan = true;
-	std::chrono::time_point<std::chrono::system_clock> lastScanTime, startTime;
+	chrono::time_point<chrono::system_clock> lastScanTime, startTime;
 
 	pcl::visualization::PCLVisualizer::Ptr viewer (new pcl::visualization::PCLVisualizer ("3D Viewer"));
   	viewer->setBackgroundColor (0, 0, 0);
@@ -155,7 +155,7 @@ int main(){
 				}
 			}
 			if(pclCloud.points.size() > 5000){ // CANDO: Can modify this value to get different scan resolutions
-				lastScanTime = std::chrono::system_clock::now();
+				lastScanTime = chrono::system_clock::now();
 				*scanCloud = pclCloud;
 				new_scan = false;
 			}
@@ -168,7 +168,7 @@ int main(){
 	while (!viewer->wasStopped())
   	{
 		while(new_scan){
-			std::this_thread::sleep_for(0.1s);
+			this_thread::sleep_for(0.1s);
 			world.Tick(1s);
 		}
 		if(refresh_view){

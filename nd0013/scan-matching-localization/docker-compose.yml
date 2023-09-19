@@ -33,5 +33,5 @@ services:
               device_ids: ['${GPU_DEVICES}']
               capabilities: [compute, utility, graphics, display]
     working_dir: /workspace
-    command: ["bash", "/home/carla/CarlaUE4.sh"]
+    command: ["bash", "/home/carla/CarlaUE4.sh", "-RenderOffScreen"]
 

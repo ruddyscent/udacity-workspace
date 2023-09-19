@@ -1,6 +1,8 @@
 
 #include "helper.h"
 
+using namespace std;
+
 Eigen::Matrix4d transform2D(double theta, double xt, double yt){
 
 	Eigen::Matrix4d matrix = Eigen::Matrix4d::Identity ();
@@ -92,7 +94,7 @@ void renderPath(pcl::visualization::PCLVisualizer::Ptr& viewer, const PointCloud
 
 	int previous = 0;
 	for(int index = previous+1; index < cloud->points.size(); index++){
-		renderRay(viewer, Point(cloud->points[previous].x, cloud->points[previous].y, 0), Point(cloud->points[index].x, cloud->points[index].y, 0), name+to_string(previous), color);
+		renderRay(viewer, Point(cloud->points[previous].x, cloud->points[previous].y, 0), Point(cloud->points[index].x, cloud->points[index].y, 0), name+std::to_string(previous), color);
 		previous++;
 	}
 

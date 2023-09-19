@@ -51,7 +51,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # RUN ln -s /usr/bin/vtk6 /usr/bin/vtk && \
 #     ln -s /usr/lib/python2.7/dist-packages/vtk/libvtkRenderingPythonTkWidgets.x86_64-linux-gnu.so /usr/lib/x86_64-linux-gnu/libvtkRenderingPythonTkWidgets.so 
 
-ARG BASE_DIR=/workspace/libcarla-install
+ARG BASE_DIR=/home/libcarla-install
 RUN cd /home \
  && git clone https://github.com/carla-simulator/carla.git carla-${CARLA_VER} \
  && cd carla-${CARLA_VER} \
@@ -77,7 +77,8 @@ RUN cd /home \
 
 RUN cd /home/carla-${CARLA_VER}/Build/boost-1.80.0-c8-install/ \
  && cp -r include/boost ${BASE_DIR}/include/system \
- && cp lib/* ${BASE_DIR}/lib
+ && find lib/* -name *.so* -exec cp {} ${BASE_DIR}/lib \; \
+ && find lib/* -name *.a -exec cp {} ${BASE_DIR}/lib \; 
 
 RUN cd /home/carla-${CARLA_VER}/Build/recast-0b13b0-c8-install/ \
  && cp -r include/recast/ ${BASE_DIR}/include/system \
