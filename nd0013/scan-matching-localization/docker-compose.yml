@@ -1,5 +1,5 @@
 services:
-  nd0013:
+  cd2693:
     build: .
     ipc: host
     privileged: true
