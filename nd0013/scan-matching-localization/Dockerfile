@@ -51,6 +51,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-setuptools \
     python3-distro \
     python3-wheel \
+    gdb \
  && update-alternatives --install /usr/bin/clang++ clang++ /usr/lib/llvm-8/bin/clang++ 180 \
  && update-alternatives --install /usr/bin/clang clang /usr/lib/llvm-8/bin/clang 180
 
