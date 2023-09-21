@@ -61,11 +61,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # RUN ln -s /usr/bin/vtk6 /usr/bin/vtk && \
 #     ln -s /usr/lib/python2.7/dist-packages/vtk/libvtkRenderingPythonTkWidgets.x86_64-linux-gnu.so /usr/lib/x86_64-linux-gnu/libvtkRenderingPythonTkWidgets.so 
 
+# Apply patch
+# https://www.boost.org/patches/1_80_0/0003-unordered-valid-after-move.patch
 ARG BASE_DIR=/home/libcarla-install
 RUN cd /home \
  && git clone https://github.com/carla-simulator/carla.git carla-${CARLA_VER} \
  && cd carla-${CARLA_VER} \
  && git checkout ${CARLA_VER} \
+ && sed -i 's/BOOST_VERSION=1.80.0/BOOST_VERSION=1.83.0/g' ./Util/BuildTools/Setup.sh \
  && make setup \
  && make LibCarla \
  && make PythonAPI \
