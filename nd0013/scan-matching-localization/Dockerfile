@@ -68,7 +68,7 @@ RUN cd /home \
  && git clone https://github.com/carla-simulator/carla.git carla-${CARLA_VER} \
  && cd carla-${CARLA_VER} \
  && git checkout ${CARLA_VER} \
- && sed -i 's/BOOST_VERSION=1.80.0/BOOST_VERSION=1.83.0/g' ./Util/BuildTools/Setup.sh \
+ && sed -i 's/BOOST_VERSION=1.80.0/BOOST_VERSION=1.75.0/g' ./Util/BuildTools/Setup.sh \
  && make setup \
  && make LibCarla \
  && make PythonAPI \

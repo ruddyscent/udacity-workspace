@@ -35,5 +35,4 @@ services:
               capabilities: [compute, utility, graphics, display]
     working_dir: /workspace
     command: ["bash", "/home/carla/CarlaUE4.sh", "-RenderOffScreen"]
-      #    command: ["bash", "/home/carla/CarlaUE4.sh", "-opengl"]
 
