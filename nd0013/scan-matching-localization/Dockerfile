@@ -8,18 +8,12 @@ USER root
 # Let us install tzdata painlessly
 ENV DEBIAN_FRONTEND=noninteractive
 
-# RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A4B469963BF863CC
-# RUN apt-key del 7fa2af80 \ 
-#  && wget https://developer.download.nvidia.com/compute/cuda/repos/$distro/$arch/cuda-keyring_1.0-1_all.deb \
-#  && dpkg -i cuda-keyring_1.0-1_all.deb
-
 # https://developer.nvidia.com/blog/updating-the-cuda-linux-gpg-repository-key/
 RUN apt-key del 7fa2af80 \
  && apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     sudo \
-    libpcl-dev \
     mesa-utils \
     zsh \
     libusb-1.0-0-dev \
@@ -52,14 +46,37 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-distro \
     python3-wheel \
     gdb \
+    libflann-dev \
+    libglew-dev \
+    libvtk7-dev \
+    libboost-filesystem-dev \
+    libboost-iostreams-dev \
+    libboost-system-dev \
+    nvidia-cuda-dev \
  && update-alternatives --install /usr/bin/clang++ clang++ /usr/lib/llvm-8/bin/clang++ 180 \
  && update-alternatives --install /usr/bin/clang clang /usr/lib/llvm-8/bin/clang 180
 
-# COPY requirements.txt .
-# RUN python3 -m pip install --no-deps -r requirements.txt 
+COPY requirements.txt .
+RUN python3 -m pip install --no-deps -r requirements.txt 
 
-# RUN ln -s /usr/bin/vtk6 /usr/bin/vtk && \
-#     ln -s /usr/lib/python2.7/dist-packages/vtk/libvtkRenderingPythonTkWidgets.x86_64-linux-gnu.so /usr/lib/x86_64-linux-gnu/libvtkRenderingPythonTkWidgets.so 
+RUN ln -s /usr/bin/vtk6 /usr/bin/vtk && \
+    ln -s /usr/lib/python2.7/dist-packages/vtk/libvtkRenderingPythonTkWidgets.x86_64-linux-gnu.so /usr/lib/x86_64-linux-gnu/libvtkRenderingPythonTkWidgets.so 
+
+RUN cd /home \
+ && wget -qO- https://gitlab.com/libeigen/eigen/-/archive/3.3.7/eigen-3.3.7.tar.gz | tar xz \
+ && cd eigen-3.3.7 && mkdir build && cd build \
+ && cmake .. \
+ && make install \
+ && cd ../.. && rm -rf eigen-3.3.7/ && rm -f eigen-3.3.7.tar.gz
+
+RUN cd /home \
+ && wget https://github.com/PointCloudLibrary/pcl/archive/pcl-1.13.1.tar.gz \
+ && tar -xf pcl-1.13.1.tar.gz \
+ && cd pcl-pcl-1.13.1/ \
+ && mkdir build && cd build \
+ && cmake .. \
+ && make -j6 \
+ && make install
 
 # Apply patch
 # https://www.boost.org/patches/1_80_0/0003-unordered-valid-after-move.patch
