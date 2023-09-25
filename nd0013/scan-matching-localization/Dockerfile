@@ -49,9 +49,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libflann-dev \
     libglew-dev \
     libvtk7-dev \
-    libboost-filesystem-dev \
-    libboost-iostreams-dev \
-    libboost-system-dev \
+    libbz2-dev \
     nvidia-cuda-dev \
  && update-alternatives --install /usr/bin/clang++ clang++ /usr/lib/llvm-8/bin/clang++ 180 \
  && update-alternatives --install /usr/bin/clang clang /usr/lib/llvm-8/bin/clang 180
@@ -62,17 +60,28 @@ RUN python3 -m pip install --no-deps -r requirements.txt
 RUN ln -s /usr/bin/vtk6 /usr/bin/vtk && \
     ln -s /usr/lib/python2.7/dist-packages/vtk/libvtkRenderingPythonTkWidgets.x86_64-linux-gnu.so /usr/lib/x86_64-linux-gnu/libvtkRenderingPythonTkWidgets.so 
 
+ARG EIGEN_VER=3.3.7
 RUN cd /home \
- && wget -qO- https://gitlab.com/libeigen/eigen/-/archive/3.3.7/eigen-3.3.7.tar.gz | tar xz \
- && cd eigen-3.3.7 && mkdir build && cd build \
+ && wget -qO- https://gitlab.com/libeigen/eigen/-/archive/${EIGEN_VER}/eigen-${EIGEN_VER}.tar.gz | tar xz \
+ && cd eigen-${EIGEN_VER} && mkdir build && cd build \
  && cmake .. \
  && make install \
- && cd ../.. && rm -rf eigen-3.3.7/ && rm -f eigen-3.3.7.tar.gz
+ && cd ../.. && rm -rf eigen-${EIGEN_VER}/ && rm -f eigen-${EIGEN_VER}.tar.gz
 
+ARG BOOST_VER=1.75.0
+ARG BOOST_VER_=1_75_0
 RUN cd /home \
- && wget https://github.com/PointCloudLibrary/pcl/archive/pcl-1.13.1.tar.gz \
- && tar -xf pcl-1.13.1.tar.gz \
- && cd pcl-pcl-1.13.1/ \
+ && wget https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VER}/source/boost_1_75_0.tar.gz \
+ && tar xvf boost_${BOOST_VER_}.tar.gz \
+ && cd boost_${BOOST_VER_} \
+ && ./bootstrap.sh --prefix=/usr/local/ \
+ && ./b2 install 
+
+ARG PCL_VER=1.13.1
+RUN cd /home \
+ && wget https://github.com/PointCloudLibrary/pcl/archive/pcl-${PCL_VER}.tar.gz \
+ && tar -xf pcl-${PCL_VER}.tar.gz \
+ && cd pcl-pcl-${PCL_VER}/ \
  && mkdir build && cd build \
  && cmake .. \
  && make -j6 \
@@ -85,7 +94,7 @@ RUN cd /home \
  && git clone https://github.com/carla-simulator/carla.git carla-${CARLA_VER} \
  && cd carla-${CARLA_VER} \
  && git checkout ${CARLA_VER} \
- && sed -i 's/BOOST_VERSION=1.80.0/BOOST_VERSION=1.75.0/g' ./Util/BuildTools/Setup.sh \
+ && sed -i 's/BOOST_VERSION=1.80.0/BOOST_VERSION=${BOOST_VER}/g' ./Util/BuildTools/Setup.sh \
  && make setup \
  && make LibCarla \
  && make PythonAPI \

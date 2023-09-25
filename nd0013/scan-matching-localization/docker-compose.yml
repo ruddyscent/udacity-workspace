@@ -35,4 +35,6 @@ services:
               capabilities: [compute, utility, graphics, display]
     working_dir: /workspace
     command: ["bash", "/home/carla/CarlaUE4.sh", "-RenderOffScreen"]
+      # tty: true
+      # command: ["bash"]
 
