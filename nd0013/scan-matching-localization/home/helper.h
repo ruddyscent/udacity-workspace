@@ -7,6 +7,8 @@
 typedef pcl::PointXYZ PointT;
 typedef pcl::PointCloud<PointT> PointCloudT;
 
+using namespace std;
+
 const double pi = M_PI;
 
 struct Point{
@@ -97,7 +99,7 @@ Eigen::Matrix4d transform2D(double theta, double xt, double yt);
 Eigen::Matrix4d transform3D(double yaw, double pitch, double roll, double xt, double yt, double zt);
 Pose getPose(Eigen::Matrix4d matrix);
 double getDistance(Point p1, Point p2);
-double minDistance(Point p1, std::vector<Point> points);
+double minDistance(Point p1, vector<Point> points);
 void print4x4Matrix (const Eigen::Matrix4d & matrix);
 void print4x4Matrixf (const Eigen::Matrix4f & matrix);
 void renderPointCloud(pcl::visualization::PCLVisualizer::Ptr& viewer, const pcl::PointCloud<pcl::PointXYZ>::Ptr& cloud, std::string name, Color color, int renderSize = 4);
@@ -176,7 +178,7 @@ struct Lidar{
 	Lidar(double setX, double setY, double setTheta, double setRange, int setRes)
 		: x(setX), y(setY), theta(setTheta), range(setRange), res(setRes){}
 
-	pcl::PointCloud<pcl::PointXYZ>::Ptr scan(std::vector<LineSegment> walls){
+	pcl::PointCloud<pcl::PointXYZ>::Ptr scan(vector<LineSegment> walls){
 
 		pcl::PointCloud<pcl::PointXYZ>::Ptr cloud (new PointCloudT); 
 		double deltaTheta = (2*pi)/double(res);
@@ -193,8 +195,8 @@ struct Lidar{
 				//cout << "vertical" << endl;
 
 				double yb = sin(angle) * range;
-				double minb = std::min(y,yb);
-				double maxb = std::max(y,yb);
+				double minb = min(y,yb);
+				double maxb = max(y,yb);
 
 				ray = LineSegment(1, 0, x, minb, maxb);
 
@@ -205,8 +207,8 @@ struct Lidar{
 				double b = y - x*m;
 
 				double xb = cos(angle) * range;
-				double minb = std::min(x,xb);
-				double maxb = std::max(x,xb);
+				double minb = min(x,xb);
+				double maxb = max(x,xb);
 
 				ray = LineSegment(m, 1, b, minb, maxb);
 			}
