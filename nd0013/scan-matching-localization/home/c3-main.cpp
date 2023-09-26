@@ -108,11 +108,6 @@ Eigen::Matrix4d ICP(PointCloudT::Ptr target, PointCloudT::Ptr source, Pose start
   	Eigen::Matrix4d initTransform = transform3D(startingPose.rotation.yaw, startingPose.rotation.pitch, startingPose.rotation.roll, startingPose.position.x, startingPose.position.y, startingPose.position.z);
   	PointCloudT::Ptr transformSource (new PointCloudT); 
   	pcl::transformPointCloud (*source, *transformSource, initTransform);
-
-  	/*
-  	if( count == 0)
-  		renderPointCloud(viewer, transformSource, "transform_scan_"+to_string(count), Color(1,0,1)); // render corrected scan
-  	*/
 	
 	pcl::console::TicToc time;
   	time.tic ();
@@ -120,10 +115,10 @@ Eigen::Matrix4d ICP(PointCloudT::Ptr target, PointCloudT::Ptr source, Pose start
   	icp.setMaximumIterations (iterations);
   	icp.setInputSource (transformSource);
   	icp.setInputTarget (target);
-	icp.setMaxCorrespondenceDistance (0.5);//(2);
-	icp.setTransformationEpsilon(1e-3);//1e-8);//0.001);
-	icp.setEuclideanFitnessEpsilon(1);//.05);
-	icp.setRANSACOutlierRejectionThreshold (10);
+	icp.setMaxCorrespondenceDistance(0.5);
+	icp.setTransformationEpsilon(1e-3);
+	icp.setEuclideanFitnessEpsilon(1);
+	icp.setRANSACOutlierRejectionThreshold(10);
 
   	PointCloudT::Ptr cloud_icp (new PointCloudT);  // ICP output point cloud
   	icp.align (*cloud_icp);
@@ -131,7 +126,7 @@ Eigen::Matrix4d ICP(PointCloudT::Ptr target, PointCloudT::Ptr source, Pose start
 
   	if (icp.hasConverged ())
   	{
-  		//std::cout << "\nICP has converged, score is " << icp.getFitnessScore () << std::endl;
+  		// std::cout << "\nICP has converged, score is " << icp.getFitnessScore () << std::endl;
   		transformation_matrix = icp.getFinalTransformation ().cast<double>();
   		transformation_matrix =  transformation_matrix * initTransform;
   		//print4x4Matrix(transformation_matrix);
@@ -349,8 +344,9 @@ int main(){
     		vg.filter(*cloudFiltered);
 
 			// TODO: Find pose transform by using ICP or NDT matching
-			// Eigen::Matrix4d transform_matching = ICP(mapCloud, cloudFiltered, truePose, 150);
-			Eigen::Matrix4d transform_matching = NDT(ndt, cloudFiltered, truePose, 150);
+			pose = Pose(Point(vehicle->GetTransform().location.x, vehicle->GetTransform().location.y, vehicle->GetTransform().location.z), Rotate(vehicle->GetTransform().rotation.yaw * pi/180, vehicle->GetTransform().rotation.pitch * pi/180, vehicle->GetTransform().rotation.roll * pi/180)) - poseRef;
+			// Eigen::Matrix4d transform_matching = ICP(mapCloud, cloudFiltered, pose, 150);
+			Eigen::Matrix4d transform_matching = NDT(ndt, cloudFiltered, pose, 150);
 			pose = getPose(transform_matching);
 
 			// TODO: Transform scan so it aligns with ego's actual pose and render that scan
