@@ -71,7 +71,7 @@ RUN cd /home \
 ARG BOOST_VER=1.75.0
 ARG BOOST_VER_=1_75_0
 RUN cd /home \
- && wget https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VER}/source/boost_1_75_0.tar.gz \
+ && wget https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VER}/source/boost_${BOOST_VER_}.tar.gz \
  && tar xvf boost_${BOOST_VER_}.tar.gz \
  && cd boost_${BOOST_VER_} \
  && ./bootstrap.sh --prefix=/usr/local/ \
