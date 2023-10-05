@@ -1,0 +1,40 @@
+services:
+  cd2693:
+    build: .
+    ipc: host
+    privileged: true
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    volumes:
+      - ./home:/workspace
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /dev/dri:/dev/dri
+      - ${HOME}:${HOME}
+      - /${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
+      - /etc/group:/etc/group:ro
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/shadow:/etc/shadow:ro
+      - /etc/sudoers.d:/etc/sudoers.d:ro
+    user: ${UID}
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1 # Fix a bug with QT
+      - SDL_VIDEODRIVER=x11
+      - NVIDIA_DRIVER_CAPABILITIES=all
+        #      - SDL_VIDEODRIVER=offscreen
+    network_mode: "host"
+      #    ports:
+      #      - "2000-2022:2000-2022"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['${GPU_DEVICES}']
+              capabilities: [compute, utility, graphics, display]
+    working_dir: /workspace
+    command: ["bash", "/home/carla/CarlaUE4.sh", "-RenderOffScreen"]
+      # tty: true
+      # command: ["bash"]
+
