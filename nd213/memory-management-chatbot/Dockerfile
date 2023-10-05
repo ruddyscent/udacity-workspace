@@ -10,6 +10,8 @@ RUN apt-get update \
 	git \
 	neovim \
 	gdb \
+	libwxgtk3.0-gtk3-dev \
+	libwxgtk3.0-gtk3-0v5 \
  && apt-get clean autoclean \
  && apt-get autoremove --yes 
 # && rm -rf /var/lib/{apt,dpkg,cache,log}/
