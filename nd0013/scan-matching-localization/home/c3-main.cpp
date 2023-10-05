@@ -178,54 +178,6 @@ Eigen::Matrix4d NDT(pcl::NormalDistributionsTransform<pcl::PointXYZ, pcl::PointX
 	return transformation_matrix;
 }
 
-// Eigen::Matrix4d NDT(pcl::NormalDistributionsTransform<pcl::PointXYZ, pcl::PointXYZ> ndt, PointCloudT::Ptr source, Pose startingPose, int iterations){
-
-// 	// Defining a rotation matrix and translation vector
-//   	Eigen::Matrix4d transformation_matrix = Eigen::Matrix4d::Identity ();
-
-//   	// align source with starting pose
-//   	Eigen::Matrix4d initTransform = transform3D(startingPose.rotation.yaw, startingPose.rotation.pitch, startingPose.rotation.roll, startingPose.position.x, startingPose.position.y, startingPose.position.z);
-//   	PointCloudT::Ptr transformSource (new PointCloudT); 
-//   	pcl::transformPointCloud (*source, *transformSource, initTransform);
-
-// 	pcl::console::TicToc time;
-// 	time.tic ();
-
-// 	Eigen::Matrix4f init_guess = transform3D(startingPose.rotation.yaw, startingPose.rotation.pitch, startingPose.rotation.roll, startingPose.position.x, startingPose.position.y, startingPose.position.z).cast<float>();
-
-//   	// Setting max number of registration iterations.
-//   	ndt.setMaximumIterations (iterations);
-// 	ndt.setInputSource (transformSource);
-  	
-// 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_ndt (new pcl::PointCloud<pcl::PointXYZ>);
-//   	ndt.align (*cloud_ndt);//, init_guess);
-
-// 	//cout << "Normal Distributions Transform has converged:" << ndt.hasConverged () << " score: " << ndt.getFitnessScore () <<  " time: " << time.toc() <<  " ms" << endl;
-
-// 	if (ndt.hasConverged ())
-//   	{
-//   		//std::cout << "\nNDT has converged, score is " << icp.getFitnessScore () << std::endl;
-//   		transformation_matrix = ndt.getFinalTransformation ().cast<double>();
-//   		transformation_matrix = transformation_matrix * initTransform;
-//   		//print4x4Matrix(transformation_matrix);
-
-
-//   		/*
-//   		PointCloudT::Ptr corrected_scan (new PointCloudT);
-//   		pcl::transformPointCloud (*source, *corrected_scan, transformation_matrix);
-//   		if( count == 1)
-//   			renderPointCloud(viewer, corrected_scan, "corrected_scan_"+to_string(count), Color(0,1,1)); // render corrected scan
-// 		*/
-//   		// return transformation_matrix;
-//   	}
-// 	else
-// 	{
-//   		PCL_ERROR ("\nNDT has not converged.\n");
-// 	}
-
-// 	return transformation_matrix;
-// }
-
 int main(){
 
 	auto client = cc::Client("localhost", 2000);
@@ -243,9 +195,9 @@ int main(){
 	auto lidar_bp = *(blueprint_library->Find("sensor.lidar.ray_cast"));
 	// CANDO: Can modify lidar values to get different scan resolutions
 	lidar_bp.SetAttribute("upper_fov", "15");
-    lidar_bp.SetAttribute("lower_fov", "-25");
-    lidar_bp.SetAttribute("channels", "32");
-    lidar_bp.SetAttribute("range", "30");
+	lidar_bp.SetAttribute("lower_fov", "-25");
+    	lidar_bp.SetAttribute("channels", "32");
+	lidar_bp.SetAttribute("range", "30");
 	lidar_bp.SetAttribute("rotation_frequency", "60");
 	lidar_bp.SetAttribute("points_per_second", "500000");
 
