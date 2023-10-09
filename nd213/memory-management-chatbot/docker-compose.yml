@@ -10,11 +10,13 @@ services:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1  # Fix a bug with QT
       - SDL_VIDEODRIVER=x11
+      - XAUTHORITY=/root/.Xauthority
     volumes:
       - ./home:/home
       # Allow graphical programs in the container.
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - /${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      - /${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority:ro
+      - /dev/dri:/dev/dri
     working_dir: /home
     # Interactive shell
     stdin_open: true
