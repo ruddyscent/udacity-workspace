@@ -17,7 +17,7 @@ private:
     ////
 
     // Task 3: Exclusive Ownership 2
-    // Task 4: Moving Smart Pointers
+    // Task 5: Moving the ChatBot
 
     // data handles (owned)
     std::vector<std::unique_ptr<GraphNode>> _nodes;
