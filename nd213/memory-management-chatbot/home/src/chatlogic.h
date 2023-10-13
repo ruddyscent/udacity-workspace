@@ -17,10 +17,11 @@ private:
     ////
 
     // Task 3: Exclusive Ownership 2
+    // Task 4: Moving Smart Pointers
 
     // data handles (owned)
     std::vector<std::unique_ptr<GraphNode>> _nodes;
-    std::vector<GraphEdge *> _edges;
+    // std::vector<std::unique_ptr<GraphEdge>> _edges;  // _edges is not used
 
     ////
     //// EOF STUDENT CODE
