@@ -1,6 +1,5 @@
 services:
   cd0426:
-    platform: linux/amd64
     build: .
     ipc: host
     privileged: true

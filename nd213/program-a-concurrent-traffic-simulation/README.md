@@ -12,3 +12,8 @@ $ export DISPLAY=[IP ADDRESS]:0
 ```shell
 $ ipconfig getifaddr en0
 ```
+
+## FAQ
+# gdb failure on M1 mac.
+Run arm64 containers on M1 hardware.
+https://github.com/docker/for-mac/issues/5191#issuecomment-834154431
