@@ -43,7 +43,9 @@ TrafficLightPhase TrafficLight::getCurrentPhase()
 
 void TrafficLight::simulate()
 {
-    // FP.2b : Finally, the private method „cycleThroughPhases“ should be started in a thread when the public method „simulate“ is called. To do this, use the thread queue in the base class. 
+    // FP.2b : Finally, the private method „cycleThroughPhases“ should be started in a thread when the public method „simulate“ is called. To do this, use the thread queue in the base class.
+    std::lock_guard<std::mutex> lock(_mutex);
+    threads.emplace_back(std::thread(&TrafficLight::cycleThroughPhases, this));
 }
 
 // virtual function which is executed in a thread
@@ -52,5 +54,24 @@ void TrafficLight::cycleThroughPhases()
     // FP.2a : Implement the function with an infinite loop that measures the time between two loop cycles 
     // and toggles the current phase of the traffic light between red and green and sends an update method 
     // to the message queue using move semantics. The cycle duration should be a random value between 4 and 6 seconds. 
-    // Also, the while-loop should use std::this_thread::sleep_for to wait 1ms between two cycles. 
+    // Also, the while-loop should use std::this_thread::sleep_for to wait 1ms between two cycles.
+
+    std::random_device rd;
+    std::mt19937 eng(rd());
+    std::uniform_int_distribution<> distr(4, 6);
+    double cycleDuration = distr(eng) * 1000;
+
+    std::chrono::time_point<std::chrono::system_clock> lastUpdate;
+    lastUpdate = std::chrono::system_clock::now();
+    while (true)
+    {
+        long timeSinceLastUpdate = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - lastUpdate).count();
+        if (timeSinceLastUpdate >= cycleDuration) {
+            lastUpdate = std::chrono::system_clock::now();
+            _currentPhase = _currentPhase == TrafficLightPhase::red ? TrafficLightPhase::green : TrafficLightPhase::red;
+        }
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }
+    
 }
