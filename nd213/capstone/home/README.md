@@ -41,7 +41,7 @@ The Snake game code consists of four main classes: `Game`, `Snake`, `Controller`
 | Rubric Point | Location |
 | --- | --- |
 | The project demonstrates an understanding of C++ functions and control structures. | [game.cpp](src/game.cpp) |
-| The project reads data from a file and process the data, or the program writes data to a file. | [game.cpp](src/game.cpp) |
+| The project reads data from a file and process the data, or the program writes data to a file. | [main.cpp](src/main.cpp) |
 | The project accepts user input and processes the input. | [controller.cpp](src/controller.cpp) |
 
 ### Object Oriented Programming
@@ -53,29 +53,30 @@ The Snake game code consists of four main classes: `Game`, `Snake`, `Controller`
 | Class constructors utilize member initialization lists. | [game.cpp](src/game.cpp) |
 | Classes abstract implementation details from their interfaces. | [game.h](src/game.h) |
 | Classes encapsulate behavior. | [game.h](src/game.h) |
-| Classes follow an appropriate inheritance hierarchy. | [game.h](src/game.h) |
-| Derived class functions override virtual base class functions. | [game.h](src/game.h) |
-| Templates generalize functions in the project. | [game.h](src/game.h) |
+* | Classes follow an appropriate inheritance hierarchy. | [game.h](src/game.h) |
+* | Overloaded functions allow the same function to operate on different parameters. | [game.h](src/game.h) |
+* | Derived class functions override virtual base class functions. | [game.h](src/game.h) |
+* | Templates generalize functions in the project. | [game.h](src/game.h) |
 
 ### Memory Management
 
 | Rubric Point | Location |
 | --- | --- |
-| The project makes use of references in function declarations. | [game.h](src/game.h) |
-| The project uses destructors appropriately. | [game.h](src/game.h) |
-| The project uses scope / Resource Acquisition Is Initialization (RAII) where appropriate. | [game.h](src/game.h) |
-| The project follows the Rule of 5. | [game.h](src/game.h) |
-| The project uses move semantics to move data, instead of copying it, where possible. | [game.h](src/game.h) |
-| The project uses smart pointers instead of raw pointers. | [game.h](src/game.h) |
+* | The project makes use of references in function declarations. | [game.h](src/game.h) |
+* | The project uses destructors appropriately. | [game.h](src/game.h) |
+* | The project uses scope / Resource Acquisition Is Initialization (RAII) where appropriate. | [game.h](src/game.h) |
+* | The project follows the Rule of 5. | [game.h](src/game.h) |
+* | The project uses move semantics to move data, instead of copying it, where possible. | [game.h](src/game.h) |
+* | The project uses smart pointers instead of raw pointers. | [game.h](src/game.h) |
 
 ### Concurrency
 
 | Rubric Point | Location |
 | --- | --- |
-| The project uses multithreading. | [game.h](src/game.h) |
-| A promise and future is used in the project. | [game.h](src/game.h) |
-| A mutex or lock is used in the project. | [game.h](src/game.h) |
-| A condition variable is used in the project. | [game.h](src/game.h) |
+* | The project uses multithreading. | [game.h](src/game.h) |
+* | A promise and future is used in the project. | [game.h](src/game.h) |
+* | A mutex or lock is used in the project. | [game.h](src/game.h) |
+* | A condition variable is used in the project. | [game.h](src/game.h) |
 
 ## CC Attribution-ShareAlike 4.0 International
 
