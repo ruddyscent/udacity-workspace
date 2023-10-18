@@ -1,0 +1,5 @@
+  FramesPerSecond 60  
+  ScreenWidth 640
+  ScreenHeight 640
+  GridWidth 32
+  GridHeight 32
