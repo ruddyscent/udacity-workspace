@@ -6,6 +6,7 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
+#include "entity.h"
 #include <vector>
 #include <SDL.h>
 
@@ -15,7 +16,7 @@
  * 
  * The Snake class contains the state and behavior of the snake in the game.
  */
-class Snake {
+class Snake : public Entity {
  public:
   enum class Direction { kUp, kDown, kLeft, kRight };
 

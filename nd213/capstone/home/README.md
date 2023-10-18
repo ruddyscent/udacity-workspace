@@ -53,18 +53,18 @@ The Snake game code consists of four main classes: `Game`, `Snake`, `Controller`
 | Class constructors utilize member initialization lists. | [game.cpp](src/game.cpp) |
 | Classes abstract implementation details from their interfaces. | [game.h](src/game.h) |
 | Classes encapsulate behavior. | [game.h](src/game.h) |
-* | Classes follow an appropriate inheritance hierarchy. | [game.h](src/game.h) |
+| Classes follow an appropriate inheritance hierarchy. | [snake.h](src/snake.h) |
 * | Overloaded functions allow the same function to operate on different parameters. | [game.h](src/game.h) |
-* | Derived class functions override virtual base class functions. | [game.h](src/game.h) |
+| Derived class functions override virtual base class functions. | [snake.h](src/snake.h) |
 * | Templates generalize functions in the project. | [game.h](src/game.h) |
 
 ### Memory Management
 
 | Rubric Point | Location |
 | --- | --- |
-* | The project makes use of references in function declarations. | [game.h](src/game.h) |
-* | The project uses destructors appropriately. | [game.h](src/game.h) |
-* | The project uses scope / Resource Acquisition Is Initialization (RAII) where appropriate. | [game.h](src/game.h) |
+| The project makes use of references in function declarations. | [game.h](src/game.h) |
+| The project uses destructors appropriately. | [renderer.cpp](src/renderer.cpp) |
+| The project uses scope / Resource Acquisition Is Initialization (RAII) where appropriate. | [renderer.cpp](src/renderer.cpp) |
 * | The project follows the Rule of 5. | [game.h](src/game.h) |
 * | The project uses move semantics to move data, instead of copying it, where possible. | [game.h](src/game.h) |
 * | The project uses smart pointers instead of raw pointers. | [game.h](src/game.h) |

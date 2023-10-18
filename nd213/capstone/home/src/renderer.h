@@ -51,13 +51,13 @@ class Renderer {
   void UpdateWindowTitle(int score, int fps);
 
  private:
-  SDL_Window *sdl_window; /**< The SDL window. */
-  SDL_Renderer *sdl_renderer; /**< The SDL renderer. */
+  SDL_Window *sdl_window; /* The SDL window. */
+  SDL_Renderer *sdl_renderer; /* The SDL renderer. */
 
-  const std::size_t screen_width; /**< The width of the screen in pixels. */
-  const std::size_t screen_height; /**< The height of the screen in pixels. */
-  const std::size_t grid_width; /**< The width of the grid in cells. */
-  const std::size_t grid_height; /**< The height of the grid in cells. */
+  const std::size_t screen_width; /* The width of the screen in pixels. */
+  const std::size_t screen_height; /* The height of the screen in pixels. */
+  const std::size_t grid_width; /* The width of the grid in cells. */
+  const std::size_t grid_height; /* The height of the grid in cells. */
 };
 
 #endif
