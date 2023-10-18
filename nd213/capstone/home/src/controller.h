@@ -1,76 +1,36 @@
+/**
+ * @file controller.h
+ * @brief Defines the Controller class and its member functions.
+ */
+
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
 #include "snake.h"
 
+/**
+ * @brief The Controller class handles user input to control the snake's movement.
+ */
 class Controller {
  public:
 
-/*
-**Function Name:** `Controller::ChangeDirection`
-
-**Function Signature:** `void Controller::ChangeDirection(Snake &snake, Snake::Direction input, Snake::Direction opposite) const`
-
-**Function Description:**
-
-This function is a member function of the `Controller` class that changes the direction of the `Snake` object passed as a parameter based on the input direction and the opposite direction. If the current direction of the snake is not opposite to the input direction or the size of the snake is 1, the direction of the snake is changed to the input direction.
-
-**Parameters:**
-
-- `snake`: A reference to a `Snake` object that represents the snake to change the direction of.
-- `input`: A `Snake::Direction` value that represents the input direction to change the snake's direction to.
-- `opposite`: A `Snake::Direction` value that represents the opposite direction to the input direction.
-
-**Return Value:**
-
-This function does not return a value.
-
-**Example Usage:**
-
-```cpp
-Snake snake;
-Controller controller;
-controller.ChangeDirection(snake, Snake::Direction::kUp, Snake::Direction::kDown);
-```
-
-In this example, the direction of the `snake` object is changed to `Snake::Direction::kUp` if the current direction is not `Snake::Direction::kDown` or the size of the snake is 1.
-*/
+  /**
+   * @brief Handles user input to control the snake's movement.
+   * 
+   * @param running A boolean reference indicating whether the game is running or not.
+   * @param snake A reference to the Snake object that needs to be controlled.
+   */
   void HandleInput(bool &running, Snake &snake) const;
 
  private:
 
-/*
-**Function Name:** `Controller::HandleInput`
-
-**Function Signature:** `void Controller::HandleInput(bool &running, Snake &snake) const`
-
-**Function Description:**
-
-This function is a member function of the `Controller` class that handles the input events for the game. It takes a reference to a boolean variable `running` and a reference to a `Snake` object as parameters. If the input event is `SDL_QUIT`, the `running` variable is set to `false`. If the input event is `SDL_KEYDOWN`, the direction of the `Snake` object is changed based on the key pressed.
-
-**Parameters:**
-
-- `running`: A reference to a boolean variable that represents whether the game is running or not.
-- `snake`: A reference to a `Snake` object that represents the snake to change the direction of.
-
-**Return Value:**
-
-This function does not return a value.
-
-**Example Usage:**
-
-```cpp
-bool running = true;
-Snake snake;
-Controller controller;
-while (running) {
-  controller.HandleInput(running, snake);
-  // ...
-}
-```
-
-In this example, the `HandleInput` function is called in a loop to handle the input events for the game. If the `running` variable is set to `false`, the loop will exit and the game will stop.
-*/
+  /**
+   * @brief Changes the direction of the snake.
+   * 
+   * @param snake A reference to the Snake object that needs to be controlled.
+   * @param input The direction to change to.
+   * @param opposite The opposite direction of the current direction.
+   */
   void ChangeDirection(Snake &snake, Snake::Direction input,
                        Snake::Direction opposite) const;
 };

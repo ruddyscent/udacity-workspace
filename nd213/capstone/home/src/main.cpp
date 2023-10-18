@@ -9,6 +9,13 @@
 
 using namespace std;
 
+/**
+ * Splits a string into tokens based on a delimiter character.
+ * 
+ * @param str The string to split.
+ * @param delim The delimiter character to split the string on. Defaults to ' '.
+ * @return A vector of strings representing the tokens.
+ */
 vector<string> split(const string &str, char delim = ' ')
 {
   vector<string> tokens;
@@ -25,6 +32,7 @@ vector<string> split(const string &str, char delim = ' ')
 
 int main(int argc, char *argv[])
 {
+  // Check for valid usage
   if (argc != 2)
   {
     cerr << "Usage: " << argv[0] << " CONFIG_FILE\n";
@@ -45,6 +53,7 @@ int main(int argc, char *argv[])
   size_t kGridWidth{32};
   size_t kGridHeight{32};
 
+  // Parse the input file
   string buffer;
   while (getline(input_file, buffer))
   {
