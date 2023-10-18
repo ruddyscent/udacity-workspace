@@ -14,6 +14,7 @@ RUN apt-get update \
 	libwxgtk3.0-gtk3-0v5 \
 	x11-apps \
 	libopencv-dev \
+	libsdl2-dev \
  && apt-get clean autoclean \
  && apt-get autoremove --yes 
 # && rm -rf /var/lib/{apt,dpkg,cache,log}/
