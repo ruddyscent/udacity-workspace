@@ -1,6 +1,9 @@
-#include "game.h"
 #include <iostream>
+#include <thread>
 #include <SDL.h>
+
+#include "game.h"
+// #include "message_queue.h"
 
 using namespace std;
 
@@ -21,13 +24,19 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   int frame_count = 0;
   bool running = true;
 
+  // shared_ptr<MessageQueue<int>> input_queue(new MessageQueue<int>);
+
   while (running) {
     frame_start = SDL_GetTicks();
 
     // Input, Update, Render - the main game loop.
-    controller.HandleInput(running, snake);
+    // controller.HandleInput(running, snake);
+    thread t1(&Controller::HandleInput, &controller, ref(running), ref(snake));
+    t1.join();
     Update();
     renderer.Render(snake, food);
+    // thread t2(&Renderer::Render, &renderer, ref(snake), ref(food));
+    // t2.join();
 
     frame_end = SDL_GetTicks();
 
