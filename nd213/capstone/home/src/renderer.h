@@ -40,7 +40,7 @@ class Renderer {
    * @param snake The Snake object to be rendered.
    * @param food The food object to be rendered.
    */
-  void Render(Snake const snake, SDL_Point const &food);
+  void Render(Snake const &snake, SDL_Point const &food);
 
   /**
    * @brief Updates the window title with the current score and fps.
