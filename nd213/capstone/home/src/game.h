@@ -54,6 +54,7 @@ class Game {
  private:
   Snake snake;
   SDL_Point food;
+  SDL_Point poison;
 
   std::random_device dev;
   std::mt19937 engine;
@@ -68,6 +69,12 @@ class Game {
    */
   void PlaceFood();
 
+  /**
+   * @brief Places a new poison item on the game grid.
+   * 
+   */
+  void PlacePoison();
+  
   /**
    * @brief Updates the state of the game.
    * 
