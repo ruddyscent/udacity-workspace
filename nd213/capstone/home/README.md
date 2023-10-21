@@ -24,7 +24,7 @@ Embark on an exciting journey through this captivating 2D Snake game, fueled by 
 1. Clone this repo.
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
-4. Run it: `./SnakeGame`.
+4. Run it: `./SnakeGame ../config.txt`.
 
 ## Code Structure
 
@@ -54,9 +54,9 @@ The Snake game code consists of four main classes: `Game`, `Snake`, `Controller`
 | Classes abstract implementation details from their interfaces. | [game.h](src/game.h) |
 | Classes encapsulate behavior. | [game.h](src/game.h) |
 | Classes follow an appropriate inheritance hierarchy. | [snake.h](src/snake.h) |
-* | Overloaded functions allow the same function to operate on different parameters. | [game.h](src/game.h) |
+| Overloaded functions allow the same function to operate on different parameters. | Not implemented |
 | Derived class functions override virtual base class functions. | [snake.h](src/snake.h) |
-* | Templates generalize functions in the project. | [game.h](src/game.h) |
+| Templates generalize functions in the project. | Not implemented |
 
 ### Memory Management
 
@@ -65,18 +65,18 @@ The Snake game code consists of four main classes: `Game`, `Snake`, `Controller`
 | The project makes use of references in function declarations. | [game.h](src/game.h) |
 | The project uses destructors appropriately. | [renderer.cpp](src/renderer.cpp) |
 | The project uses scope / Resource Acquisition Is Initialization (RAII) where appropriate. | [renderer.cpp](src/renderer.cpp) |
-* | The project follows the Rule of 5. | [game.h](src/game.h) |
-* | The project uses move semantics to move data, instead of copying it, where possible. | [game.h](src/game.h) |
-* | The project uses smart pointers instead of raw pointers. | [game.h](src/game.h) |
+| The project follows the Rule of 5. | Not implemented |
+| The project uses move semantics to move data, instead of copying it, where possible. | Not implemented |
+| The project uses smart pointers instead of raw pointers. | Not implemented |
 
 ### Concurrency
 
 | Rubric Point | Location |
 | --- | --- |
-* | The project uses multithreading. | [game.h](src/game.h) |
-* | A promise and future is used in the project. | [game.h](src/game.h) |
-* | A mutex or lock is used in the project. | [game.h](src/game.h) |
-* | A condition variable is used in the project. | [game.h](src/game.h) |
+| The project uses multithreading. | [game.cpp](src/game.cpp) |
+| A promise and future is used in the project. | Not implemented |
+| A mutex or lock is used in the project. | Not implemented |
+| A condition variable is used in the project. | Not implemented |
 
 ## CC Attribution-ShareAlike 4.0 International
 
