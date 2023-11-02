@@ -69,9 +69,9 @@ def print_results(results_dic, results_stats_dic, model,
     print("{:20}: {:3d}".format('N Dog Images', results_stats_dic['n_dogs_img']))     
     print("{:20}: {:3d}".format('N "Not-a" Dog Images', results_stats_dic['n_notdogs_img']))   
     print(" ")
-    print("% Correct Dogs:", results_stats_dic["pct_correct_dogs"])
-    print("% Correct Breed:", results_stats_dic["pct_correct_breed"])
-    print("% Correct \"Not-a\" Dog:", results_stats_dic["pct_correct_notdogs"])
+    print("% Correct Dogs: {:.1f}".format(results_stats_dic["pct_correct_dogs"]))
+    print("% Correct Breed: {:.1f}".format(results_stats_dic["pct_correct_breed"]))
+    print("% Correct \"Not-a\" Dog: {:.1f}".format(results_stats_dic["pct_correct_notdogs"]))
     print("% Match:", results_stats_dic["pct_match"])
     print(" ")
     if (print_incorrect_dogs and 
