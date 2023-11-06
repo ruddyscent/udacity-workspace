@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
     libgl1-mesa-dev \
     wget
 
-# Copy this version of of the model garden into the image
+# Copy this version of the model garden into the image
 COPY models/research/object_detection /home/tensorflow/models/research/object_detection 
 
 # Compile protobuf configs
@@ -22,6 +22,7 @@ RUN (cd /home/tensorflow/models/research/ && protoc object_detection/protos/*.pr
 WORKDIR /home/tensorflow/models/research/
 
 RUN cp object_detection/packages/tf2/setup.py ./
+RUN sed -i 's/pillow/pillow==9.5/g' setup.py
 ENV PATH="/home/tensorflow/.local/bin:${PATH}"
 RUN python -m pip install -U pip
 RUN python -m pip install .
