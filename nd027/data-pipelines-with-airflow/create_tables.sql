@@ -35,7 +35,7 @@ CREATE TABLE public.songplays (
 
 CREATE TABLE public.songs (
 	songid varchar(256) NOT NULL,
-	title varchar(1024),
+	title varchar(512),
 	artistid varchar(256),
 	"year" int4,
 	duration numeric(18,0),
@@ -71,7 +71,7 @@ CREATE TABLE public.staging_songs (
 	artist_longitude numeric(18,0),
 	artist_location varchar(512),
 	song_id varchar(256),
-	title varchar(1024),
+	title varchar(512),
 	duration numeric(18,0),
 	"year" int4
 );
