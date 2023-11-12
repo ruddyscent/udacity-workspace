@@ -1,7 +1,8 @@
-from airflow.providers.amazon.aws.hooks.base_aws import AwsBaseHook
-from airflow.providers.postgres.hooks.postgres import PostgresHook
+from airflow.hooks.postgres_hook import PostgresHook
 from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
+
+from airflow.providers.amazon.aws.hooks.base_aws import AwsBaseHook
 
 class StageToRedshiftOperator(BaseOperator):
     ui_color = "#358140"
@@ -61,3 +62,8 @@ class StageToRedshiftOperator(BaseOperator):
             self.json_path
         )
         redshift.run(formatted_sql)
+
+
+
+
+

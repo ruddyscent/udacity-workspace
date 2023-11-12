@@ -4,8 +4,8 @@ import os
 
 from airflow.decorators import dag
 from airflow.operators.empty import EmptyOperator
-from final_project_operators import (StageToRedshiftOperator, LoadFactOperator,
-                                     LoadDimensionOperator, DataQualityOperator)
+from operators import (StageToRedshiftOperator, LoadFactOperator,
+                       LoadDimensionOperator, DataQualityOperator)
 from helpers.sql_queries import SqlQueries
 
 
