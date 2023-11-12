@@ -25,6 +25,8 @@
 #
 # AIRFLOW_IMAGE_NAME           - Docker image name used to run Airflow.
 #                                Default: apache/airflow:2.6.0
+# AIRFLOW_PORT                 - Port number of Airflow
+#                                Default: 8080
 # AIRFLOW_UID                  - User ID in Airflow containers
 #                                Default: 50000
 # AIRFLOW_PROJ_DIR             - Base path to which all the files will be volumed.
@@ -116,7 +118,7 @@ services:
     <<: *airflow-common
     command: webserver
     ports:
-      - "${AIRFLOW_PORT}:8080"
+      - "${AIRFLOW_PORT:-8080}:8080"
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
       interval: 30s
