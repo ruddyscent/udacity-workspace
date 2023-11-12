@@ -1,0 +1,15 @@
+services:
+  nd893:
+    build: .
+    volumes:
+      - ./deep-reinforcement-learning:/abcd
+    ports:
+      - "${JUPYTER_PORT:-8888}:8888"
+      - "${TENSORBOARD_PORT:-6006}:6006"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    working_dir: /abcd
+    command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="${JUPYTER_TOKEN}" --NotebookApp.password='' --notebook-dir=/abcd
