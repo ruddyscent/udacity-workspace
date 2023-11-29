@@ -1,7 +1,7 @@
 CREATE EXTERNAL TABLE IF NOT EXISTS `stedi`.`customer_landing` (
   `customername` string,
   `email` string,
-  `phone` string,
+  `phone` bigint,
   `birthday` string,
   `serialnumber` string,
   `registrationdate` bigint,
