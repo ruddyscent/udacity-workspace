@@ -72,12 +72,13 @@ def calculates_results_stats(results_dic):
     # this function 
     results_stats_dic = dict()
     results_stats_dic["n_images"] = len(results_dic)
-    results_stats_dic["n_dogs_img"] = sum(1 for k, v in results_dic.items() if v[3] == 1)
-    results_stats_dic["n_notdogs_img"] = sum(1 for k, v in results_dic.items() if v[3] == 0)
-    results_stats_dic["n_match"] = sum(1 for k, v in results_dic.items() if v[2] == 1)
-    results_stats_dic["n_correct_dogs"] = sum(1 for k, v in results_dic.items() if v[3] == 1 and v[4] == 1)
-    results_stats_dic["n_correct_notdogs"] = sum(1 for k, v in results_dic.items() if v[3] == 0 and v[4] == 0)
-    results_stats_dic["n_correct_breed"] = sum(1 for k, v in results_dic.items() if v[2] == 1 and v[3] == 1)
+    results_stats_dic["n_dogs_img"] = sum(1 for _, v in results_dic.items() if v[3] == 1)
+    results_stats_dic["n_notdogs_img"] = sum(1 for _, v in results_dic.items() if v[3] == 0)
+    results_stats_dic["n_match"] = sum(1 for _, v in results_dic.items() if v[2] == 1)
+    results_stats_dic["n_correct_dogs"] = sum(1 for _, v in results_dic.items() if v[3] == 1 and v[4] == 1)
+    results_stats_dic["n_correct_notdogs"] = sum(1 for _, v in results_dic.items() if v[3] == 0 and v[4] == 0)
+    results_stats_dic["n_correct_breed"] = sum(1 for _, v in results_dic.items() if v[2] == 1 and v[3] == 1)
+
     results_stats_dic["pct_match"] = results_stats_dic["n_match"] / results_stats_dic["n_images"] * 100
     results_stats_dic["pct_correct_dogs"] = results_stats_dic["n_correct_dogs"] / results_stats_dic["n_dogs_img"] * 100
     results_stats_dic["pct_correct_breed"] = results_stats_dic["n_correct_breed"] / results_stats_dic["n_dogs_img"] * 100
