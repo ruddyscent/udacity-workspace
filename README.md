@@ -2,11 +2,11 @@
 Replicate Udacity workspaces on a local machine.
 
 ## Programs
- * [nd0013-kr](https://github.com/ruddyscent/udacity-workspace/tree/main/nd0013-kr): Self Driving Car Engineer Nanodegree (Korean)
- * [nd0013](https://github.com/ruddyscent/udacity-workspace/tree/main/nd0013): Self Driving Car Engineer Nanodegree
+ * [nd0013-kr](https://github.com/ruddyscent/udacity-workspace/tree/main/nd0013-kr): 자율주행차 엔지니어
+ * [nd0013](https://github.com/ruddyscent/udacity-workspace/tree/main/nd0013): Self Driving Car Engineer
  * [nd013](https://github.com/ruddyscent/udacity-workspace/tree/main/nd013): Self-Driving Car Engineer
  * [nd027](https://github.com/ruddyscent/udacity-workspace/tree/main/nd027): Data Engineering with AWS
- * [nd089](https://github.com/ruddyscent/udacity-workspace/tree/main/nd089): AI Programming with Python Nanodegree
+ * [nd089](https://github.com/ruddyscent/udacity-workspace/tree/main/nd089): AI Programming with Python
  * [nd101](https://github.com/ruddyscent/udacity-workspace/tree/main/nd101): Deep Learning
  * [nd213](https://github.com/ruddyscent/udacity-workspace/tree/main/nd213): C++
  * [nd892](https://github.com/ruddyscent/udacity-workspace/tree/main/nd892): Natural Language Processing
