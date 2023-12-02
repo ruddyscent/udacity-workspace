@@ -1,6 +1,19 @@
 # udacity-workspace
 Replicate Udacity workspaces on a local machine.
 
+## Programs
+ * [nd0013-kr](https://github.com/ruddyscent/udacity-workspace/tree/main/nd0013-kr): Self Driving Car Engineer Nanodegree (Korean)
+ * [nd0013](https://github.com/ruddyscent/udacity-workspace/tree/main/nd0013): Self Driving Car Engineer Nanodegree
+ * [nd013](https://github.com/ruddyscent/udacity-workspace/tree/main/nd013): Self-Driving Car Engineer
+ * [nd027](https://github.com/ruddyscent/udacity-workspace/tree/main/nd027): Data Engineering with AWS
+ * [nd089](https://github.com/ruddyscent/udacity-workspace/tree/main/nd089): AI Programming with Python Nanodegree
+ * [nd101](https://github.com/ruddyscent/udacity-workspace/tree/main/nd101): Deep Learning
+ * [nd213](https://github.com/ruddyscent/udacity-workspace/tree/main/nd213): C++
+ * [nd892](https://github.com/ruddyscent/udacity-workspace/tree/main/nd892): Natural Language Processing
+ * [ud210](https://github.com/ruddyscent/udacity-workspace/tree/main/ud210): C++ For Programmers
+ * [ud595](https://github.com/ruddyscent/udacity-workspace/tree/main/ud595): Linux Command Line Basics
+ * [ud810](https://github.com/ruddyscent/udacity-workspace/tree/main/ud810): Introduction to Computer Vision
+
 ## Common environment variables
 You can set the environment variable in the `.env` file in the project root directory. There are the following common variables. If the projects may have a special variable, the `README.md` at the project root directory explains the variable.
 
