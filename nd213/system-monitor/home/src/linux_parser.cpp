@@ -130,7 +130,8 @@ string LinuxParser::Command(int pid) {
 // DONE: Read and return the memory used by a process
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::Ram(int pid) {
-  return GetValueByKey<string>(filterProcMem, kStatusFilename, pid);
+  string maybe_unused = GetValueByKey<string>(filterProcMem, kStatusFilename, pid);
+  return maybe_unused == "" ? "0" : maybe_unused;
 }
 
 // DONE: Read and return the user ID associated with a process
