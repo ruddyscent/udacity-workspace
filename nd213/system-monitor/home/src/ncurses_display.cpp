@@ -71,7 +71,7 @@ void NCursesDisplay::DisplayProcesses(vector<Process>& processes,
   mvwprintw(window, row, time_column, "TIME+");
   mvwprintw(window, row, command_column, "COMMAND");
   wattroff(window, COLOR_PAIR(2));
-  for (int i = 0; i < n; ++i) {
+  for (int i = 0; i < std::min(n, static_cast<int>(processes.size())); ++i) {
     // You need to take care of the fact that the cpu utilization has already
     // been multiplied by 100.
     //  Clear the line
