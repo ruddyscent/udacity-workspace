@@ -1,10 +1,16 @@
 services:
   cd12441:
-    build: .
+    image: amazon/aws-glue-libs:glue_libs_4.0.0_image_01-arm64
     volumes:
-      - ./home:/home
+      - ./home:/home/glue_user/workspace
+    working_dir: /home/glue_user
+    environment:
+      - DISABLE_SSL=true
     ports:
       - "${JUPYTER_PORT}:8888"
-    working_dir: /home
-    command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="$JUPYTER_TOKEN" --notebook-dir=/home
-
+      - "4040:4040"
+      - "18080:1808"
+        #    command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="$JUPYTER_TOKEN" --notebook-dir=/home
+    # Interactive shell
+    stdin_open: true
+    tty: true
