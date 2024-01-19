@@ -12,6 +12,7 @@ RUN apt-get update \
 	neovim \
 	x11-apps \
 	mesa-utils \
+        gdb \
  && apt-get clean autoclean \
  && apt-get autoremove --yes 
 # && rm -rf /var/lib/{apt,dpkg,cache,log}/
