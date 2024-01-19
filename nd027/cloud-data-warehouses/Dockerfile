@@ -21,7 +21,8 @@ RUN apt-get update \
         postgresql-client-14 \
         python3-boto3 \
         python3-matplotlib \
-        python3-sqlalchemy
+        python3-sqlalchemy \
+        neovim
 #    && rm -rf /var/lib/apt/lists/* \
 #    && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
