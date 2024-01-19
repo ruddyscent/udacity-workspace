@@ -22,8 +22,9 @@ RUN apt-get update \
     python3-boto3 \
     python3-matplotlib \
     python3-sqlalchemy \
-    neovim
-# && rm -rf /var/lib/apt/lists/* \
+    neovim \
+ && apt-get clean autoclean \
+ && apt-get autoremove --yes 
 # && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 COPY requirements.txt /tmp/pip-tmp/
