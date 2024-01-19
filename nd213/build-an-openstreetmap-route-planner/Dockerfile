@@ -1,5 +1,4 @@
-# FROM arm64v8/ubuntu:22.04
-FROM ubuntu:22.04
+FROM arm64v8/ubuntu:22.04
 
 RUN apt-get update \
  && export DEBIAN_FRONTEND=noninteractive \
@@ -13,6 +12,7 @@ RUN apt-get update \
 	neovim \
 	x11-apps \
 	mesa-utils \
+        gdb \
  && apt-get clean autoclean \
  && apt-get autoremove --yes 
 # && rm -rf /var/lib/{apt,dpkg,cache,log}/
