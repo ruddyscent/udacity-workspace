@@ -3,5 +3,4 @@ seaborn==0.12.2
 ipywidgets==7.5.0
 nbconvert==6.5.0
 voila==0.3.1
-nbdev==2.3.12
-pre-commit==3.1.0
+traitlets==5.9.0
