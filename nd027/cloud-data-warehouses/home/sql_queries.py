@@ -28,12 +28,12 @@ staging_events_table_create = ("""CREATE TABLE IF NOT EXISTS staging_events (
     method VARCHAR,
     page VARCHAR,
     registration FLOAT,
-    sessionId INT,
+    sessionId INT sortkey,
     song VARCHAR,
     status INT,
     ts BIGINT,
     userAgent VARCHAR,
-    userId INT
+    userId INT distkey
     )
 """)
 
@@ -43,11 +43,11 @@ staging_songs_table_create = ("""CREATE TABLE IF NOT EXISTS staging_songs (
     artist_latitude FLOAT,
     artist_longitude FLOAT,
     artist_location VARCHAR,
-    artist_name VARCHAR,
-    song_id VARCHAR,
+    artist_name VARCHAR distkey,
+    song_id VARCHARy,
     title VARCHAR,
     duration FLOAT,
-    year INT
+    year INT sortkey
     )
 """)
 
