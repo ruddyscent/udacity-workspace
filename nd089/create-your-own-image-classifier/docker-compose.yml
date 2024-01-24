@@ -1,5 +1,5 @@
 services:
-  nd089:
+  cd0673:
     build: .
     ipc: host
     ulimits:

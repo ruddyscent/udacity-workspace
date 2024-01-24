@@ -7,9 +7,10 @@ RUN apt-get update \
         texlive-xetex \
         texlive-fonts-recommended \
         texlive-plain-generic \
-        pandoc 
-#    && apt-get clean autoclean \
-#    && apt-get autoremove --yes
+        pandoc \
+        neovim \
+    && apt-get clean autoclean \
+    && apt-get autoremove --yes
 # && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 COPY requirements.txt /tmp/pip-tmp/
@@ -18,3 +19,6 @@ RUN pip install --upgrade pip \
     && pip --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
     && rm -rf /tmp/pip-tmp
 
+RUN echo "alias vi=nvim" >> ~/.bash_aliases \
+ && echo "alias vim=nvim" >> ~/.bash_aliases
+ 
