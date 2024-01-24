@@ -13,7 +13,8 @@ Replicate Udacity workspaces on a local machine.
  * [ud210](https://github.com/ruddyscent/udacity-workspace/tree/main/ud210): C++ For Programmers
  * [ud595](https://github.com/ruddyscent/udacity-workspace/tree/main/ud595): Linux Command Line Basics
  * [ud810](https://github.com/ruddyscent/udacity-workspace/tree/main/ud810): Introduction to Computer Vision
-
+ * [cd1822](https://github.com/ruddyscent/udacity-workspace/tree/main/cd1822): RNNs and Transformers
+   
 ## Common environment variables
 You can set the environment variable in the `.env` file in the project root directory. There are the following common variables. If the projects may have a special variable, the `README.md` at the project root directory explains the variable.
 
