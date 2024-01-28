@@ -2,6 +2,7 @@
 #define CHATBOT_H_
 
 #include <wx/bitmap.h>
+#include <random>
 #include <string>
 
 class GraphNode; // forward declaration
@@ -10,6 +11,10 @@ class ChatLogic; // forward declaration
 class ChatBot
 {
 private:
+    #include <random>
+
+    std::mt19937 _generator;
+
     // data handles (owned)
     wxBitmap *_image; // avatar image
 

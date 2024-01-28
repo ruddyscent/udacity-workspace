@@ -9,25 +9,20 @@
 #include "chatbot.h"
 
 // constructor WITHOUT memory allocation
-ChatBot::ChatBot()
+ChatBot::ChatBot(): 
+_image{nullptr}, _rootNode{nullptr}, _chatLogic{nullptr}, // invalidate data handles
+_generator{std::random_device{}()} // initialize random number generator
 {
-    // invalidate data handles
-    _image = nullptr;
-    _chatLogic = nullptr;
-    _rootNode = nullptr;
+    std::cout << "ChatBot Constructor" << std::endl;
 }
 
 // constructor WITH memory allocation
-ChatBot::ChatBot(std::string filename)
+ChatBot::ChatBot(std::string filename):
+_image{new wxBitmap(filename, wxBITMAP_TYPE_PNG)}, // load image into heap memory
+_rootNode{nullptr}, _chatLogic{nullptr}, // invalidate data handles
+_generator{std::random_device{}()} // initialize random number generator
 {
     std::cout << "ChatBot Constructor" << std::endl;
-    
-    // invalidate data handles
-    _chatLogic = nullptr;
-    _rootNode = nullptr;
-
-    // load image into heap memory
-    _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
 }
 
 ChatBot::~ChatBot()
@@ -163,9 +158,8 @@ void ChatBot::SetCurrentNode(GraphNode *node)
 
     // select a random node answer (if several answers should exist)
     std::vector<std::string> answers = _currentNode->GetAnswers();
-    std::mt19937 generator(int(std::time(0)));
     std::uniform_int_distribution<int> dis(0, answers.size() - 1);
-    std::string answer = answers.at(dis(generator));
+    std::string answer = answers.at(dis(_generator));
 
     // send selected node answer to user
     _chatLogic->SendMessageToUser(answer);
