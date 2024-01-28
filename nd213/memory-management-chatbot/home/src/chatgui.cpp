@@ -13,8 +13,8 @@ const int height = 736;
 // wxWidgets APP
 IMPLEMENT_APP(ChatBotApp);
 
-std::string dataPath = "../";
-std::string imgBasePath = dataPath + "images/";
+const std::string DATA_PATH = "../";
+const std::string IMG_BASE_PATH = DATA_PATH + "images/";
 
 bool ChatBotApp::OnInit()
 {
@@ -88,7 +88,7 @@ void ChatBotFrameImagePanel::paintNow()
 void ChatBotFrameImagePanel::render(wxDC &dc)
 {
     // load backgroud image from file
-    wxString imgFile = imgBasePath + "sf_bridge.jpg";
+    wxString imgFile = IMG_BASE_PATH + "sf_bridge.jpg";
     wxImage image;
     image.LoadFile(imgFile);
 
@@ -126,7 +126,7 @@ ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
     _chatLogic->SetPanelDialogHandle(this);
 
     // load answer graph from file
-    _chatLogic->LoadAnswerGraphFromFile(dataPath + "src/answergraph.txt");
+    _chatLogic->LoadAnswerGraphFromFile(DATA_PATH + "src/answergraph.txt");
 
     ////
     //// EOF STUDENT CODE
@@ -186,7 +186,7 @@ void ChatBotPanelDialog::paintNow()
 void ChatBotPanelDialog::render(wxDC &dc)
 {
     wxImage image;
-    image.LoadFile(imgBasePath + "sf_bridge_inner.jpg");
+    image.LoadFile(IMG_BASE_PATH + "sf_bridge_inner.jpg");
 
     wxSize sz = this->GetSize();
     wxImage imgSmall = image.Rescale(sz.GetWidth(), sz.GetHeight(), wxIMAGE_QUALITY_HIGH);
@@ -202,7 +202,7 @@ ChatBotPanelDialogItem::ChatBotPanelDialogItem(wxPanel *parent, wxString text, b
     wxBitmap *bitmap = isFromUser == true ? nullptr : ((ChatBotPanelDialog*)parent)->GetChatLogicHandle()->GetImageFromChatbot(); 
 
     // create image and text
-    _chatBotImg = new wxStaticBitmap(this, wxID_ANY, (isFromUser ? wxBitmap(imgBasePath + "user.png", wxBITMAP_TYPE_PNG) : *bitmap), wxPoint(-1, -1), wxSize(-1, -1));
+    _chatBotImg = new wxStaticBitmap(this, wxID_ANY, (isFromUser ? wxBitmap(IMG_BASE_PATH + "user.png", wxBITMAP_TYPE_PNG) : *bitmap), wxPoint(-1, -1), wxSize(-1, -1));
     _chatBotTxt = new wxStaticText(this, wxID_ANY, text, wxPoint(-1, -1), wxSize(150, -1), wxALIGN_CENTRE | wxBORDER_NONE);
     _chatBotTxt->SetForegroundColour(isFromUser == true ? wxColor(*wxBLACK) : wxColor(*wxWHITE));
 
