@@ -44,7 +44,7 @@ staging_songs_table_create = ("""CREATE TABLE IF NOT EXISTS staging_songs (
     artist_longitude FLOAT,
     artist_location VARCHAR,
     artist_name VARCHAR distkey,
-    song_id VARCHARy,
+    song_id VARCHAR,
     title VARCHAR,
     duration FLOAT,
     year INT sortkey
