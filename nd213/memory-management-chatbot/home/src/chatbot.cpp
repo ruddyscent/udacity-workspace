@@ -79,7 +79,7 @@ ChatBot::ChatBot(ChatBot &&source)
     std::cout << "ChatBot Move Constructor" << std::endl;
 
     _image = source._image;
-    source._image = NULL;
+    source._image = nullptr;
 
     _currentNode = source._currentNode;
     _rootNode = source._rootNode;
