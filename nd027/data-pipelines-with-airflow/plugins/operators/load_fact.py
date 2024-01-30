@@ -32,7 +32,6 @@ class LoadFactOperator(BaseOperator):
             self.log.info(f"Appending data to {self.table} fact table")
         else:
             self.log.info(f"Clearing data from {self.table} fact table")
-            # redshift.run(f"DELETE FROM {self.table}")
             redshift.run(f"TRUNCATE TABLE {self.table}")
 
         self.log.info(f"Inserting data to {self.table} fact table")
