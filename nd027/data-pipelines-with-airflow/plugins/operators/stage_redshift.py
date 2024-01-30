@@ -47,7 +47,6 @@ class StageToRedshiftOperator(BaseOperator):
         redshift = PostgresHook(postgres_conn_id=self.redshift_conn_id)
 
         self.log.info("Clearing data from destination Redshift table")
-        # redshift.run(f"DELETE FROM {self.table}")
         redshift.run(f"TRUNCATE TABLE {self.table}")
 
         self.log.info(f"Inserting data to {self.table} staging table")
