@@ -1,1 +1,2 @@
-Building a Domain Expert Model
+Introducing Generative AI with AWS
+
