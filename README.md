@@ -14,6 +14,7 @@ Replicate Udacity workspaces on a local machine.
  * [ud595](https://github.com/ruddyscent/udacity-workspace/tree/main/ud595): Linux Command Line Basics
  * [ud810](https://github.com/ruddyscent/udacity-workspace/tree/main/ud810): Introduction to Computer Vision
  * [cd1822](https://github.com/ruddyscent/udacity-workspace/tree/main/cd1822): RNNs and Transformers
+ * [cd13232](https://github.com/ruddyscent/udacity-workspace/tree/main/cd13232): Introducing Generative AI with AWS
    
 ## Common environment variables
 You can set the environment variable in the `.env` file in the project root directory. There are the following common variables. If the projects may have a special variable, the `README.md` at the project root directory explains the variable.
