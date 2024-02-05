@@ -27,7 +27,7 @@ Now we need to know how the length of rental duration of these family-friendly m
 ```sql
 SELECT 
   f.title, c.name, f.rental_duration,
-  NTILE(4) OVER (ORDER BY f.rental_duration) AS standard_qurtile
+  NTILE(4) OVER (ORDER BY f.rental_duration) AS standard_quartile
 FROM film f
 JOIN film_category fc
 ON f.film_id = fc.film_id
@@ -49,16 +49,16 @@ Finally, provide a table with the family-friendly film category, each of the qua
 WITH family_films AS (
     SELECT 
       f.title, c.name AS category, f.rental_duration,
-      NTILE(4) OVER (ORDER BY f.rental_duration) AS standard_qurtile
+      NTILE(4) OVER (ORDER BY f.rental_duration) AS standard_quartile
     FROM film f
     INNER JOIN film_category fc ON f.film_id = fc.film_id
     INNER JOIN category c ON fc.category_id = c.category_id
     WHERE c.name IN ('Animation', 'Children', 'Classics', 'Comedy', 'Family', 'Music')
 )
-SELECT category, standard_qurtile, COUNT(*)
+SELECT category, standard_quartile, COUNT(*)
 FROM family_films
-GROUP BY category, standard_qurtile
-ORDER BY category, standard_qurtile;
+GROUP BY category, standard_quartile
+ORDER BY category, standard_quartile;
 ```
 
 # Question Set 2
@@ -67,14 +67,13 @@ We want to find out how the two stores compare in their count of rental orders d
 
 ```sql
 SELECT
-  EXTRACT(MONTH FROM rental_date) AS rental_month,
-  EXTRACT(YEAR FROM rental_date) AS rental_year,
+  DATE_TRUNC('month', rental_date) AS pay_mon,
   i.store_id,
   COUNT(*) AS count_rentals
 FROM rental r
 INNER JOIN inventory i ON r.inventory_id = i.inventory_id
-GROUP BY rental_month, rental_year, i.store_id
-ORDER BY rental_year, rental_month;
+GROUP BY pay_mon, i.store_id
+ORDER BY pay_mon;
 ```
 
 ## Question 2
@@ -130,8 +129,9 @@ pay_per_month AS (
   ORDER BY tc.full_name, pay_mon)
 SELECT 
   pay_mon, full_name, pay_countermon, pay_amount,
-  COALESCE(LEAD(pay_amount) OVER (PARTITION BY full_name ORDER BY pay_mon) - pay_amount, 0) AS diff
-FROM pay_per_month;
+  COALESCE(pay_amount - LAG(pay_amount) OVER (PARTITION BY full_name ORDER BY pay_mon), 0) AS diff
+FROM pay_per_month
+WHERE pay_mon > '2007-01-01';
 ```
 
 ```sql
@@ -157,8 +157,95 @@ pay_per_month AS (
   ORDER BY tc.full_name, pay_mon)
 SELECT 
   pay_mon, full_name, pay_countermon, pay_amount,
-  COALESCE(LEAD(pay_amount) OVER (PARTITION BY full_name ORDER BY pay_mon) - pay_amount, 0) AS diff
+  COALESCE(pay_amount - LAG(pay_amount) OVER (PARTITION BY full_name ORDER BY pay_mon), 0) AS diff
 FROM pay_per_month
 ORDER BY diff DESC
 LIMIT 1;
+```
+
+# Question Set 3
+## Question 1
+I'm interested in identifying actors who excel in family-friendly movies. Could you please provide the top 10 actors based on the highest number of movie rentals across all family-friendly films?
+
+```sql
+SELECT f.film_id, f.title
+FROM film f
+JOIN film_category fc
+ON f.film_id = fc.film_id
+JOIN category c
+ON fc.category_id = c.category_id
+WHERE c.name IN ('Animation', 'Children', 'Classics', 'Comedy', 'Family', 'Music')
+```
+
+
+```sql
+WITH family_films AS (
+    SELECT f.film_id, f.title
+    FROM film f
+    JOIN film_category fc
+    ON f.film_id = fc.film_id
+    JOIN category c
+    ON fc.category_id = c.category_id
+    WHERE c.name IN ('Animation', 'Children', 'Classics', 'Comedy', 'Family', 'Music')
+    )
+
+SELECT a.actor_id, a.first_name || ' ' || a.last_name AS full_name, COUNT(r.rental_id) AS rental_count
+FROM family_films
+JOIN film_actor fa
+ON family_films.film_id = fa.film_id
+JOIN actor a
+ON fa.actor_id = a.actor_id
+JOIN inventory i
+ON family_films.film_id = i.film_id
+JOIN rental r
+ON i.inventory_id = r.inventory_id
+GROUP BY a.actor_id, full_name
+ORDER BY rental_count DESC
+LIMIT 10;
+```
+
+## Question 2
+I'm interested in discovering which actors excel in family-friendly movies. Could we analyze the monthly rental trends for the top 5 actors with the highest number of movie rentals across all family-friendly genres?
+
+```sql
+WITH family_films AS (
+    SELECT f.film_id, f.title
+    FROM film f
+    INNER JOIN film_category fc
+    ON f.film_id = fc.film_id
+    INNER JOIN category c
+    ON fc.category_id = c.category_id
+    WHERE c.name IN ('Animation', 'Children', 'Classics', 'Comedy', 'Family', 'Music')
+    ),
+top_actors AS (
+    SELECT a.actor_id
+    FROM family_films
+    INNER JOIN film_actor fa
+    ON family_films.film_id = fa.film_id
+    INNER JOIN actor a
+    ON fa.actor_id = a.actor_id
+    INNER JOIN inventory i
+    ON family_films.film_id = i.film_id
+    INNER JOIN rental r
+    ON i.inventory_id = r.inventory_id
+    GROUP BY a.actor_id
+    ORDER BY COUNT(r.rental_id) DESC
+    LIMIT 5
+    )
+SELECT 
+  DATE_TRUNC('month', r.rental_date) AS pay_mon,
+  a.first_name || ' ' || a.last_name AS full_name,
+  COUNT(r.rental_id) AS rental_count
+FROM family_films
+INNER JOIN film_actor fa
+ON family_films.film_id = fa.film_id
+INNER JOIN actor a
+ON fa.actor_id = a.actor_id
+INNER JOIN inventory i
+ON family_films.film_id = i.film_id
+INNER JOIN rental r
+ON i.inventory_id = r.inventory_id
+WHERE EXISTS (SELECT 1 FROM top_actors ta WHERE ta.actor_id = a.actor_id)
+GROUP BY pay_mon, full_name
+ORDER BY full_name, pay_mon
 ```
