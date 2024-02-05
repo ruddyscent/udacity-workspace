@@ -7,7 +7,7 @@ easydict==1.10
 shapely==2.0.1
 open3d==0.17.0
 plotly==5.13.1
-dash==2.11.1
+dash==2.15.0
 addict==2.4.0
 flask==2.2.5
 itsdangerous==2.1.2
