@@ -1,5 +1,5 @@
 services:
-  nd101:
+  cd1823:
     build: .
     ipc: host
     ulimits:
