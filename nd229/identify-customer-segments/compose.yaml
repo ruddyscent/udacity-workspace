@@ -1,0 +1,13 @@
+services:
+  cd0026:
+    build: .
+    ipc: host
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    volumes:
+      - ./home/:/home
+    ports:
+      - "${JUPYTER_PORT}:8888"
+    working_dir: /home
+    command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="${JUPYTER_TOKEN}" --NotebookApp.password='' --notebook-dir=/home
