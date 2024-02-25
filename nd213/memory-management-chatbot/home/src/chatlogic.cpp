@@ -60,19 +60,11 @@ ChatLogic::~ChatLogic()
 template <typename T>
 void ChatLogic::AddAllTokensToElement(std::string tokenID, tokenlist &tokens, T &element)
 {
-    // find all occurences for current node
-    auto token = tokens.begin();
-    while (true)
+    for (const auto &token : tokens)
     {
-        token = std::find_if(token, tokens.end(), [&tokenID](const std::pair<std::string, std::string> &pair) { return pair.first == tokenID;; });
-        if (token != tokens.end())
+        if (token.first == tokenID)
         {
-            element.AddToken(token->second); // add new keyword to edge
-            token++;                         // increment iterator to next element
-        }
-        else
-        {
-            break; // quit infinite while-loop
+            element.AddToken(token.second); // add new keyword to edge
         }
     }
 }
