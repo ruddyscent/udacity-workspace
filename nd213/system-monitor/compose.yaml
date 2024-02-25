@@ -1,6 +1,8 @@
 services:
   cd0424:
     build: .
+    ulimits:
+      core: -1
     # Need to display graphical applications
     network_mode: host
     environment:
