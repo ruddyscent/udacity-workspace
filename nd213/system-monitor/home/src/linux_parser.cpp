@@ -195,12 +195,18 @@ float LinuxParser::CpuUtilization(int pid, float& prev_non_idle_time,
 }
 
 float LinuxParser::CpuUtilization(int pid) {
+  const int UTIME_INDEX = 13;
+  const int STIME_INDEX = 14;
+  const int CUTIME_INDEX = 15;
+  const int CSTIME_INDEX = 16;
+  const int START_TIME_INDEX = 21;
+
   float uptime = UpTime();
   float hertz = sysconf(_SC_CLK_TCK);
   float cpu_usage = 0;
 
   ifstream stream(kProcDirectory + "/" + to_string(pid) + kStatFilename);
-  // vector<string> cpu_utilization;
+  
   if (stream.is_open()) {
     string line;
     getline(stream, line);
@@ -210,11 +216,11 @@ float LinuxParser::CpuUtilization(int pid) {
     while (linestream >> value) {
       cpu_utilization.emplace_back(value);
     }
-    float utime = stof(cpu_utilization[13]);
-    float stime = stof(cpu_utilization[14]);
-    float cutime = stof(cpu_utilization[15]);
-    float cstime = stof(cpu_utilization[16]);
-    float start_time = stof(cpu_utilization[21]);
+    float utime = stof(cpu_utilization[UTIME_INDEX]);
+    float stime = stof(cpu_utilization[STIME_INDEX]);
+    float cutime = stof(cpu_utilization[CUTIME_INDEX]);
+    float cstime = stof(cpu_utilization[CSTIME_INDEX]);
+    float start_time = stof(cpu_utilization[START_TIME_INDEX]);
 
     float total_time = utime + stime + cutime + cstime;
     float seconds = uptime - (start_time / hertz);
