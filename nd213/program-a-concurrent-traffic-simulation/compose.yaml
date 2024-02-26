@@ -1,18 +1,25 @@
 services:
-  nd213:
+  cd0426:
     build: .
+    # Unlimit the size of core files
+    ulimits:
+      core: -1
+    ipc: host
+    privileged: true
     # Need to display graphical applications
     network_mode: host
     environment:
       # Allow graphical programs in the container.
       - DISPLAY=${DISPLAY}
-      - QT_X11_NO_MITSHM=1
-      - NVIDIA_DRIVER_CAPABILITIES=all
+      - QT_X11_NO_MITSHM=1  # Fix a bug with QT
+      - SDL_VIDEODRIVER=x11
+      - XAUTHORITY=/root/.Xauthority
     volumes:
       - ./home:/home
       # Allow graphical programs in the container.
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      - /${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      - /${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority:ro
+      - /dev/dri:/dev/dri
     working_dir: /home
     # Interactive shell
     stdin_open: true

@@ -1,22 +1,21 @@
 services:
-  capstone:
+  nd213:
     build: .
-    ipc: host
-    privileged: true
+    # Unlimit the size of core files
+    ulimits:
+      core: -1
     # Need to display graphical applications
     network_mode: host
     environment:
       # Allow graphical programs in the container.
       - DISPLAY=${DISPLAY}
-      - QT_X11_NO_MITSHM=1  # Fix a bug with QT
-      - SDL_VIDEODRIVER=x11
-      - XAUTHORITY=/root/.Xauthority
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_DRIVER_CAPABILITIES=all
     volumes:
       - ./home:/home
       # Allow graphical programs in the container.
-      - /tmp/.X11-unix:/tmp/.X11-unix:ro
-      - /${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority:ro
-      - /dev/dri:/dev/dri
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
     working_dir: /home
     # Interactive shell
     stdin_open: true
