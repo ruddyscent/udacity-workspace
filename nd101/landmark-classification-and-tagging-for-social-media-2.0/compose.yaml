@@ -8,8 +8,8 @@ services:
     volumes:
       - ./home:/home
     ports:
-      - "${JUPYTER_PORT}:8888"
-      - "${TENSORBOARD_PORT}:6006"
+      - "${JUPYTER_PORT:-8888}:8888"
+      - "${TENSORBOARD_PORT:-6006}:6006"
     deploy:
       resources:
         reservations:
@@ -29,7 +29,7 @@ services:
     volumes:
       - ./home:/home
     ports:
-      - "${VOILA_PORT}:8866"
+      - "${VOILA_PORT:-8866}:8866"
     deploy:
       resources:
         reservations:
