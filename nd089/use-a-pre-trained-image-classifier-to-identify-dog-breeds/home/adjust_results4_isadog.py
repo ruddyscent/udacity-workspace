@@ -68,7 +68,7 @@ def adjust_results4_isadog(results_dic, dogfile):
            None - results_dic is mutable data type so no return needed.
     """           
     dognames_dic = dict()
-    with open(dogfile, 'r') as fp:
+    with open(dogfile, 'r', encoding='utf-8') as fp:
         for dog_breed in fp:
             dog_breed = dog_breed.strip()
             if dog_breed in dognames_dic:
