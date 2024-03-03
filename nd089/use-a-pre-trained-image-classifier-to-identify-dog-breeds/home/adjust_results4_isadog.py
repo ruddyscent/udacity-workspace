@@ -70,13 +70,13 @@ def adjust_results4_isadog(results_dic, dogfile):
     dognames_dic = dict()
     with open(dogfile, 'r') as fp:
         for dog_breed in fp:
-            dog_breed = dog_breed.rstrip()
+            dog_breed = dog_breed.strip()
             if dog_breed in dognames_dic:
                 print("** Warning: There are duplicated dog breed name", 
                       dog_breed)
             else:
                 dognames_dic[dog_breed] = 1
     
-    for filename, value in results_dic.items():
+    for _, value in results_dic.items():
         value.append(1 if value[0] in dognames_dic else 0)
-        value.append(1 if value[1].lower() in dognames_dic else 0)
+        value.append(1 if value[1] in dognames_dic else 0)

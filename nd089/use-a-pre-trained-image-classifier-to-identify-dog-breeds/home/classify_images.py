@@ -69,6 +69,6 @@ def classify_images(images_dir, results_dic, model):
     """
     for filename, value in results_dic.items():
         fullpath = os.path.join(images_dir, filename)
-        classifier_label = classifier(fullpath, model)
+        classifier_label = classifier(fullpath, model).strip().lower()
         value.append(classifier_label)
-        value.append(1 if value[0].strip().lower() in classifier_label.strip().lower() else 0)
+        value.append(1 if value[0] in classifier_label else 0)
