@@ -16,7 +16,7 @@ RUN apt-get update \
 COPY requirements.txt /tmp/pip-tmp/
 
 RUN pip install --upgrade pip \
- && pip install --upgrade --upgrade --upgrade-strategy only-if-needed --no-cache-dir -r /tmp/pip-tmp/requirements.txt \
+ && pip install --upgrade --upgrade-strategy only-if-needed --no-cache-dir -r /tmp/pip-tmp/requirements.txt \
  && rm -rf /tmp/pip-tmp
 
 RUN echo "alias vi=nvim" >> ~/.bash_aliases \

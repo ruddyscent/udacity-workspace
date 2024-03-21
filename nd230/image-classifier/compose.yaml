@@ -8,7 +8,7 @@ services:
     volumes:
       - ./home/:/home
     ports:
-      - "${JUPYTER_PORT}:8888"
+      - "${JUPYTER_PORT:-8888}:8888"
       - "${TENSORBOARD_PORT:-6006}:6006"
     environment:
       # https://github.com/tensorflow/tensorflow/issues/63849#issuecomment-2002501172
