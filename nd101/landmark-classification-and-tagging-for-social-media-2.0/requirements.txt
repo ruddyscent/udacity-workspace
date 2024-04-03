@@ -2,5 +2,5 @@ livelossplot==0.5.5
 seaborn==0.12.2
 ipywidgets==7.5.0
 nbconvert==6.5.0
-voila==0.3.1
+voila==0.3.8
 traitlets==5.9.0
