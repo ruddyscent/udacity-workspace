@@ -1,0 +1,10 @@
+services:
+  cd0377:
+    build: .
+    volumes:
+      - ./home:/home
+    ports:
+      - "${JUPYTER_PORT:-8888}:8888"
+    working_dir: /home
+    command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="${JUPYTER_TOKEN}" --NotebookApp.password='' --notebook-dir=/home
+
