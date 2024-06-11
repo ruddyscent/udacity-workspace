@@ -1,5 +1,5 @@
 services:
-  nd892:
+  cd0380:
     build: .
     command: bash
     ipc: host
