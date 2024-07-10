@@ -166,6 +166,25 @@ def user_stats(df):
     print('-'*40)
 
 
+def display_raw_data(df):
+    """Displays 5 lines of raw data upon user request."""
+    print('\nWould you like to see raw data? Enter yes or no.')
+    start_loc = 0
+    while True:
+        response = input().lower()
+        if response == 'yes':
+            print(df.iloc[start_loc:start_loc + 5])
+            start_loc += 5
+            if start_loc >= len(df):
+                print("You've reached the end of the data.")
+                break
+            print('\nWould you like to see more raw data? Enter yes or no.')
+        elif response == 'no':
+            break
+        else:
+            print("Sorry, I didn't understand that. Please type 'yes' or 'no'.")
+
+
 def main():
     while True:
         city, month, day = get_filters()
@@ -175,7 +194,8 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
-
+        display_raw_data(df)  # Call the function to display raw data
+        
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
