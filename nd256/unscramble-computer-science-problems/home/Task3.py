@@ -50,7 +50,7 @@ The percentage should have 2 decimal digits
 codes = set()
 
 for record in calls:
-  if record[0][:5] != "(080)":
+  if not record[0].startswith("(080)"):
     continue
 
   if record[1][0] in [7, 8, 9]:
@@ -72,7 +72,7 @@ from_bangalore = 0
 to_bangalore = 0
 
 for record in calls:
-  if record[0][:5] != "(080)":
+  if not record[0].startswith("(080)"):
     continue
 
   from_bangalore += 1
@@ -80,5 +80,5 @@ for record in calls:
   if record[1][:5] != "(080)":
     to_bangalore += 1
 
-print(f"{float(to_bangalore) / from_bangalore:0.2} percent of calls from fixed",
+print(f"{100.0 * to_bangalore / from_bangalore:0.2} percent of calls from fixed",
       f" lines in Bangalore are calls to other fixed lines in Bangalore.")

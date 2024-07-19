@@ -46,20 +46,40 @@ Combining these steps, the overall worst-case time complexity of the script is *
 
 ## Task3.py
 
-1. **Initialization of variables (`from_bangalore`, `to_bangalore`):** This is an O(1) operation, as it simply sets two integer variables to 0.
+### Part A: Finding Area Codes and Mobile Prefixes
 
-2. **Iterating over `calls` records:**
+1. **Iterating over `calls` records:**
    - Let's denote the number of records in `calls` as `N`.
-   - The loop iterates over each record in `calls`. For each iteration, it performs a constant-time check to see if the call is from Bangalore (i.e., `record[0][:5] != "(080)"`). This string comparison is O(1) because the substring length is constant (5 characters).
-   - If the call is from Bangalore, `from_bangalore` is incremented by 1, which is an O(1) operation.
-   - Then, it checks if the call is not to Bangalore (i.e., `record[1][:5] != "(080)"`). This is another O(1) operation for the same reason as above.
-   - If the call is not to Bangalore, `to_bangalore` is incremented by 1, which is also an O(1) operation.
+   - The loop iterates over each record in `calls`. The worst-case time complexity for this loop is O(N) because it examines each call record.
 
-3. **Calculating the percentage and printing the result:**
-   - The calculation of `float(to_bangalore) / from_bangalore` is an O(1) operation, as it involves a single division of two integers.
-   - The `print` function's complexity is not typically considered in algorithmic complexity analysis, as it is dependent on the environment and is generally O(1) for practical purposes.
+2. **Checking if the call is from Bangalore and extracting codes:**
+   - The check for whether a call is from Bangalore (`record[0].startswith("(080)")`) is an O(1) operation because it compares a fixed number of characters at the start of the string.
+   - Extracting codes involves:
+     - Checking the first character of the called number to identify mobile numbers, which is O(1).
+     - Finding the closing parenthesis for fixed lines, which is O(k) in the worst case, where `k` is the length of the phone number. However, since `k` is relatively small and constant, this can be considered O(1) for practical purposes.
+     - Adding the extracted code to a set, which is generally O(1) on average due to hash table operations, but can be worse in cases of hash collisions.
 
-Combining these steps, the overall worst-case time complexity of the script is **O(N)**. This represents the time to iterate over all records in `calls`, performing constant-time operations for each record to determine if it is a call from Bangalore and if it is a call to Bangalore.
+3. **Sorting and printing the codes:**
+   - Converting the set of codes to a list and sorting it has a complexity of O(C log C), where `C` is the number of unique codes.
+   - Printing each code is O(C), assuming printing each code is an O(1) operation.
+
+### Part B: Calculating Percentage of Calls
+
+1. **Iterating over `calls` records again:**
+   - This is another loop over `N` records, so its time complexity is O(N).
+
+2. **Counting calls from and to Bangalore:**
+   - The checks and increments inside the loop are O(1) operations.
+
+3. **Calculating and printing the percentage:**
+   - The division and printing are O(1) operations.
+
+### Overall Complexity
+
+- **Part A:** The dominant factor is the sorting of codes, making its complexity O(N + C log C).
+- **Part B:** The loop over `N` records dominates, making its complexity O(N).
+
+Combining both parts, the overall worst-case time complexity of the script is **O(N + C log C)**. This accounts for iterating over all call records, extracting and sorting unique codes, and calculating the percentage of calls from Bangalore to Bangalore.
 
 ## Task4.py
 

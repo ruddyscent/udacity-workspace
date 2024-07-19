@@ -28,6 +28,6 @@ for record in calls:
     duration[record[0]] += int(record[3])
     duration[record[1]] += int(record[3])
 
-number, time = max(duration.items(), key=lambda v: v)
+number, time = max(duration.items(), key=lambda v: v[1])
 
 print(f"{number} spent the longest time, {time} seconds, on the phone during September 2016.")
