@@ -1,6 +1,5 @@
 .jupyter
 .local
-*.csv
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,jupyternotebooks,macos,vim,visualstudiocode,windows,git
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,jupyternotebooks,macos,vim,visualstudiocode,windows,git
