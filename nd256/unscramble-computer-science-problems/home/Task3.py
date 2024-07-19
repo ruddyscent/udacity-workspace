@@ -44,3 +44,41 @@ Print the answer as a part of a message::
 to other fixed lines in Bangalore."
 The percentage should have 2 decimal digits
 """
+
+# Part A
+
+codes = set()
+
+for record in calls:
+  if record[0][:5] != "(080)":
+    continue
+
+  if record[1][0] in [7, 8, 9]:
+    codes.add(record[:4])
+  elif record[1][:2] == '(0':
+    closing_parentheses = record[1].find(')')
+    codes.add(record[1][1:closing_parentheses])
+  else:
+    continue
+
+print("The numbers called by people in Bangalore have codes:")
+for code in sorted(list(codes)):
+  print(code)
+print()
+
+# Part B
+
+from_bangalore = 0
+to_bangalore = 0
+
+for record in calls:
+  if record[0][:5] != "(080)":
+    continue
+
+  from_bangalore += 1
+
+  if record[1][:5] != "(080)":
+    to_bangalore += 1
+
+print(f"{float(to_bangalore) / from_bangalore:0.2} percent of calls from fixed",
+      f" lines in Bangalore are calls to other fixed lines in Bangalore.")

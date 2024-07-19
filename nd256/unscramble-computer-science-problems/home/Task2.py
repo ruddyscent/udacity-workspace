@@ -20,3 +20,14 @@ Print a message:
 September 2016.".
 """
 
+from collections import defaultdict
+
+duration = defaultdict(int)
+
+for record in calls:
+    duration[record[0]] += int(record[3])
+    duration[record[1]] += int(record[3])
+
+number, time = max(duration.items(), key=lambda v: v)
+
+print(f"{number} spent the longest time, {time} seconds, on the phone during September 2016.")

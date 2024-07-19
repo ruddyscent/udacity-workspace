@@ -25,3 +25,21 @@ Print a message:
 The list of numbers should be print out one per line in lexicographic order with no duplicates.
 """
 
+senders = []
+receivers = []
+
+for record in calls:
+    senders.append(record[0])
+    receivers.append(record[1])
+
+text_nums = []
+
+for record in texts:
+    text_nums.append(record[0])
+    text_nums.append(record[1])
+
+suspects = set(senders) - set(receivers) - set(text_nums)
+
+print("These numbers could be telemarketers: ")
+for num in sorted(list(suspects)):
+    print(num)
