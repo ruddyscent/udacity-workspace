@@ -54,7 +54,7 @@ for record in calls:
     continue
 
   if record[1][0] in [7, 8, 9]:
-    codes.add(record[:4])
+    codes.add(record[1][:4])
   elif record[1][:2] == '(0':
     closing_parentheses = record[1].find(')')
     codes.add(record[1][1:closing_parentheses])
@@ -72,13 +72,10 @@ from_bangalore = 0
 to_bangalore = 0
 
 for record in calls:
-  if not record[0].startswith("(080)"):
-    continue
+  if record[0].startswith("(080)"):
+    from_bangalore += 1
+    if record[1].startswith("(080)"):
+      to_bangalore += 1
 
-  from_bangalore += 1
-
-  if record[1][:5] != "(080)":
-    to_bangalore += 1
-
-print(f"{100.0 * to_bangalore / from_bangalore:0.2} percent of calls from fixed",
+print(f"{round(100.0 * to_bangalore / from_bangalore, 2)} percent of calls from fixed",
       f" lines in Bangalore are calls to other fixed lines in Bangalore.")
