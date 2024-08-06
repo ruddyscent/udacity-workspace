@@ -1,0 +1,5 @@
+The function `rearrange_digits` in `problem_3.py` is designed to rearrange the digits of an input list to form two numbers such that their sum is maximized. The approach begins by sorting the list in descending order using a custom quicksort algorithm. This ensures that the largest digits are processed first, which is crucial for maximizing the sum of the two numbers formed.
+
+The sorted list is then used to alternately assign digits to two numbers, `num1` and `num2`. This alternating assignment ensures that both numbers are as large as possible, given the sorted order of digits. This method is efficient because it leverages the properties of sorting and simple arithmetic operations to achieve the desired outcome.
+
+The time complexity of the quicksort algorithm is $O(n \log n)$ on average, where $n$ is the number of elements in the input list. The space complexity is $O(n)$ due to the additional lists created during the sorting process. The subsequent formation of the two numbers has a linear time complexity, $O(n)$, and constant space complexity, $O(1)$, as it only uses a fixed amount of extra space for the two numbers.

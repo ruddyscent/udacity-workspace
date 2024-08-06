@@ -1,0 +1,9 @@
+services:
+  cd1887:
+    image: quay.io/jupyter/datascience-notebook
+    volumes:
+      - ./home:/home/jovyan
+    ports:
+      - "${JUPYTER_PORT:-8888}:8888"
+    working_dir: /home
+    command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token="${JUPYTER_TOKEN:-letmein}" --NotebookApp.password='' --notebook-dir=/home/jovyan
