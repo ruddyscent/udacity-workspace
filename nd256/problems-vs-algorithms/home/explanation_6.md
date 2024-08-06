@@ -1,0 +1,7 @@
+In `problem_6.py`, the function `get_min_max` is designed to find and return the minimum and maximum values from a list of unsorted integers. The decision to use a simple list as the input data structure is appropriate because lists are a fundamental and versatile data structure in Python, allowing for efficient iteration and element access.
+
+The function begins by checking if the input list is empty, returning `None` if so, which is a clear and concise way to handle edge cases where no elements are present. This ensures that the function's behavior is well-defined for all possible inputs.
+
+To find the minimum and maximum values, the function initializes both `minimum` and `maximum` to the first element of the list. It then iterates through the list, updating these values as it encounters elements that are smaller or larger, respectively. This approach ensures that each element is only examined once, resulting in a time complexity of $O(n)$, where $n$ is the number of elements in the list. This linear time complexity is optimal for this problem, as it guarantees that the function will perform efficiently even for large lists.
+
+The space complexity of the solution is $O(1)$, as it only uses a fixed amount of additional space (for the `minimum` and `maximum` variables) regardless of the size of the input list. This makes the function very space-efficient.

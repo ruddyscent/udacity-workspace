@@ -1,0 +1,7 @@
+The function `sqrt` in `problem_1.py` is designed to compute the floored square root of a given non-negative integer using a binary search algorithm. This approach is chosen for its efficiency compared to a naive linear search. Binary search is particularly suitable here because it reduces the search space logarithmically, making it much faster for large numbers.
+
+The function first handles edge cases: it returns `None` for negative inputs (since the square root is not defined for negative numbers) and directly returns the input for `0` and `1` (since their square roots are themselves). For other numbers, it initializes a binary search between `1` and `number // 2` (since the square root of a number is always less than or equal to half of the number for numbers greater than 1).
+
+The binary search iteratively narrows down the range by comparing the square of the midpoint (`mid`) with the input number. If `mid * mid` equals the input number, `mid` is returned as the exact square root. If `mid * mid` is less than the input number, the search continues in the upper half, and `mid` is stored as the last valid result. If `mid * mid` is greater, the search continues in the lower half. This process ensures that the function returns the largest integer `mid` such that `mid * mid` is less than or equal to the input number.
+
+The time complexity of this solution is $O(\log n)$ due to the binary search, making it highly efficient for large inputs. The space complexity is $O(1)$ as it uses a constant amount of extra space regardless of the input size.
