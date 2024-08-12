@@ -1,6 +1,6 @@
 services:
   cd1888:
-    image: quay.io/jupyter/datascience-notebook
+    build: .
     volumes:
       - ./home:/home/jovyan
     ports:
