@@ -1,2 +1,9 @@
 .local
 .vscode-server
+.bash_history
+.dotnet
+.gitconfig
+.jupyter
+.plotly
+.python_history
+.ssh
