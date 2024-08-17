@@ -1,4 +1,4 @@
-## Task0.py
+## Task0
 
 1. **Reading the files (`texts.csv` and `calls.csv`):** The time complexity of reading a file is $O(N)$, where $N$ is the number of lines in the file. This is because each line must be read and processed. Since there are two files, if we assume `texts.csv` has $N$ lines and `calls.csv` has $M$ lines, the complexity for this part is $O(N + M)$.
 
@@ -10,7 +10,7 @@
 
 Combining these, the overall worst-case time complexity of the script is dominated by the file reading and list conversion steps, leading to a final complexity of $O(N + M)$, where $N$ is the number of records in `texts.csv` and $M$ is the number of records in `calls.csv`.
 
-## Task1.py
+## Task1
 
 1. **Initialization of a set (`telephones`):** This is an $O(1)$ operation, as it simply initializes an empty set.
 
@@ -25,7 +25,7 @@ Combining these, the overall worst-case time complexity of the script is dominat
 
 Combining these, the overall worst-case time complexity of the script is dominated by the loops that iterate over `texts` and `calls`, leading to a final complexity of $O(N + M)$. This represents the time to iterate over all records in both `texts` and `calls` and add their telephone numbers to the set, where $N$ is the number of records in `texts` and $M$ is the number of records in `calls`.
 
-## Task2.py
+## Task2
 
 1. **Initialization of a defaultdict (`duration`):** This is an $O(1)$ operation, as it simply initializes an empty defaultdict with integers.
 
@@ -44,7 +44,7 @@ Combining these, the overall worst-case time complexity of the script is dominat
 
 Combining these steps, the overall worst-case time complexity of the script is $O(N)$. This represents the time to iterate over all records in `calls`, update the `duration` for each number, and then find the number with the maximum duration.
 
-## Task3.py
+## Task3
 
 ### Part A: Finding Area Codes and Mobile Prefixes
 
@@ -81,7 +81,7 @@ Combining these steps, the overall worst-case time complexity of the script is $
 
 Combining both parts, the overall worst-case time complexity of the script is $O(N + C \log C)$. This accounts for iterating over all call records, extracting and sorting unique codes, and calculating the percentage of calls from Bangalore to Bangalore.
 
-## Task4.py
+## Task4
 
 1. **Appending to `senders` and `receivers` lists:**
    - Let's denote the number of records in `calls` as $N$.
