@@ -1,5 +1,5 @@
 gensim==4.1.2
 torchdata==0.5.1
 torchtext==0.14.1
-nltk==3.8.1
+nltk==3.9
 livelossplot==0.5.5
