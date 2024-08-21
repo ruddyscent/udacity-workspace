@@ -4,4 +4,4 @@ soundfile==0.10.2
 pandoc==2.3
 nbconvert==7.16.4
 pomegranate==0.14.8
-nltk==3.8.1
+nltk==3.9
