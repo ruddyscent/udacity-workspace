@@ -3,8 +3,8 @@ import pickle
 import chart_studio.plotly as py
 import random
 from plotly.graph_objs import Data, Figure, Layout, Line, Marker, Scatter, XAxis, YAxis
-from plotly.offline import init_notebook_mode, plot, iplot
-from typing import Optional, List
+from plotly.offline import init_notebook_mode, iplot
+from typing import Optional
 
 init_notebook_mode(connected=True)
 
@@ -44,7 +44,7 @@ def load_map(name: str) -> Map:
         G = pickle.load(f)
     return Map(G)
 
-def show_map(M: Map, start: Optional[int] = None, goal: Optional[int] = None, path: Optional[List[int]] = None) -> None:
+def show_map(M: Map, start: Optional[int] = None, goal: Optional[int] = None, path: Optional[list[int]] = None) -> None:
     """
     Display the map using Plotly.
 
@@ -52,7 +52,7 @@ def show_map(M: Map, start: Optional[int] = None, goal: Optional[int] = None, pa
         M (Map): The map to display.
         start (Optional[int]): The starting node (default is None).
         goal (Optional[int]): The goal node (default is None).
-        path (Optional[List[int]]): The path to highlight (default is None).
+        path (Optional[list[int]]): The path to highlight (default is None).
     """    
     G = M._graph
     pos = nx.get_node_attributes(G, 'pos')
