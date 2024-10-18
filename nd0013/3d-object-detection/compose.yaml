@@ -17,9 +17,6 @@ services:
       LIBGL_ALWAYS_INDIRECT: 0
       NO_AT_BRIDGE: 1
     network_mode: "host"
-    ports:
-      - "${JUPYTER_PORT:-8888}:8888"
-      - "${TENSORBOARD_PORT:-6006}:6006"
     deploy:
       resources:
         reservations:
