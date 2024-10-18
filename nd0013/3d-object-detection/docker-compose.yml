@@ -1,5 +1,5 @@
 services:
-  nd0013-kr:
+  nd0013:
     build: .
     ipc: host
     privileged: true
