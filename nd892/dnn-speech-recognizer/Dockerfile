@@ -13,7 +13,7 @@ RUN apt-get update \
 COPY requirements.txt /tmp/pip-tmp/
 
 RUN pip install --upgrade pip \
- && pip install --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
+ && pip install --no-cache-dir -r /tmp/pip-tmp/requirements.txt \
  && rm -rf /tmp/pip-tmp
 
 # RUN conda install -c conda-forge wordcloud

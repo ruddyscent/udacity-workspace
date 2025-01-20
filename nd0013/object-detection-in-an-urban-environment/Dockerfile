@@ -26,7 +26,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.
 COPY requirements.txt /tmp/pip-tmp/
 
 RUN pip install --upgrade pip \
-    && pip install --upgrade --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
+    && pip install --upgrade --no-cache-dir -r /tmp/pip-tmp/requirements.txt \
     && rm -rf /tmp/pip-tmp
 
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager 

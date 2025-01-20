@@ -22,6 +22,6 @@ RUN apt-get update \
 COPY requirements.txt /tmp/pip-tmp/
 
 RUN pip install --upgrade pip \
-    && pip --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
+    && pip --disable-pip-version-check --no-cache-dir -r /tmp/pip-tmp/requirements.txt \
     && rm -rf /tmp/pip-tmp
 
