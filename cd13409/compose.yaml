@@ -1,0 +1,7 @@
+services:
+  cd13409:
+    image: gcc:latest
+    volumes:
+      - ./home/:/home
+    working_dir: /home
+    stdin_open: true
