@@ -1,6 +1,6 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-// TODO: declare necessary constants
+#define MAX_FILENAME_LENGTH 256
 
-#endif
+#endif // CONSTANTS_H

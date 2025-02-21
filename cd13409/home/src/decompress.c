@@ -1,8 +1,62 @@
-/* Include any necessary libraries and header files */
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
 #include "../header_files/decompress.h"
+#include "../header_files/utils.h"
+#include "../header_files/constants.h"
 
 int decompress(const char *input_file_name)
 {
-    // TODO: write decompression solution
+    printf("Initiated decompressing \"%s\"...\n", input_file_name);
+
+    FILE *inputFile = openFile(input_file_name, "r");
+    if (inputFile == NULL) {
+        printf("Decompression of \"%s\" failed\n", input_file_name);
+        return 1;
+    }
+
+    char base_name[MAX_FILENAME_LENGTH];
+    strncpy(base_name, input_file_name, sizeof(base_name) - 1);
+    base_name[sizeof(base_name) - 1] = '\0';
+    char *dot = strrchr(base_name, '.');
+    if (dot != NULL) {
+        *dot = '\0';
+    }
+
+    char output_file_name[MAX_FILENAME_LENGTH];
+    generateUniqueFileName(output_file_name, base_name, "txt");
+
+    FILE *outputFile = openFile(output_file_name, "w");
+    if (outputFile == NULL) {
+        fclose(inputFile);
+        printf("Decompression of \"%s\" failed\n", input_file_name);
+        return 1;
+    }
+
+    int ch;
+    while ((ch = fgetc(inputFile)) != EOF) {
+        if (ch == '\n') {
+            fputc('\n', outputFile);
+        } else if (isalpha(ch)) {
+            int count = 0;
+            int nextCh;
+            while ((nextCh = fgetc(inputFile)) != EOF && isdigit(nextCh)) {
+                count = count * 10 + (nextCh - '0');
+            }
+            for (int i = 0; i < count; i++) {
+                fputc(ch, outputFile);
+            }
+            if (nextCh != EOF) {
+                ungetc(nextCh, inputFile);
+            }
+        }
+    }
+
+    fclose(inputFile);
+    fclose(outputFile);
+
+    printf("Successfully decompressed \"%s\" to \"%s\"\n", input_file_name, output_file_name);
     return 0;
 }

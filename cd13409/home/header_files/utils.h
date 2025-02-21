@@ -1,6 +1,9 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-// TODO: declare necessary utility/helper functions
+#include <stdio.h>
 
-#endif
+FILE* openFile(const char *file_name, const char *mode);
+void generateUniqueFileName(char *output_file_name, const char *base_name, const char *extension);
+
+#endif // UTILS_H
