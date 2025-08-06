@@ -1,6 +1,6 @@
 pandoc==2.3
 livelossplot==0.5.5
 ipywidgets==8.0.4
-transformers==4.52.1
+transformers==4.53.0
 sentencepiece==0.1.99
 sacremoses==0.0.53
