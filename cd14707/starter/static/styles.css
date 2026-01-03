@@ -1,0 +1,208 @@
+/* Theme variables and base styles */
+:root {
+    --bg: #f4f4f4;
+    --text: #333;
+    --board-bg: #fff;
+    --board-border: #333;
+    --cell-bg: #fafafa;
+    --cell-alt-bg: #f0f0f0;
+    --cell-border: #bbb;
+    --btn-bg: #1976d2;
+    --btn-bg-hover: #1565c0;
+    --prefilled-bg: #e0e0e0;
+    --incorrect-bg: #ffcdd2;
+    --conflict-bg: #ff9800;
+    --hinted-bg: #fff9c4;
+    --score-th-bg: #f0f0f0;
+    --score-th-text: #333;
+    --cell-size: 40px;
+    --cell-font: 20px;
+}
+
+html[data-theme="dark"] {
+  --bg: #121212;
+  --text: #e6e6e6;
+  --board-bg: #1e1e1e;
+  --board-border: #e0e0e0;
+  --cell-bg: #141414;
+  --cell-alt-bg: #1a1a1a;
+  --cell-border: #505050;
+  --btn-bg: #0d47a1;
+  --btn-bg-hover: #08306f;
+  --prefilled-bg: #2a2a2a;
+  --incorrect-bg: #5f2121;
+  --conflict-bg: #b34700;
+  --hinted-bg: #6b5d00;
+    --score-th-bg: #2a2a2a;
+    --score-th-text: #e6e6e6;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin-top: 30px;
+    color: var(--text);
+}
+
+#sudoku-board {
+    display: inline-block;
+    margin: 30px auto;
+    border: 4px solid var(--board-border);
+    background: var(--board-bg);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.sudoku-row {
+    display: flex;
+}
+
+.sudoku-cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border: 1px solid var(--cell-border);
+    text-align: center;
+    font-size: var(--cell-font);
+    outline: none;
+    background: var(--cell-bg);
+    transition: background 0.15s ease, transform 0.08s ease;
+    color: var(--text);
+    box-sizing: border-box;
+    -webkit-appearance: none;
+}
+
+.sudoku-cell:focus {
+    background: #e0f7fa;
+}
+
+.sudoku-cell.prefilled {
+    background: var(--prefilled-bg);
+    font-weight: bold;
+    color: var(--text);
+}
+
+.sudoku-cell.incorrect {
+    background: var(--incorrect-bg);
+}
+
+.sudoku-cell.hinted {
+    background: var(--hinted-bg);
+}
+
+.sudoku-cell.conflict {
+    background: var(--conflict-bg);
+    color: #fff;
+    font-weight: bold;
+}
+
+#scoreboard-container {
+    max-width: 520px;
+    width: 95%;
+    margin: 10px auto 40px auto;
+    text-align: left;
+}
+
+.scoreboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.scoreboard-table th,
+.scoreboard-table td {
+    border: 1px solid #ddd;
+    padding: 6px 8px;
+    text-align: left;
+}
+
+.scoreboard-table th {
+    background: var(--score-th-bg);
+    color: var(--score-th-text);
+}
+
+.scoreboard-table td { color: var(--text); }
+
+/* Responsive adjustments for mobile */
+@media (max-width: 600px) {
+    :root { --cell-size: 34px; --cell-font: 18px; }
+    #sudoku-board { margin: 18px auto; }
+    .controls { gap: 6px; }
+    button { padding: 6px 12px; font-size: 14px; }
+}
+
+@media (max-width: 420px) {
+    :root { --cell-size: 30px; --cell-font: 16px; }
+    #sudoku-board { margin: 14px auto; }
+    .controls { gap: 6px; }
+    button { padding: 6px 10px; font-size: 13px; }
+    h1 { font-size: 20px; }
+}
+
+/* Alternate 3x3 box backgrounds using the box-a / box-b classes applied at creation time. */
+.sudoku-cell.box-a { background: var(--cell-bg); }
+.sudoku-cell.box-b { background: var(--cell-alt-bg); }
+
+.sudoku-row .sudoku-cell.box-a { background: var(--cell-bg); }
+.sudoku-row .sudoku-cell.box-b { background: var(--cell-alt-bg); }
+
+.sudoku-cell.prefilled.box-a { background: var(--prefilled-bg); }
+.sudoku-cell.prefilled.box-b { background: var(--prefilled-bg); }
+
+.sudoku-cell.incorrect.box-a,
+.sudoku-cell.incorrect.box-b { background: var(--incorrect-bg); }
+
+.sudoku-cell.conflict.box-a,
+.sudoku-cell.conflict.box-b { 
+    background: var(--conflict-bg);
+    color: #fff;
+    font-weight: bold;
+}
+
+.sudoku-cell.hinted.box-a,
+.sudoku-cell.hinted.box-b { background: var(--hinted-bg); }
+
+.sudoku-cell:nth-child(3),
+.sudoku-cell:nth-child(6) {
+    border-right: 3px solid var(--board-border);
+}
+
+.sudoku-row:nth-child(3) .sudoku-cell,
+.sudoku-row:nth-child(6) .sudoku-cell {
+    border-bottom: 3px solid var(--board-border);
+}
+
+.controls {
+    margin: 20px auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+button {
+    padding: 8px 18px;
+    margin: 0 8px;
+    font-size: 16px;
+    border: none;
+    background: var(--btn-bg);
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: var(--btn-bg-hover);
+}
+
+#message {
+    margin-left: 20px;
+    font-size: 16px;
+    color: #d32f2f;
+}
