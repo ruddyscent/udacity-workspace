@@ -44,3 +44,41 @@ The app keeps a single in-memory game (global `CURRENT` in [app.py](app.py)). Th
 - Example: check board payload (client sends): `POST /check` JSON body `{ "board": [[...], ...] }` and receives `{ "incorrect": [[0,1], [8,8]] }`.
 
 If anything here is unclear or you want more examples (tests, CI config, or making generation deterministic), tell me which area to expand and I'll update this file.
+
+**How Copilot should use this file**
+- Treat this as the source of truth for style and project expectations; prefer these rules over generic patterns.
+- Keep outputs consistent to minimize refactors: follow naming, formatting, and API shapes declared here.
+- Ask (or add TODOs) instead of inventing behavior when something is unspecified.
+
+**Naming and code style**
+- Python: snake_case for functions/vars, CapWords for classes, constants UPPER_SNAKE; prefer explicit returns and small helpers.
+- JavaScript: camelCase for functions/vars, PascalCase only for classes/components; avoid implicit globals; keep functions small and pure when possible.
+- CSS: use hyphenated class names; prefer utility-ish names that describe purpose (e.g., `.cell-error`).
+- Tests: name cases after the behavior under test; be explicit about inputs/outputs.
+
+**Architecture and patterns**
+- Keep the app a thin Flask layer: routing + JSON serialization only; push Sudoku rules into `sudoku_logic.py`.
+- Preserve the single in-memory `CURRENT` store; do not add persistence unless asked.
+- Frontend should call the existing `/new` and `/check` endpoints; avoid inventing new routes without need.
+- Keep Sudoku board shape as 9x9 int lists with `0` for empty, both server and client.
+
+**Libraries and tech choices**
+- Use only stdlib + Flask on the server; no new deps unless explicitly requested.
+- In the browser, stick to vanilla JS and the existing DOM helpers in `static/main.js`; avoid frameworks.
+- Testing: prefer `pytest` style already used in `tests/`; no new test frameworks without a reason.
+
+**Examples of desired output**
+- Server change: small, focused Flask route handlers that validate input and return concise JSON.
+- Logic change: pure functions in `sudoku_logic.py` that operate on 9x9 int grids and are easy to test.
+- Frontend change: DOM updates scoped to a single function in `static/main.js`, with clear class names for state (e.g., `prefilled`, `incorrect`).
+- Tests: arrange-act-assert with explicit fixtures for boards; avoid randomness unless seeded.
+
+**Why this file matters**
+- Copilot reads these rules to keep code consistent with team standards and reduce churn from rewrites.
+- Clear direction means faster reviews, fewer regressions, and alignment with the project’s established patterns.
+
+**References**
+- GitHub Copilot configuration: https://docs.github.com/en/copilot/configuring-copilot
+- Prompting best practices: https://docs.github.com/en/copilot/using-github-copilot/best-practices-for-writing-prompts
+- Copilot instructions overview: https://github.blog/changelog/2024-03-27-github-copilot-workflows-and-instructions/
+- Prompt engineering guide: https://platform.openai.com/docs/guides/prompt-engineering
