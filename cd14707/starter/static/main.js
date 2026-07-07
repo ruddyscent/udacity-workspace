@@ -292,16 +292,53 @@ function addTopRecord(rec) {
 function renderTop10() {
   const container = document.getElementById('scoreboard');
   const arr = loadTop10();
+  container.textContent = '';
+
   if (arr.length === 0) {
-    container.innerHTML = '<p>No records yet.</p>';
+    const p = document.createElement('p');
+    p.textContent = 'No records yet.';
+    container.appendChild(p);
     return;
   }
-  let html = '<table class="scoreboard-table"><tr><th>#</th><th>Name</th><th>Time</th><th>Level</th><th>Hints</th></tr>';
-  arr.forEach((r, i) => {
-    html += `<tr><td>${i+1}</td><td>${escapeHtml(r.name)}</td><td>${formatTime(r.time)}</td><td>${r.level}</td><td>${r.hints}</td></tr>`;
+
+  const table = document.createElement('table');
+  table.className = 'scoreboard-table';
+
+  const headerRow = document.createElement('tr');
+  ['#', 'Name', 'Time', 'Level', 'Hints'].forEach((h) => {
+    const th = document.createElement('th');
+    th.textContent = h;
+    headerRow.appendChild(th);
   });
-  html += '</table>';
-  container.innerHTML = html;
+  table.appendChild(headerRow);
+
+  arr.forEach((r, i) => {
+    const tr = document.createElement('tr');
+
+    const rankTd = document.createElement('td');
+    rankTd.textContent = String(i + 1);
+    tr.appendChild(rankTd);
+
+    const nameTd = document.createElement('td');
+    nameTd.textContent = String(r.name);
+    tr.appendChild(nameTd);
+
+    const timeTd = document.createElement('td');
+    timeTd.textContent = formatTime(r.time);
+    tr.appendChild(timeTd);
+
+    const levelTd = document.createElement('td');
+    levelTd.textContent = String(r.level);
+    tr.appendChild(levelTd);
+
+    const hintsTd = document.createElement('td');
+    hintsTd.textContent = String(r.hints);
+    tr.appendChild(hintsTd);
+
+    table.appendChild(tr);
+  });
+
+  container.appendChild(table);
 }
 
 function escapeHtml(s) {
