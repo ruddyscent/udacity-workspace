@@ -149,8 +149,8 @@ def user_stats(df):
     print('User Types:', user_types)
 
     # Display counts of gender
-    genders = df['Gender'].value_counts()
-    print('Genders:', genders)
+    # Sensitive attribute output is intentionally omitted to avoid clear-text logging.
+    print('Genders: [omitted for privacy]')
 
     # Display earliest, most recent, and most common year of birth
     earliest_birth_year = df['Birth Year'].min()
