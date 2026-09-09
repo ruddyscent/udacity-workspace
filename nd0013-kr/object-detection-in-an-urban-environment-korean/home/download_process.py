@@ -2,11 +2,10 @@ import argparse
 import io
 import os
 import subprocess
+from multiprocessing import cpu_count, get_context
 
-import ray
 import tensorflow.compat.v1 as tf
 from PIL import Image
-from psutil import cpu_count
 from waymo_open_dataset import dataset_pb2 as open_dataset
 
 from utils import get_module_logger, parse_frame, int64_feature, int64_list_feature, \
@@ -130,7 +129,6 @@ def process_tfr(path, data_dir):
     writer.close()
 
 
-@ray.remote
 def download_and_process(filename, data_dir):
     logger = get_module_logger(__name__)
     # need to re-import the logger because of multiprocesing
@@ -157,7 +155,6 @@ if __name__ == "__main__":
         filenames = f.read().splitlines()
     logger.info(f'Download {len(filenames[:size])} files. Be patient, this will take a long time.')
 
-    # init ray
-    ray.init(num_cpus=cpu_count())
-    workers = [download_and_process.remote(fn, data_dir) for fn in filenames[:size]]
-    _ = ray.get(workers)
+    with get_context('spawn').Pool(processes=cpu_count()) as pool:
+        pool.starmap(download_and_process,
+                     ((filename, data_dir) for filename in filenames[:size]))
