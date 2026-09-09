@@ -11,6 +11,8 @@ from waymo_open_dataset import dataset_pb2 as open_dataset
 from utils import get_module_logger, parse_frame, int64_feature, int64_list_feature, \
     bytes_list_feature, bytes_feature, float_list_feature
 
+logger = get_module_logger(__name__)
+
 
 def create_tf_example(filename, encoded_jpeg, annotations, resize=True):
     """
@@ -130,8 +132,6 @@ def process_tfr(path, data_dir):
 
 
 def download_and_process(filename, data_dir):
-    logger = get_module_logger(__name__)
-    # need to re-import the logger because of multiprocesing
     local_path = download_tfr(filename, data_dir)
     process_tfr(local_path, data_dir)
     # remove the original tf record to save space
@@ -140,7 +140,6 @@ def download_and_process(filename, data_dir):
 
 
 if __name__ == "__main__":
-    logger = get_module_logger(__name__)
     parser = argparse.ArgumentParser(description='Download and process tf files')
     parser.add_argument('--data_dir', required=True,
                         help='data directory')
@@ -155,6 +154,15 @@ if __name__ == "__main__":
         filenames = f.read().splitlines()
     logger.info(f'Download {len(filenames[:size])} files. Be patient, this will take a long time.')
 
-    with get_context('spawn').Pool(processes=cpu_count()) as pool:
-        pool.starmap(download_and_process,
-                     ((filename, data_dir) for filename in filenames[:size]))
+    tasks = [(filename, data_dir) for filename in filenames[:size]]
+    if tasks:
+        cuda_visible_devices = os.environ.get('CUDA_VISIBLE_DEVICES')
+        os.environ['CUDA_VISIBLE_DEVICES'] = ''
+        try:
+            with get_context('spawn').Pool(processes=min(cpu_count(), len(tasks))) as pool:
+                pool.starmap(download_and_process, tasks)
+        finally:
+            if cuda_visible_devices is None:
+                os.environ.pop('CUDA_VISIBLE_DEVICES', None)
+            else:
+                os.environ['CUDA_VISIBLE_DEVICES'] = cuda_visible_devices
