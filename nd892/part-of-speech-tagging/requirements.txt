@@ -4,4 +4,5 @@ soundfile==0.10.2
 pandoc==2.3
 nbconvert==7.17.1
 pomegranate==0.14.8
-nltk==3.10.3
+# Temporary upstream fix for GHSA-8mgp-746c-j5xp until a patched release is available.
+nltk @ git+https://github.com/nltk/nltk.git@574270e2ad368c8816976e584da56ddfb3fefbad
